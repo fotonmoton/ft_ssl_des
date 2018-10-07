@@ -31,6 +31,9 @@ LIBFT_INC :=					-I $(LIBFT_DIR)includes/
 LIBFT_LIB :=					-lft -L $(LIBFT_DIR)
 LIBFT =							$(LIBFT_DIR)libft.a
 
+MUINUT_DIR :=					$(LIB_DIR)munit/
+MUINUT_INC :=					-I $(MUINUT_DIR)
+
 # project source files
 
 SRC =							main.c
@@ -42,6 +45,13 @@ OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 # project test files
 
+TEST_BIN =						ft_ssl_test
+
+TEST_SRC =						test_test.c
+
+TEST_SRC +=						munit.c
+
+TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
 
 # compilation flags
 
@@ -73,7 +83,7 @@ LINK_FLAGS = ""
 
 # header flags
 
-HEADER_FLAGS = ""
+HEADER_FLAGS =					$(MUINUT_INC)
 
 # compiler
 
@@ -83,15 +93,16 @@ CC :=							clang
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): check $(LIBFT) $(OBJ)
 	$(CC) $(OBJ) $(LINK_FLAGS) -o $(NAME)
 
-$(TEST_NAME): $(LIBFT) $(TEST_OBJ)
-	$(CC) $(TEST_OBJ) $(LINK_FLAGS) -o $(TEST_NAME)
+check: $(TEST_BIN)
+	./$(TEST_BIN)
 
-$(OBJ): | $(OBJ_DIR)
+$(TEST_BIN): $(LIBFT) $(TEST_OBJ)
+	$(CC) $(TEST_OBJ) $(LINK_FLAGS) -o $(TEST_BIN)
 
-$(TEST_OBJ): | $(OBJ_DIR)
+$(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
@@ -102,10 +113,6 @@ $(OBJ_DIR)%.o: %.c
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-check: $(TEST_NAME)
-	clear
-	./$(TEST_NAME)
-
 clean: 
 	rm -f $(OBJ)
 	rm -f $(TEST_OBJ)
@@ -113,7 +120,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm -f $(TEST_NAME)
 	rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
@@ -126,6 +132,9 @@ multi:
 
 # special stuff
 
-vpath %.c						$(SRC_DIR)
+vpath %.c						$(SRC_DIR) \
+								$(TST_DIR) \
+								$(MUINUT_DIR)
+
 
 .PHONY: all check clean fclean re multi
