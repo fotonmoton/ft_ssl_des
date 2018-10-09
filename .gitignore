@@ -2,3 +2,4 @@ ft_ssl
 ft_ssl_test
 *.o
 *.a
+.vscode

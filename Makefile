@@ -47,7 +47,8 @@ OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 TEST_BIN =						ft_ssl_test
 
-TEST_SRC =						test_test.c
+TEST_SRC =						main_test.c		\
+								test_tests.c
 
 TEST_SRC +=						munit.c
 
@@ -83,7 +84,8 @@ LINK_FLAGS = ""
 
 # header flags
 
-HEADER_FLAGS =					$(MUINUT_INC)
+HEADER_FLAGS =					-I $(INC_DIR)		\
+								$(MUINUT_INC)
 
 # compiler
 
@@ -97,6 +99,7 @@ $(NAME): check $(LIBFT) $(OBJ)
 	$(CC) $(OBJ) $(LINK_FLAGS) -o $(NAME)
 
 check: $(TEST_BIN)
+	clear
 	./$(TEST_BIN)
 
 $(TEST_BIN): $(LIBFT) $(TEST_OBJ)
@@ -120,7 +123,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm -rf $(OBJ_DIR)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
