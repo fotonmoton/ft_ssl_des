@@ -6,7 +6,7 @@
 #    By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/18 16:06:01 by gtertysh          #+#    #+#              #
-#    Updated: 2018/06/24 18:49:59 by gtertysh         ###   ########.fr        #
+#    Updated: 2018/10/16 21:05:56 by gtertysh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,6 +123,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f $(TEST_BIN)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
