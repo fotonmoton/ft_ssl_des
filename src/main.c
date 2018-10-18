@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
+#include "libft.h"
 
 #ifndef PROTOTYPES
-#define PROTOTYPES 0
+#define PROTOTYPES 1
 #endif
 
 /* PROTO_LIST is defined depending on how PROTOTYPES is defined above.
@@ -46,7 +47,7 @@ typedef unsigned char *POINTER;
 typedef unsigned short int UINT2;
 
 /* UINT4 defines a four byte word */
-typedef unsigned long int UINT4;
+typedef unsigned int UINT4;
 
 /* MD5 context. */
 typedef struct
@@ -66,7 +67,6 @@ void MD5Final PROTO_LIST((unsigned char[16], MD5_CTX *));
 #define TEST_BLOCK_COUNT 1000
 
 static void MDString PROTO_LIST((char *));
-static void MDTimeTrial PROTO_LIST((void));
 static void MDTestSuite PROTO_LIST((void));
 static void MDFile PROTO_LIST((char *));
 static void MDFilter PROTO_LIST((void));
@@ -127,8 +127,7 @@ Rotation is separate from addition to prevent recomputation.
 
 /* MD5 initialization. Begins an MD5 operation, writing a new context.
  */
-void MD5Init(context)
-	MD5_CTX *context; /* context */
+void MD5Init(MD5_CTX *context)
 {
 	context->count[0] = context->count[1] = 0;
 	/* Load magic initialization constants.*/
@@ -136,16 +135,14 @@ void MD5Init(context)
 	context->state[1] = 0xefcdab89;
 	context->state[2] = 0x98badcfe;
 	context->state[3] = 0x10325476;
+	ft_bzero(context->buffer, 64);
 }
 
 /* MD5 block update operation. Continues an MD5 message-digest
   operation, processing another message block, and updating the
   context.
  */
-void MD5Update(context, input, inputLen)
-	MD5_CTX *context;  /* context */
-	unsigned char *input;  /* input block */
-	unsigned int inputLen; /* length of input block */
+void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputLen)
 {
 	unsigned int i, index, partLen;
 
@@ -181,9 +178,7 @@ void MD5Update(context, input, inputLen)
 /* MD5 finalization. Ends an MD5 message-digest operation, writing the
   the message digest and zeroizing the context.
  */
-void MD5Final(digest, context) 
-unsigned char digest[16]; 								 /* message digest */
-MD5_CTX *context;										 /* context */
+void MD5Final(unsigned char digest[16], MD5_CTX *context)
 {
 	unsigned char bits[8];
 	unsigned int index, padLen;
@@ -202,15 +197,14 @@ MD5_CTX *context;										 /* context */
 	/* Store state in digest */
 	Encode(digest, context->state, 16);
 
-	/* Zeroize sensitive information.
-*/
+	/* Zeroize sensitive information.*/
 	MD5_memset((POINTER)context, 0, sizeof(*context));
 }
 
 /* MD5 basic transformation. Transforms state based on block.
  */
 static void MD5Transform(state, block)
-	UINT4 state[4];
+UINT4 state[4];
 unsigned char block[64];
 {
 	UINT4 a = state[0], b = state[1], c = state[2], d = state[3], x[16];
@@ -341,7 +335,7 @@ unsigned int len;
 		output[i] = input[i];
 }
 
-/* Note: Replace "for loop" with standard memset if possible.
+/* Note: Replace "for l
  */
 static void MD5_memset(output, value, len)
 	POINTER output;
@@ -363,7 +357,7 @@ static void MDString(string) char *string;
 	unsigned int len = strlen(string);
 
 	MDInit(&context);
-	MDUpdate(&context, string, len);
+	MDUpdate(&context, (unsigned char *)string, len);
 	MDFinal(digest, &context);
 
 	printf("MD5 (\"%s\") = ", string);
@@ -371,24 +365,88 @@ static void MDString(string) char *string;
 	printf("\n");
 }
 
-int main(argc, argv) 
-int argc;
-char *argv[];
+/* Digests the standard input and prints the result.
+ */
+static void MDFilter()
 {
-	int i;
+	MD_CTX context;
+	int len;
+	unsigned char buffer[16], digest[16];
 
-	if (argc > 1)
-		for (i = 1; i < argc; i++)
-			if (argv[i][0] == '-' && argv[i][1] == 's')
-				MDString(argv[i] + 2);
-			else if (strcmp(argv[i], "-t") == 0)
-				MDTimeTrial();
-			else if (strcmp(argv[i], "-x") == 0)
-				MDTestSuite();
-			else
-				MDFile(argv[i]);
-	else
-		MDFilter();
+	MDInit(&context);
+	while ((len = fread(buffer, 1, 16, stdin)))
+		MDUpdate(&context, buffer, len);
+	MDFinal(digest, &context);
 
-	return (0);
+	MDPrint(digest);
+	printf("\n");
 }
+
+/* Prints a message digest in hexadecimal.
+ */
+static void MDPrint(digest) unsigned char digest[16];
+{
+	unsigned int i;
+
+	for (i = 0; i < 16; i++)
+		printf("%02x", digest[i]);
+}
+
+static void MDFile(filename) char *filename;
+{
+	FILE *file;
+	MD_CTX context;
+	int len;
+	unsigned char buffer[1024], digest[16];
+
+	if ((file = fopen(filename, "rb")) == NULL)
+		printf("%s can't be opened\n", filename);
+
+	else
+	{
+		MDInit(&context);
+		while ((len = fread(buffer, 1, 1024, file)))
+			MDUpdate(&context, buffer, len);
+		MDFinal(digest, &context);
+
+		fclose(file);
+
+		printf("MD5 (%s) = ", filename);
+		MDPrint(digest);
+		printf("\n");
+	}
+	}
+
+	/* Digests a reference suite of strings and prints the results.
+ */
+	static void MDTestSuite()
+	{
+		printf("MD5 test suite:\n");
+
+		MDString((char *)"");
+		MDString((char *)"a");
+		MDString((char *)"abc");
+		MDString((char *)"message digest");
+		MDString((char *)"abcdefghijklmnopqrstuvwxyz");
+		MDString((char *)"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+		MDString((char *)"1234567890123456789012345678901234567890\
+1234567890123456789012345678901234567890");
+	}
+
+	int main(int argc, char **argv)
+	{
+		int i;
+
+		if (argc > 1)
+			for (i = 1; i < argc; i++)
+				if (argv[i][0] == '-' && argv[i][1] == 's')
+					MDString(argv[i] + 2);
+				else if (strcmp(argv[i], "-x") == 0)
+					MDTestSuite();
+				else
+					MDFile(argv[i]);
+		else
+			MDFilter();
+
+		return (0);
+	}

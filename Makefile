@@ -36,8 +36,10 @@ MUINUT_INC :=					-I $(MUINUT_DIR)
 
 # project source files
 
-SRC =							main.c
+MD5_SRC =						ft_md5_init.c
 
+SRC =							main.c
+SRC +=							$(MD5_SRC)
 # project object files
 
 OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
@@ -47,10 +49,12 @@ OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 TEST_BIN =						ft_ssl_test
 
-TEST_SRC =						main_test.c		\
-								test_tests.c
+MD5_TESTS =						md5_tests.c
+MD5_TESTS +=					$(MD5_SRC)
 
-TEST_SRC +=						munit.c
+TEST_SRC =						tests.c		\
+								munit.c
+TEST_SRC +=						$(MD5_TESTS)
 
 TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
 
@@ -80,12 +84,13 @@ endif
 
 # linking flags
 
-LINK_FLAGS = ""
+LINK_FLAGS =					$(LIBFT_LIB)
 
 # header flags
 
 HEADER_FLAGS =					-I $(INC_DIR)		\
-								$(MUINUT_INC)
+								$(MUINUT_INC)		\
+								$(LIBFT_INC)
 
 # compiler
 

@@ -6,8 +6,6 @@
 #include "tests_macros.h"
 
 // test tests
-CASE(should_pass);
-CASE(should_skip);
-CASE(should_fail);
+CASE(should_init_ctx);
 
 #endif
