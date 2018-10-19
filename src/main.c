@@ -40,21 +40,26 @@ If using PROTOTYPES, then PROTO_LIST returns the list, otherwise it
 #define MDUpdate MD5Update
 #define MDFinal MD5Final
 
+#define MD5_BLOCK_SIZE 64
+
 /* POINTER defines a generic pointer type */
 typedef unsigned char *POINTER;
 
-/* UINT2 defines a two byte word */
-typedef unsigned short int UINT2;
+/* UINT4 defines a four byte word */
+typedef uint32_t UINT4;
 
 /* UINT4 defines a four byte word */
-typedef unsigned int UINT4;
+typedef uint64_t UINT8;
 
 /* MD5 context. */
 typedef struct
 {
-	UINT4 state[4];			  /* state (ABCD) */
-	UINT4 count[2];			  /* number of bits, modulo 2^64 (lsb first) */
-	unsigned char buffer[64]; /* input buffer */
+	UINT4 a;
+	UINT4 b;
+	UINT4 c;
+	UINT4 d;				  /* state (ABCD) */
+	UINT8 count;			  /* number of bits, modulo 2^64 (lsb first) */
+	unsigned char buffer[MD5_BLOCK_SIZE]; /* input buffer */
 } MD5_CTX;
 
 void MD5Init PROTO_LIST((MD5_CTX *));
@@ -129,13 +134,13 @@ Rotation is separate from addition to prevent recomputation.
  */
 void MD5Init(MD5_CTX *context)
 {
-	context->count[0] = context->count[1] = 0;
+	context->count = 0;
 	/* Load magic initialization constants.*/
-	context->state[0] = 0x67452301;
-	context->state[1] = 0xefcdab89;
-	context->state[2] = 0x98badcfe;
-	context->state[3] = 0x10325476;
-	ft_bzero(context->buffer, 64);
+	context->a = 0x67452301;
+	context->b = 0xefcdab89;
+	context->c = 0x98badcfe;
+	context->d = 0x10325476;
+	ft_bzero(context->buffer, MD5_BLOCK_SIZE);
 }
 
 /* MD5 block update operation. Continues an MD5 message-digest
@@ -147,23 +152,20 @@ void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputLen)
 	unsigned int i, index, partLen;
 
 	/* Compute number of bytes mod 64 */
-	index = (unsigned int)((context->count[0] >> 3) & 0x3F);
+	index = (unsigned int)((context->count / 8) % 64);
 
-	/* Update number of bits */
-	if ((context->count[0] += ((UINT4)inputLen << 3)) < ((UINT4)inputLen << 3))
-		context->count[1]++;
-	context->count[1] += ((UINT4)inputLen >> 29);
+	context->count += inputLen * 8;
 
-	partLen = 64 - index;
+	partLen = MD5_BLOCK_SIZE - index;
 
 	/* Transform as many times as possible.*/
 	if (inputLen >= partLen)
 	{
 		MD5_memcpy((POINTER)&context->buffer[index], (POINTER)input, partLen);
-		MD5Transform(context->state, context->buffer);
+		MD5Transform(context, context->buffer);
 
-		for (i = partLen; i + 63 < inputLen; i += 64)
-			MD5Transform(context->state, &input[i]);
+		for (i = partLen; i + 63 < inputLen; i += MD5_BLOCK_SIZE)
+			MD5Transform(context, &input[i]);
 
 		index = 0;
 	}
@@ -184,11 +186,18 @@ void MD5Final(unsigned char digest[16], MD5_CTX *context)
 	unsigned int index, padLen;
 
 	/* Save number of bits */
-	Encode(bits, context->count, 8);
+	bits[0] = (unsigned char)(context->count & 0xff);
+	bits[1] = (unsigned char)(context->count >> 8 & 0xff);
+	bits[2] = (unsigned char)(context->count >> 16 & 0xff);
+	bits[3] = (unsigned char)(context->count >> 24 & 0xff);
+	bits[4] = (unsigned char)(context->count >> 32 & 0xff);
+	bits[5] = (unsigned char)(context->count >> 40 & 0xff);
+	bits[6] = (unsigned char)(context->count >> 48 & 0xff);
+	bits[7] = (unsigned char)(context->count >> 56 & 0xff);
 
-	/* Pad out to 56 mod 64.
-*/
-	index = (unsigned int)((context->count[0] >> 3) & 0x3f);
+	/* Pad out to 56 mod 64. */
+	index = (unsigned int)((context->count / 8) % 64);
+
 	padLen = (index < 56) ? (56 - index) : (120 - index);
 	MD5Update(context, PADDING, padLen);
 
@@ -203,13 +212,11 @@ void MD5Final(unsigned char digest[16], MD5_CTX *context)
 
 /* MD5 basic transformation. Transforms state based on block.
  */
-static void MD5Transform(state, block)
-UINT4 state[4];
-unsigned char block[64];
+static void MD5Transform(MD5_CTX *ctx, unsigned char block[MD5_BLOCK_SIZE])
 {
-	UINT4 a = state[0], b = state[1], c = state[2], d = state[3], x[16];
+	UINT4 a = ctx->a, b = ctx->b, c = ctx->c, d = ctx->d, x[16];
 
-	Decode(x, block, 64);
+	Decode(x, block, MD5_BLOCK_SIZE);
 
 	/* Round 1 */
 	FF(a, b, c, d, x[0], S11, 0xd76aa478);  /* 1 */
@@ -283,10 +290,10 @@ unsigned char block[64];
 	II(c, d, a, b, x[2], S43, 0x2ad7d2bb);  /* 63 */
 	II(b, c, d, a, x[9], S44, 0xeb86d391);  /* 64 */
 
-	state[0] += a;
-	state[1] += b;
-	state[2] += c;
-	state[3] += d;
+	ctx->a += a;
+	ctx->b += b;
+	ctx->c += c;
+	ctx->d += d;
 	/* Zeroize sensitive information.*/
 	MD5_memset((POINTER)x, 0, sizeof(x));
 }
