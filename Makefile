@@ -36,7 +36,15 @@ MUINUT_INC :=					-I $(MUINUT_DIR)
 
 # project source files
 
-MD5_SRC =						ft_md5_init.c
+MD5_SRC =						ft_md5_init.c				\
+								ft_md5_update.c				\
+								ft_md5_transform.c			\
+								ft_md5_decode.c				\
+								ft_md5_encode_len.c			\
+								ft_md5_encode_register.c	\
+								ft_md5_final.c				\
+								ft_md5_padding.c			\
+								ft_md5_digest_string.c
 
 SRC =							main.c
 SRC +=							$(MD5_SRC)
@@ -121,7 +129,7 @@ $(OBJ_DIR)%.o: %.c
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-clean: 
+clean:
 	rm -f $(OBJ)
 	rm -f $(TEST_OBJ)
 	$(MAKE) -C $(LIBFT_DIR) clean
