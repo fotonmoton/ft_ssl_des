@@ -18,6 +18,7 @@ NAME :=							ft_ssl
 
 ROOT :=							$(shell pwd)
 SRC_DIR :=						$(ROOT)/src/
+MD5_DIR :=						$(SRC_DIR)/md5/
 OBJ_DIR :=						$(ROOT)/obj/
 INC_DIR :=						$(ROOT)/inc/
 LIB_DIR :=						$(ROOT)/lib/
@@ -148,8 +149,9 @@ multi:
 
 # special stuff
 
-vpath %.c						$(SRC_DIR) \
-								$(TST_DIR) \
+vpath %.c						$(SRC_DIR)		\
+								$(MD5_DIR)		\
+								$(TST_DIR)		\
 								$(MUINUT_DIR)
 
 

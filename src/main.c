@@ -2,6 +2,6 @@
 
 int main()
 {
-	printf("hello from sha256");
-	return(0);
+	printf("hello from sha256\n");
+	return (0);
 }
