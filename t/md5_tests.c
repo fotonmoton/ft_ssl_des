@@ -10,8 +10,8 @@ TEST_RESULT should_init_ctx(TEST_PARAMS, TEST_DATA)
 
     ft_md5_init(&ctx);
 
-    munit_assert_true(ctx.a == 0x67452301);
-    munit_assert_uint(ctx.b, ==, 0xefcdab89);
+	munit_assert_uint(ctx.a, ==, 0x67452301);
+	munit_assert_uint(ctx.b, ==, 0xefcdab89);
     munit_assert_uint(ctx.c, ==, 0x98badcfe);
     munit_assert_uint(ctx.d, ==, 0x10325476);
     munit_assert_true(ctx.bit_len == 0);

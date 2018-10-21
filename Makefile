@@ -19,6 +19,7 @@ NAME :=							ft_ssl
 ROOT :=							$(shell pwd)
 SRC_DIR :=						$(ROOT)/src/
 MD5_DIR :=						$(SRC_DIR)/md5/
+SHA_DIR :=						$(SRC_DIR)/sha/
 OBJ_DIR :=						$(ROOT)/obj/
 INC_DIR :=						$(ROOT)/inc/
 LIB_DIR :=						$(ROOT)/lib/
@@ -47,6 +48,18 @@ MD5_SRC =						ft_md5_init.c				\
 								ft_md5_padding.c			\
 								ft_md5_digest_string.c
 
+SHA_SRC =						ft_sha256_init.c			\
+								ft_sha256_update.c			\
+								ft_sha256_decode.c			\
+								ft_sha256_encode_len.c		\
+								ft_sha256_encode_register.c	\
+								ft_sha256_transform.c		\
+								ft_sha256_padding.c			\
+								ft_sha256_final.c			\
+								ft_sha256_digest_string.c	\
+								ft_sha256_constants.c
+
+
 SRC =							main.c
 SRC +=							$(MD5_SRC)
 # project object files
@@ -61,9 +74,14 @@ TEST_BIN =						ft_ssl_test
 MD5_TESTS =						md5_tests.c
 MD5_TESTS +=					$(MD5_SRC)
 
-TEST_SRC =						tests.c		\
+SHA_TESTS =						sha_tests.c
+SHA_TESTS +=					$(SHA_SRC)
+
+TEST_SRC =						tests.c			\
 								munit.c
-TEST_SRC +=						$(MD5_TESTS)
+
+TEST_SRC +=						$(MD5_TESTS)	\
+								$(SHA_TESTS)
 
 TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
 
@@ -151,6 +169,7 @@ multi:
 
 vpath %.c						$(SRC_DIR)		\
 								$(MD5_DIR)		\
+								$(SHA_DIR)		\
 								$(TST_DIR)		\
 								$(MUINUT_DIR)
 
