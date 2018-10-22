@@ -64,8 +64,22 @@ SHA_SRC =						ft_sha256_init.c			\
 								ft_sha224_digest_string.c
 
 
-SRC =							main.c
-SRC +=							$(MD5_SRC)
+SRC =							main.c						\
+								ft_ssl_init.c				\
+								ft_ssl_md5_file.c			\
+								ft_ssl_md5_stdin.c			\
+								ft_ssl_md5_string.c			\
+								ft_ssl_md5_print.c			\
+								ft_ssl_sha256_file.c 		\
+								ft_ssl_sha256_stdin.c 		\
+								ft_ssl_sha256_string.c		\
+								ft_ssl_sha224_file.c 		\
+								ft_ssl_sha224_stdin.c 		\
+								ft_ssl_sha224_string.c 		\
+								ft_ssl_usage.c
+
+SRC +=							$(MD5_SRC)					\
+								$(SHA_SRC)
 # project object files
 
 OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))

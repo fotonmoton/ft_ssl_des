@@ -17,7 +17,7 @@ void ft_md5_update(t_md5_ctx *c, BYTE1 * message, BYTE8 message_len)
         i = part_block_len;
         while(i + 63 < message_len)
         {
-            ft_md5_transform(c, &c->block[i]);
+            ft_md5_transform(c, &message[i]);
             i += FT_MD5_BLOCK_SIZE;
         }
         curent_block_index = 0;

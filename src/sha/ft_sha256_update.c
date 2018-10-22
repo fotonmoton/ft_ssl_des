@@ -17,7 +17,7 @@ void ft_sha256_update(t_sha256_ctx *c, BYTE1 *message, BYTE8 message_len)
 		i = part_block_len;
 		while (i + 63 < message_len)
 		{
-			ft_sha256_transform(c, &c->block[i]);
+			ft_sha256_transform(c, &message[i]);
 			i += FT_SHA256_BLOCK_SIZE;
 		}
 		curent_block_index = 0;
