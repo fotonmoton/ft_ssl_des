@@ -10,6 +10,9 @@
 # define FT_SHA256_STRING_SIZE_BYTE 65
 # define FT_SHA256_REG_SIZE_BYTE 4
 
+# define FT_SHA224_DIGEST_LENGTH_BYTE 28
+# define FT_SHA224_STRING_SIZE_BYTE 57
+
 /* Define the SHA shift, rotate left, and rotate right macros */
 #define SHR(bits, word) ((word) >> (bits))
 #define ROTL(bits, word) (((word) << (bits)) | ((word) >> (32 - (bits))))
@@ -55,10 +58,15 @@ typedef struct 		s_temp_registers
 }					t_temp_registers;
 
 void				ft_sha256_init(t_sha256_ctx *ctx);
+void				ft_sha224_init(t_sha256_ctx *ctx);
 void 				ft_sha256_update(t_sha256_ctx *ctx,
 						BYTE1 *message, BYTE8 len);
+void				ft_sha224_update(t_sha256_ctx *ctx,
+					  BYTE1 *message, BYTE8 len);
 void				ft_sha256_final(BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE],
 						t_sha256_ctx *ctx);
+void				ft_sha224_final(BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE],
+					 t_sha256_ctx *ctx);
 void				ft_sha256_transform(t_sha256_ctx *ctx,
 						BYTE1 block[FT_SHA256_BLOCK_SIZE]);
 void 				ft_sha256_decode(BYTE4 w[FT_SHA256_WORDS_COUNT],
@@ -71,6 +79,9 @@ void				ft_sha256_padding(BYTE1 padding[FT_SHA256_BLOCK_SIZE]);
 void				ft_sha256_digest_string(
 						BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE],
 						BYTE1 digst_string[FT_SHA256_STRING_SIZE_BYTE]);
+void				ft_sha224_digest_string(
+						BYTE1 digest[FT_SHA224_DIGEST_LENGTH_BYTE],
+						BYTE1 digst_string[FT_SHA224_STRING_SIZE_BYTE]);
 BYTE4				*ft_sha256_constants(void);
 
 #endif

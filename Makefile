@@ -57,7 +57,11 @@ SHA_SRC =						ft_sha256_init.c			\
 								ft_sha256_padding.c			\
 								ft_sha256_final.c			\
 								ft_sha256_digest_string.c	\
-								ft_sha256_constants.c
+								ft_sha256_constants.c 		\
+								ft_sha224_init.c 			\
+								ft_sha224_update.c 			\
+								ft_sha224_final.c 			\
+								ft_sha224_digest_string.c
 
 
 SRC =							main.c

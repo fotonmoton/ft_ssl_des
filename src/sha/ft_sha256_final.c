@@ -36,5 +36,4 @@ void ft_sha256_final
 	ft_sha256_update(ctx, padding, padding_len);
 	ft_sha256_update(ctx, length_as_bytes, FT_SHA256_MESSAGE_LENGTH_BYTE);
 	fill_digest(digest, ctx);
-	// ft_bzero(ctx, sizeof(t_sha256_ctx));
 }

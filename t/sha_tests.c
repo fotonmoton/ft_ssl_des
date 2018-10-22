@@ -25,6 +25,29 @@ TEST_RESULT should_init_ctx_sha256(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
+TEST_RESULT should_init_ctx_sha224(TEST_PARAMS, TEST_DATA)
+{
+	UNUSED(test_data);
+	UNUSED(test_params);
+	t_sha256_ctx ctx;
+
+	ft_sha224_init(&ctx);
+
+	munit_assert_uint(ctx.a, ==, 0xc1059ed8);
+	munit_assert_uint(ctx.b, ==, 0x367cd507);
+	munit_assert_uint(ctx.c, ==, 0x3070dd17);
+	munit_assert_uint(ctx.d, ==, 0xf70e5939);
+	munit_assert_uint(ctx.e, ==, 0xffc00b31);
+	munit_assert_uint(ctx.f, ==, 0x68581511);
+	munit_assert_uint(ctx.g, ==, 0x64f98fa7);
+	munit_assert_uint(ctx.h, ==, 0xbefa4fa4);
+	munit_assert_true(ctx.bit_len == 0);
+	for (int i = 0; i < 64; i++)
+		munit_assert_uchar(ctx.block[i], ==, 0);
+
+	return MUNIT_OK;
+}
+
 TEST_RESULT decode_string_to_int_sha256(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
@@ -191,6 +214,30 @@ TEST_RESULT compute_digest_sha256(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
+TEST_RESULT compute_digest_sha224(TEST_PARAMS, TEST_DATA)
+{
+	UNUSED(test_data);
+	UNUSED(test_params);
+
+	BYTE1 message[] = "abc";
+	t_sha256_ctx ctx;
+	BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
+
+	ft_sha224_init(&ctx);
+	ft_sha224_update(&ctx, message, ft_strlen((const char *)message));
+	ft_sha224_final(digest, &ctx);
+
+	munit_assert_uint32(ctx.a, ==, 0x23097d22);
+	munit_assert_uint32(ctx.b, ==, 0x3405d822);
+	munit_assert_uint32(ctx.c, ==, 0x8642a477);
+	munit_assert_uint32(ctx.d, ==, 0xbda255b3);
+	munit_assert_uint32(ctx.e, ==, 0x2aadbce4);
+	munit_assert_uint32(ctx.f, ==, 0xbda0b3f7);
+	munit_assert_uint32(ctx.g, ==, 0xe36c9da7);
+
+	return MUNIT_OK;
+}
+
 TEST_RESULT create_digest_string_sha256(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_data);
@@ -210,6 +257,29 @@ TEST_RESULT create_digest_string_sha256(TEST_PARAMS, TEST_DATA)
 
 	munit_assert_string_equal((const char *)message_digest,
 								(const char *)digest_string);
+
+	return MUNIT_OK;
+}
+
+TEST_RESULT create_digest_string_sha224(TEST_PARAMS, TEST_DATA)
+{
+	UNUSED(test_data);
+	UNUSED(test_params);
+
+	BYTE1 message[] = "abc";
+	BYTE1 message_digest[] =
+		"23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7";
+	t_sha256_ctx ctx;
+	BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
+	BYTE1 digest_string[FT_SHA224_STRING_SIZE_BYTE];
+
+	ft_sha224_init(&ctx);
+	ft_sha224_update(&ctx, message, ft_strlen((const char *)message));
+	ft_sha224_final(digest, &ctx);
+	ft_sha224_digest_string(digest, digest_string);
+
+	munit_assert_string_equal((const char *)message_digest,
+							  (const char *)digest_string);
 
 	return MUNIT_OK;
 }

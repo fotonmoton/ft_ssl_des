@@ -24,6 +24,8 @@ CASE(fill_buffer_sha256);
 CASE(add_right_padding_sha256);
 CASE(compute_digest_sha256);
 CASE(create_digest_string_sha256);
-
+CASE(should_init_ctx_sha224);
+CASE(compute_digest_sha224);
+CASE(create_digest_string_sha224);
 
 #endif
