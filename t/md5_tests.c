@@ -1,4 +1,5 @@
 #include "tests.h"
+#include "tests_macros.h"
 #include "ft_md5.h"
 #include "libft.h"
 
@@ -26,8 +27,8 @@ TEST_RESULT decode_string_to_int(TEST_PARAMS, TEST_DATA)
     UNUSED(test_params);
     UNUSED(test_data);
 
-    BYTE1 block[FT_MD5_BLOCK_SIZE];
-    BYTE4 words[FT_MD5_WORDS_COUNT];
+    t_byte1 block[FT_MD5_BLOCK_SIZE];
+    t_byte4 words[FT_MD5_WORDS_COUNT];
 
     ft_bzero(block, FT_MD5_BLOCK_SIZE);
     block[0] = 'a';
@@ -49,10 +50,10 @@ TEST_RESULT update_should_change_count(TEST_PARAMS, TEST_DATA)
     UNUSED(test_data);
     t_md5_ctx ctx;
     char message[] = "hello, World!";
-    BYTE8 size = ft_strlen(message);
+    t_byte8 size = ft_strlen(message);
 
     ft_md5_init(&ctx);
-    ft_md5_update(&ctx, (BYTE1 *)message, size);
+    ft_md5_update(&ctx, (t_byte1 *)message, size);
 
     munit_assert_true(size * 8 == ctx.bit_len);
 
@@ -64,8 +65,8 @@ TEST_RESULT encode_bits_to_string(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 	UNUSED(test_data);
 
-	BYTE8 len;
-	BYTE1 bits[FT_MD5_MESSAGE_LENGTH_BYTE];
+	t_byte8 len;
+	t_byte1 bits[FT_MD5_MESSAGE_LENGTH_BYTE];
 
 	/*
 		1111 0000 : 63 - 56
@@ -81,9 +82,9 @@ TEST_RESULT encode_bits_to_string(TEST_PARAMS, TEST_DATA)
 
 	ft_md5_encode_len(bits, len);
 
-	munit_assert_true(bits[7] == (BYTE1)((len >> 56) & 0xff));
-	munit_assert_true(bits[0] == (BYTE1)(len & 0xff));
-	munit_assert_true(bits[1] == (BYTE1)((len >> 8) & 0xff));
+	munit_assert_true(bits[7] == (t_byte1)((len >> 56) & 0xff));
+	munit_assert_true(bits[0] == (t_byte1)(len & 0xff));
+	munit_assert_true(bits[1] == (t_byte1)((len >> 8) & 0xff));
 
 	return MUNIT_OK;
 }
@@ -93,8 +94,8 @@ TEST_RESULT encode_register(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 	UNUSED(test_data);
 
-	BYTE1 digest_part[4];
-	BYTE4 reg;
+	t_byte1 digest_part[4];
+	t_byte4 reg;
 
 	/*
 		1000 0000 : 31 - 24
@@ -106,10 +107,10 @@ TEST_RESULT encode_register(TEST_PARAMS, TEST_DATA)
 
 	ft_md5_encode_register(digest_part, reg);
 
-	munit_assert_true(digest_part[0] == (BYTE1)(reg & 0xff));
-	munit_assert_true(digest_part[1] == (BYTE1)((reg >> 8) & 0xff));
-	munit_assert_true(digest_part[2] == (BYTE1)((reg >> 16) & 0xff));
-	munit_assert_true(digest_part[3] == (BYTE1)((reg >> 24) & 0xff));
+	munit_assert_true(digest_part[0] == (t_byte1)(reg & 0xff));
+	munit_assert_true(digest_part[1] == (t_byte1)((reg >> 8) & 0xff));
+	munit_assert_true(digest_part[2] == (t_byte1)((reg >> 16) & 0xff));
+	munit_assert_true(digest_part[3] == (t_byte1)((reg >> 24) & 0xff));
 
 	return MUNIT_OK;
 }
@@ -120,12 +121,12 @@ TEST_RESULT create_digest(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_data);
 
 	t_md5_ctx	ctx;
-	BYTE1		digest[FT_MD5_DIGEST_LENGTH_BYTE];
-	BYTE1		digest_string[FT_MD5_STRING_SIZE_BYTE];
+	t_byte1		digest[FT_MD5_DIGEST_LENGTH_BYTE];
+	t_byte1		digest_string[FT_MD5_STRING_SIZE_BYTE];
 
-	BYTE1		case1[] = "";
-	BYTE1		case2[] = "a";
-	BYTE1		case7[] = "1234567890123456789012345678901234567\
+	t_byte1		case1[] = "";
+	t_byte1		case2[] = "a";
+	t_byte1		case7[] = "1234567890123456789012345678901234567\
 891234567890123456789012345678901234567890";
 
 	ft_md5_init(&ctx);
@@ -160,12 +161,12 @@ TEST_RESULT create_string(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 	UNUSED(test_data);
 
-	BYTE1 digest[FT_MD5_DIGEST_LENGTH_BYTE];
-	BYTE1 digest_string[FT_MD5_STRING_SIZE_BYTE];
-	BYTE4 a;
-	BYTE4 b;
-	BYTE4 c;
-	BYTE4 d;
+	t_byte1 digest[FT_MD5_DIGEST_LENGTH_BYTE];
+	t_byte1 digest_string[FT_MD5_STRING_SIZE_BYTE];
+	t_byte4 a;
+	t_byte4 b;
+	t_byte4 c;
+	t_byte4 d;
 
 	/* final registers values for empty input */
 	a = 3649838548;

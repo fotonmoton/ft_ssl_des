@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ssl_md5_print.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/23 20:28:46 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 20:28:58 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_md5.h"
 #include "ft_ssl.h"
 #include "libft.h"
 
-static void print_name(const char *name, int reverse)
+static void	print_name(const char *name, int reverse)
 {
 	if (reverse)
 	{
@@ -17,14 +29,14 @@ static void print_name(const char *name, int reverse)
 	}
 }
 
-void ft_ssl_md5_print
+void		ft_ssl_md5_print
 (
 	const char *target,
 	unsigned char *digest,
 	t_ft_ssl *ft_ssl
 )
 {
-	BYTE1 digest_string[FT_MD5_STRING_SIZE_BYTE];
+	t_byte1 digest_string[FT_MD5_STRING_SIZE_BYTE];
 
 	ft_md5_digest_string(digest, digest_string);
 	if (target && !ft_ssl->flags.quiet && ft_ssl->flags.reverse)

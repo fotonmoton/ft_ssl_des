@@ -6,7 +6,7 @@
 /*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/22 20:07:36 by gtertysh          #+#    #+#             */
-/*   Updated: 2018/10/22 20:15:49 by gtertysh         ###   ########.fr       */
+/*   Updated: 2018/10/23 19:36:23 by gtertysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,26 @@ void					ft_ssl_md5_string(const char *strng,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_md5_file(const char *filename,
 							t_ft_ssl *ft_ssl);
-void 					ft_ssl_md5_print(const char *target,
-					  		unsigned char *digest,
-					  		t_ft_ssl *ft_ssl);
+void					ft_ssl_md5_print(const char *target,
+							unsigned char *digest,
+							t_ft_ssl *ft_ssl);
 
-void 					ft_ssl_sha256_stdin(t_ft_ssl *ft_ssl);
+void					ft_ssl_sha256_stdin(t_ft_ssl *ft_ssl);
 void					ft_ssl_sha256_string(const char *strng,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_sha256_file(const char *filename,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_sha224_print(const char *target,
-					  		unsigned char *digest,
-					  		t_ft_ssl *ft_ssl);
+							unsigned char *digest,
+							t_ft_ssl *ft_ssl);
 
-void 					ft_ssl_sha224_stdin(t_ft_ssl *ft_ssl);
+void					ft_ssl_sha224_stdin(t_ft_ssl *ft_ssl);
 void					ft_ssl_sha224_string(const char *strng,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_sha224_file(const char *filename,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_sha256_print(const char *target,
-					  		unsigned char *digest,
-					  		t_ft_ssl *ft_ssl);
+							unsigned char *digest,
+							t_ft_ssl *ft_ssl);
 
 #endif

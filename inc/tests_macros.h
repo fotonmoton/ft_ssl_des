@@ -1,22 +1,34 @@
-#ifndef TESTS_MACROS
-# define TESTS_MACROS
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tests_macros.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/23 19:46:23 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 19:46:33 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "munit.h"
+#ifndef TESTS_MACROS_H
+# define TESTS_MACROS_H
 
-#define UNUSED(x) (void)(x)
+# include "munit.h"
 
-#define TEST_RESULT MunitResult
-#define TEST_PARAMS const MunitParameter test_params[]
-#define TEST_DATA void *test_data
-#define CASE(f) TEST_RESULT f(TEST_PARAMS, TEST_DATA)
+# define UNUSED(x) (void)(x)
 
-#define N(name) (char *)name
-#define T(test_function) test_function
-#define S(setup_function) setup_function
-#define TD(tear_down_function) tear_down_function
-#define O(options) options
-#define P(paramenters) paramenters
-#define IT(n, t, s, td, o, p) { N(n), T(t), S(s), TD(td), O(o), P(p) }
-#define END_IT IT(NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL)
+# define TEST_RESULT MunitResult
+# define TEST_PARAMS const MunitParameter test_params[]
+# define TEST_DATA void *test_data
+# define CASE(f) TEST_RESULT		f(TEST_PARAMS, TEST_DATA)
+
+# define N(name) (char *)name
+# define T(test_function) test_function
+# define S(setup_function) setup_function
+# define TD(tear_down_function) tear_down_function
+# define O(options) options
+# define P(paramenters) paramenters
+# define IT(n, t, s, td, o, p) { N(n), T(t), S(s), TD(td), O(o), P(p) }
+# define END_IT IT(NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL)
 
 #endif

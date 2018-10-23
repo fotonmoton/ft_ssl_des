@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sha224_update.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/23 20:12:58 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 20:13:00 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_sha.h"
 
-void ft_sha224_update(t_sha256_ctx *ctx, BYTE1 *message, BYTE8 len)
+void	ft_sha224_update(t_sha256_ctx *ctx, t_byte1 *message, t_byte8 len)
 {
 	ft_sha256_update(ctx, message, len);
 }

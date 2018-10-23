@@ -1,4 +1,6 @@
 #include "tests.h"
+#include "tests_macros.h"
+
 
 MunitTest md5_tests[] = {
 	IT("/init_ctx", should_init_ctx, NULL, NULL, 0, NULL),

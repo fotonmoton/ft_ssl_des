@@ -1,4 +1,5 @@
 #include "tests.h"
+#include "tests_macros.h"
 #include "ft_sha.h"
 #include "libft.h"
 
@@ -53,8 +54,8 @@ TEST_RESULT decode_string_to_int_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 	UNUSED(test_data);
 
-	BYTE1 block[FT_SHA256_BLOCK_SIZE];
-	BYTE4 words[FT_SHA256_WORDS_COUNT];
+	t_byte1 block[FT_SHA256_BLOCK_SIZE];
+	t_byte4 words[FT_SHA256_WORDS_COUNT];
 
 	ft_bzero(block, FT_SHA256_BLOCK_SIZE);
 	block[0] = 'a';
@@ -73,8 +74,8 @@ TEST_RESULT encode_len_to_string_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 	UNUSED(test_data);
 
-	BYTE8 len;
-	BYTE1 bits[FT_SHA256_MESSAGE_LENGTH_BYTE];
+	t_byte8 len;
+	t_byte1 bits[FT_SHA256_MESSAGE_LENGTH_BYTE];
 
 	/*
 		1111 0000 : 63 - 56
@@ -90,9 +91,9 @@ TEST_RESULT encode_len_to_string_sha256(TEST_PARAMS, TEST_DATA)
 
 	ft_sha256_encode_len(bits, len);
 
-	munit_assert_uchar(bits[0], ==, (BYTE1)((len >> 56) & 0xff));
-	munit_assert_uchar(bits[7], ==, (BYTE1)(len & 0xff));
-	munit_assert_uchar(bits[6], ==, (BYTE1)((len >> 8) & 0xff));
+	munit_assert_uchar(bits[0], ==, (t_byte1)((len >> 56) & 0xff));
+	munit_assert_uchar(bits[7], ==, (t_byte1)(len & 0xff));
+	munit_assert_uchar(bits[6], ==, (t_byte1)((len >> 8) & 0xff));
 
 	return MUNIT_OK;
 }
@@ -102,8 +103,8 @@ TEST_RESULT encode_register_to_string_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 	UNUSED(test_data);
 
-	BYTE1 digest_part[4];
-	BYTE4 reg;
+	t_byte1 digest_part[4];
+	t_byte4 reg;
 
 	reg = 0xba7816bf;
 
@@ -123,7 +124,7 @@ TEST_RESULT update_bit_count_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 
 	t_sha256_ctx ctx;
-	BYTE1 message[] = "abc";
+	t_byte1 message[] = "abc";
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
@@ -139,7 +140,7 @@ TEST_RESULT fill_buffer_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 
 	t_sha256_ctx ctx;
-	BYTE1 message[] = "abc";
+	t_byte1 message[] = "abc";
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
@@ -151,9 +152,9 @@ TEST_RESULT fill_buffer_sha256(TEST_PARAMS, TEST_DATA)
 
 static void block_with_right_padding
 (
-	BYTE1 *message,
-	BYTE8 message_len,
-	BYTE1 padding[FT_SHA256_BLOCK_SIZE]
+	t_byte1 *message,
+	t_byte8 message_len,
+	t_byte1 padding[FT_SHA256_BLOCK_SIZE]
 )
 {
 	ft_bzero(padding, FT_SHA256_BLOCK_SIZE);
@@ -167,11 +168,11 @@ TEST_RESULT add_right_padding_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_params);
 
 	t_sha256_ctx ctx;
-	BYTE1 message[] = "abc";
-	BYTE8 buff_index;
-	BYTE8 padding_len;
-	BYTE1 padding[FT_SHA256_BLOCK_SIZE];
-	BYTE1 block_with_message_and_pading[FT_SHA256_BLOCK_SIZE];
+	t_byte1 message[] = "abc";
+	t_byte8 buff_index;
+	t_byte8 padding_len;
+	t_byte1 padding[FT_SHA256_BLOCK_SIZE];
+	t_byte1 block_with_message_and_pading[FT_SHA256_BLOCK_SIZE];
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
@@ -193,9 +194,9 @@ TEST_RESULT compute_digest_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_data);
 	UNUSED(test_params);
 
-	BYTE1			message[] = "abc";
+	t_byte1			message[] = "abc";
 	t_sha256_ctx	ctx;
-	BYTE1			digest[FT_SHA256_DIGEST_LENGTH_BYTE];
+	t_byte1			digest[FT_SHA256_DIGEST_LENGTH_BYTE];
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, ft_strlen((const char *)message));
@@ -219,9 +220,9 @@ TEST_RESULT compute_digest_sha224(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_data);
 	UNUSED(test_params);
 
-	BYTE1 message[] = "abc";
+	t_byte1 message[] = "abc";
 	t_sha256_ctx ctx;
-	BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
+	t_byte1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
 
 	ft_sha224_init(&ctx);
 	ft_sha224_update(&ctx, message, ft_strlen((const char *)message));
@@ -243,12 +244,12 @@ TEST_RESULT create_digest_string_sha256(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_data);
 	UNUSED(test_params);
 
-	BYTE1 message[] = "abc";
-	BYTE1 message_digest[] =
+	t_byte1 message[] = "abc";
+	t_byte1 message_digest[] =
 		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
 	t_sha256_ctx ctx;
-	BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
-	BYTE1 digest_string[FT_SHA256_STRING_SIZE_BYTE];
+	t_byte1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
+	t_byte1 digest_string[FT_SHA256_STRING_SIZE_BYTE];
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, ft_strlen((const char *)message));
@@ -266,12 +267,12 @@ TEST_RESULT create_digest_string_sha224(TEST_PARAMS, TEST_DATA)
 	UNUSED(test_data);
 	UNUSED(test_params);
 
-	BYTE1 message[] = "abc";
-	BYTE1 message_digest[] =
+	t_byte1 message[] = "abc";
+	t_byte1 message_digest[] =
 		"23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7";
 	t_sha256_ctx ctx;
-	BYTE1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
-	BYTE1 digest_string[FT_SHA224_STRING_SIZE_BYTE];
+	t_byte1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
+	t_byte1 digest_string[FT_SHA224_STRING_SIZE_BYTE];
 
 	ft_sha224_init(&ctx);
 	ft_sha224_update(&ctx, message, ft_strlen((const char *)message));

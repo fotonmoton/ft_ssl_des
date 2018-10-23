@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/23 20:36:18 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 20:39:16 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ssl.h"
 #include "libft.h"
 
-static int find_flag(const char *expected, char *real)
+static int	find_flag(const char *expected, char *real)
 {
-	return ft_strcmp(real, expected) == 0;
+	return (ft_strcmp(real, expected) == 0);
 }
 
-static int process_flags(int argc, char **argv, t_ft_ssl *ft_ssl)
+static int	process_flags(int argc, char **argv, t_ft_ssl *ft_ssl)
 {
 	int		i;
 
@@ -20,12 +32,13 @@ static int process_flags(int argc, char **argv, t_ft_ssl *ft_ssl)
 		else if (find_flag("-p", argv[i]))
 			ft_ssl->flags.print_stdin = 1;
 		else
-			break;
+			break ;
 		i++;
 	}
-	return i;
+	return (i);
 }
-static void process_strings_and_files
+
+static void	process_strings_and_files
 (
 	int i,
 	int argc,
@@ -46,7 +59,8 @@ static void process_strings_and_files
 			ft_ssl->process_file(argv[i++], ft_ssl);
 	}
 }
-int main(int argc, char **argv)
+
+int			main(int argc, char **argv)
 {
 	t_ft_ssl	ft_ssl;
 	int			i;
