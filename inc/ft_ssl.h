@@ -29,6 +29,7 @@ typedef struct			s_flags
 	int					quiet;
 	int					reverse;
 	int					print_stdin;
+	int					something_printed;
 }						t_flags;
 
 typedef struct			s_alorithm
@@ -55,19 +56,26 @@ void					ft_ssl_md5_string(const char *strng,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_md5_file(const char *filename,
 							t_ft_ssl *ft_ssl);
-void					ft_ssl_md5_print(unsigned char *digest,
-					 		t_ft_ssl *ft_ssl);
+void 					ft_ssl_md5_print(const char *target,
+					  		unsigned char *digest,
+					  		t_ft_ssl *ft_ssl);
 
 void 					ft_ssl_sha256_stdin(t_ft_ssl *ft_ssl);
 void					ft_ssl_sha256_string(const char *strng,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_sha256_file(const char *filename,
 							t_ft_ssl *ft_ssl);
+void					ft_ssl_sha224_print(const char *target,
+					  		unsigned char *digest,
+					  		t_ft_ssl *ft_ssl);
 
 void 					ft_ssl_sha224_stdin(t_ft_ssl *ft_ssl);
 void					ft_ssl_sha224_string(const char *strng,
 							t_ft_ssl *ft_ssl);
 void					ft_ssl_sha224_file(const char *filename,
 							t_ft_ssl *ft_ssl);
+void					ft_ssl_sha256_print(const char *target,
+					  		unsigned char *digest,
+					  		t_ft_ssl *ft_ssl);
 
 #endif

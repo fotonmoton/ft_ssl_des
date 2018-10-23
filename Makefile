@@ -73,9 +73,11 @@ SRC =							main.c						\
 								ft_ssl_sha256_file.c 		\
 								ft_ssl_sha256_stdin.c 		\
 								ft_ssl_sha256_string.c		\
+								ft_ssl_sha256_print.c		\
 								ft_ssl_sha224_file.c 		\
 								ft_ssl_sha224_stdin.c 		\
 								ft_ssl_sha224_string.c 		\
+								ft_ssl_sha224_print.c 		\
 								ft_ssl_usage.c
 
 SRC +=							$(MD5_SRC)					\

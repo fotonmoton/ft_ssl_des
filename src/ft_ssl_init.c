@@ -26,6 +26,14 @@ static t_algorithm	*init_algorithms(void)
 	return algs;
 }
 
+static void			init_flags(t_ft_ssl *ft_ssl)
+{
+	ft_ssl->flags.print_stdin = 0;
+	ft_ssl->flags.quiet = 0;
+	ft_ssl->flags.reverse = 0;
+	ft_ssl->flags.something_printed = 0;
+}
+
 static void			set_algorithm(t_algorithm *alg, t_ft_ssl *ft_ssl)
 {
 	ft_ssl->process_file = alg->process_file;
@@ -42,6 +50,7 @@ void				ft_ssl_init(char *alg_name, t_ft_ssl *ft_ssl)
 	i = 0;
 	alg = 0;
 
+	init_flags(ft_ssl);
 	alg_walker = init_algorithms();
 	while (i < FT_SSL_ALGS_COUNT)
 	{

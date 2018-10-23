@@ -23,5 +23,5 @@ void	ft_ssl_md5_file(const char *filename, t_ft_ssl *ft_ssl)
 	while ((len = read(fd, buf, FT_SSL_BUFFER_SIZE)) > 0)
 		ft_md5_update(&ctx, buf, len);
 	ft_md5_final(digest, &ctx);
-	ft_ssl_md5_print(digest, ft_ssl);
+	ft_ssl_md5_print(filename, digest, ft_ssl);
 }

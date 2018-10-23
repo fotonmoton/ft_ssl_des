@@ -25,7 +25,27 @@ static int process_flags(int argc, char **argv, t_ft_ssl *ft_ssl)
 	}
 	return i;
 }
-
+static void process_strings_and_files
+(
+	int i,
+	int argc,
+	char **argv,
+	t_ft_ssl *ft_ssl
+)
+{
+	while (i < argc)
+	{
+		if (find_flag("-s", argv[i]))
+		{
+			if (i + 1 >= argc)
+				ft_ssl_usage();
+			ft_ssl->process_string(argv[++i], ft_ssl);
+			i++;
+		}
+		else
+			ft_ssl->process_file(argv[i++], ft_ssl);
+	}
+}
 int main(int argc, char **argv)
 {
 	t_ft_ssl	ft_ssl;
@@ -35,16 +55,10 @@ int main(int argc, char **argv)
 		ft_ssl_usage();
 	ft_ssl_init(argv[1], &ft_ssl);
 	i = process_flags(argc, argv, &ft_ssl);
-	if (ft_ssl.flags.print_stdin || i == argc)
+	if (ft_ssl.flags.print_stdin)
 		ft_ssl.process_stdin(&ft_ssl);
-	while (i < argc)
-	{
-		if (find_flag("-s", argv[i]) && ++i < argc)
-			ft_ssl.process_string(argv[i++], &ft_ssl);
-		else
-			ft_ssl.process_file(argv[i++], &ft_ssl);
-	}
-	if (argc == 2)
+	process_strings_and_files(i, argc, argv, &ft_ssl);
+	if (!ft_ssl.flags.something_printed)
 		ft_ssl.process_stdin(&ft_ssl);
 	return (0);
 }

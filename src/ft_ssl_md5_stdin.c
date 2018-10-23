@@ -20,5 +20,5 @@ void ft_ssl_md5_stdin(t_ft_ssl *ft_ssl)
 		ft_md5_update(&ctx, buf, len);
 	}
 	ft_md5_final(digest, &ctx);
-	ft_ssl_md5_print(digest, ft_ssl);
+	ft_ssl_md5_print(NULL, digest, ft_ssl);
 }
