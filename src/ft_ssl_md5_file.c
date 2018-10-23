@@ -28,7 +28,7 @@ void	ft_ssl_md5_file(const char *filename, t_ft_ssl *ft_ssl)
 	(void)ft_ssl;
 	if ((fd = open(filename, O_RDONLY)) == -1)
 	{
-		perror("ft_ssl: ");
+		perror("ft_ssl");
 		exit(1);
 	}
 	ft_md5_init(&ctx);
