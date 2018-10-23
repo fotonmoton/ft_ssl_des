@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   md5_tests.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/23 21:06:22 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 21:06:33 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tests.h"
 #include "tests_macros.h"
 #include "ft_md5.h"
@@ -5,59 +17,59 @@
 
 TEST_RESULT should_init_ctx(TEST_PARAMS, TEST_DATA)
 {
-    UNUSED(test_params);
-    UNUSED(test_data);
-    t_md5_ctx ctx;
+	UNUSED(test_params);
+	UNUSED(test_data);
+	t_md5_ctx ctx;
 
-    ft_md5_init(&ctx);
+	ft_md5_init(&ctx);
 
 	munit_assert_uint(ctx.a, ==, 0x67452301);
 	munit_assert_uint(ctx.b, ==, 0xefcdab89);
-    munit_assert_uint(ctx.c, ==, 0x98badcfe);
-    munit_assert_uint(ctx.d, ==, 0x10325476);
-    munit_assert_true(ctx.bit_len == 0);
-    for (int i = 0; i < 64; i++)
-        munit_assert_uchar(ctx.block[i], ==, 0);
+	munit_assert_uint(ctx.c, ==, 0x98badcfe);
+	munit_assert_uint(ctx.d, ==, 0x10325476);
+	munit_assert_true(ctx.bit_len == 0);
+	for (int i = 0; i < 64; i++)
+		munit_assert_uchar(ctx.block[i], ==, 0);
 
-    return MUNIT_OK;
+	return MUNIT_OK;
 }
 
 TEST_RESULT decode_string_to_int(TEST_PARAMS, TEST_DATA)
 {
-    UNUSED(test_params);
-    UNUSED(test_data);
+	UNUSED(test_params);
+	UNUSED(test_data);
 
-    t_byte1 block[FT_MD5_BLOCK_SIZE];
-    t_byte4 words[FT_MD5_WORDS_COUNT];
+	t_byte1 block[FT_MD5_BLOCK_SIZE];
+	t_byte4 words[FT_MD5_WORDS_COUNT];
 
-    ft_bzero(block, FT_MD5_BLOCK_SIZE);
-    block[0] = 'a';
-    block[9] = 'b';
-    block[63] = 'c';
+	ft_bzero(block, FT_MD5_BLOCK_SIZE);
+	block[0] = 'a';
+	block[9] = 'b';
+	block[63] = 'c';
 
-    ft_md5_decode(words, block);
+	ft_md5_decode(words, block);
 
-    munit_assert_true((words[0] & 0xff) == 97);
-    munit_assert_true(((words[2] >> 8) & 0xff) == 98);
-    munit_assert_true(((words[15] >> 24) & 0xff) == 99);
+	munit_assert_true((words[0] & 0xff) == 97);
+	munit_assert_true(((words[2] >> 8) & 0xff) == 98);
+	munit_assert_true(((words[15] >> 24) & 0xff) == 99);
 
-    return MUNIT_OK;
+	return MUNIT_OK;
 }
 
 TEST_RESULT update_should_change_count(TEST_PARAMS, TEST_DATA)
 {
-    UNUSED(test_params);
-    UNUSED(test_data);
-    t_md5_ctx ctx;
-    char message[] = "hello, World!";
-    t_byte8 size = ft_strlen(message);
+	UNUSED(test_params);
+	UNUSED(test_data);
+	t_md5_ctx ctx;
+	char message[] = "hello, World!";
+	t_byte8 size = ft_strlen(message);
 
-    ft_md5_init(&ctx);
-    ft_md5_update(&ctx, (t_byte1 *)message, size);
+	ft_md5_init(&ctx);
+	ft_md5_update(&ctx, (t_byte1 *)message, size);
 
-    munit_assert_true(size * 8 == ctx.bit_len);
+	munit_assert_true(size * 8 == ctx.bit_len);
 
-    return MUNIT_OK;
+	return MUNIT_OK;
 }
 
 TEST_RESULT encode_bits_to_string(TEST_PARAMS, TEST_DATA)
