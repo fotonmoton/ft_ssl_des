@@ -12,7 +12,7 @@
 
 # name of the executable file
 
-NAME :=							ft_ssl
+NAME :=							ft_ssl_des
 
 # project directories
 
@@ -89,7 +89,7 @@ OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 # project test files
 
-TEST_BIN =						ft_ssl_test
+TEST_BIN =						ft_ssl_des_test
 
 MD5_TESTS =						md5_tests.c
 MD5_TESTS +=					$(MD5_SRC)
