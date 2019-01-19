@@ -6,13 +6,13 @@
 #    By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/18 16:06:01 by gtertysh          #+#    #+#              #
-#    Updated: 2018/10/16 21:05:56 by gtertysh         ###   ########.fr        #
+#    Updated: 2019/01/19 15:21:01 by gtertysh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # name of the executable file
 
-NAME :=							ft_ssl_des
+NAME :=							ft_ssl
 
 # project directories
 
@@ -89,7 +89,7 @@ OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 
 # project test files
 
-TEST_BIN =						ft_ssl_des_test
+TEST_BIN =						ft_ssl_test
 
 MD5_TESTS =						md5_tests.c
 MD5_TESTS +=					$(MD5_SRC)
