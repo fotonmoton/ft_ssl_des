@@ -15,21 +15,29 @@
 
 # define MUNIT_ENABLE_ASSERT_ALIASES
 # include "munit.h"
+# include "tests_macros.h"
 
-MunitResult	should_init_ctx(const MunitParameter test_params[],
+/*
+** MD5
+*/
+MunitResult	should_init_md5_ctx(const MunitParameter test_params[],
 			void *test_data);
-MunitResult	update_should_change_count(const MunitParameter test_params[],
+MunitResult	md5_update_change_count(const MunitParameter test_params[],
 			void *test_data);
-MunitResult	decode_string_to_int(const MunitParameter test_params[],
+MunitResult	md5_decode_string_to_int(const MunitParameter test_params[],
 			void *test_data);
-MunitResult	encode_bits_to_string(const MunitParameter test_params[],
+MunitResult	md5_encode_bits_to_string(const MunitParameter test_params[],
 			void *test_data);
-MunitResult	encode_register(const MunitParameter test_params[],
+MunitResult	md5_encode_register(const MunitParameter test_params[],
 			void *test_data);
-MunitResult	create_digest(const MunitParameter test_params[],
+MunitResult	md5_create_digest(const MunitParameter test_params[],
 			void *test_data);
-MunitResult	create_string(const MunitParameter test_params[],
+MunitResult	md5_create_string(const MunitParameter test_params[],
 			void *test_data);
+
+/*
+** SHA256
+*/
 MunitResult	should_init_ctx_sha256(const MunitParameter test_params[],
 			void *test_data);
 MunitResult	decode_string_to_int_sha256(const MunitParameter test_params[],
@@ -48,6 +56,10 @@ MunitResult	compute_digest_sha256(const MunitParameter test_params[],
 			void *test_data);
 MunitResult	create_digest_string_sha256(const MunitParameter test_params[],
 			void *test_data);
+
+/*
+** SHA224
+*/
 MunitResult	should_init_ctx_sha224(const MunitParameter test_params[],
 			void *test_data);
 MunitResult	compute_digest_sha224(const MunitParameter test_params[],
@@ -55,4 +67,9 @@ MunitResult	compute_digest_sha224(const MunitParameter test_params[],
 MunitResult	create_digest_string_sha224(const MunitParameter test_params[],
 			void *test_data);
 
+/*
+** BASE64
+*/
+MunitResult	should_init_base64_ctx(const MunitParameter test_params[],
+			void *test_data);
 #endif

@@ -20,6 +20,7 @@ ROOT :=							$(shell pwd)
 SRC_DIR :=						$(ROOT)/src/
 MD5_DIR :=						$(SRC_DIR)/md5/
 SHA_DIR :=						$(SRC_DIR)/sha/
+B64_DIR :=						$(SRC_DIR)/base64/
 OBJ_DIR :=						$(ROOT)/obj/
 INC_DIR :=						$(ROOT)/inc/
 LIB_DIR :=						$(ROOT)/lib/
@@ -63,6 +64,7 @@ SHA_SRC =						ft_sha256_init.c			\
 								ft_sha224_final.c 			\
 								ft_sha224_digest_string.c
 
+BASE64_SRC =					ft_base64_init.c
 
 SRC =							main.c						\
 								ft_ssl_init.c				\
@@ -81,7 +83,8 @@ SRC =							main.c						\
 								ft_ssl_usage.c
 
 SRC +=							$(MD5_SRC)					\
-								$(SHA_SRC)
+								$(SHA_SRC)					\
+								$(BASE64_SRC)
 # project object files
 
 OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
@@ -97,11 +100,15 @@ MD5_TESTS +=					$(MD5_SRC)
 SHA_TESTS =						sha_tests.c
 SHA_TESTS +=					$(SHA_SRC)
 
+BASE64_TESTS =					base64_tests.c
+BASE64_TESTS +=					$(BASE64_SRC)
+
 TEST_SRC =						tests.c			\
 								munit.c
 
 TEST_SRC +=						$(MD5_TESTS)	\
-								$(SHA_TESTS)
+								$(SHA_TESTS)	\
+								$(BASE64_TESTS)
 
 TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
 
@@ -190,6 +197,7 @@ multi:
 vpath %.c						$(SRC_DIR)		\
 								$(MD5_DIR)		\
 								$(SHA_DIR)		\
+								$(B64_DIR)		\
 								$(TST_DIR)		\
 								$(MUINUT_DIR)
 

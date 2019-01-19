@@ -15,7 +15,7 @@
 #include "ft_md5.h"
 #include "libft.h"
 
-TEST_RESULT should_init_ctx(TEST_PARAMS, TEST_DATA)
+TEST_RESULT should_init_md5_ctx(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
@@ -34,7 +34,7 @@ TEST_RESULT should_init_ctx(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
-TEST_RESULT decode_string_to_int(TEST_PARAMS, TEST_DATA)
+TEST_RESULT md5_decode_string_to_int(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
@@ -56,7 +56,7 @@ TEST_RESULT decode_string_to_int(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
-TEST_RESULT update_should_change_count(TEST_PARAMS, TEST_DATA)
+TEST_RESULT md5_update_change_count(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
@@ -72,7 +72,7 @@ TEST_RESULT update_should_change_count(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
-TEST_RESULT encode_bits_to_string(TEST_PARAMS, TEST_DATA)
+TEST_RESULT md5_encode_bits_to_string(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
@@ -101,7 +101,7 @@ TEST_RESULT encode_bits_to_string(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
-TEST_RESULT encode_register(TEST_PARAMS, TEST_DATA)
+TEST_RESULT md5_encode_register(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
@@ -127,7 +127,7 @@ TEST_RESULT encode_register(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
-TEST_RESULT create_digest(TEST_PARAMS, TEST_DATA)
+TEST_RESULT md5_create_digest(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
@@ -168,7 +168,7 @@ TEST_RESULT create_digest(TEST_PARAMS, TEST_DATA)
 	return MUNIT_OK;
 }
 
-TEST_RESULT create_string(TEST_PARAMS, TEST_DATA)
+TEST_RESULT md5_create_string(TEST_PARAMS, TEST_DATA)
 {
 	UNUSED(test_params);
 	UNUSED(test_data);
