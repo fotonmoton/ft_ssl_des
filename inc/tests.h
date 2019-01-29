@@ -15,7 +15,6 @@
 
 # define MUNIT_ENABLE_ASSERT_ALIASES
 # include "munit.h"
-# include "tests_macros.h"
 
 /*
 ** MD5
@@ -71,5 +70,12 @@ MunitResult	create_digest_string_sha224(const MunitParameter test_params[],
 ** BASE64
 */
 MunitResult	should_init_base64_ctx(const MunitParameter test_params[],
+			void *test_data);
+
+MunitResult	should_fill_base64_buffer(const MunitParameter test_params[],
+			void *test_data);
+
+MunitResult should_clean_base64_buffer(const MunitParameter [], void *);
+MunitResult should_encode_base64_buffer(const MunitParameter test_params[],
 			void *test_data);
 #endif

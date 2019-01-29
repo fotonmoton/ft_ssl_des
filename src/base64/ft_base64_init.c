@@ -15,6 +15,14 @@
 
 void	ft_base64_init(t_base64_ctx *ctx)
 {
-	ctx->block_bit_index = 0;
+	char	capital_case[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char	lower_case[] = "abcdefghijklmnopqrstuvwxyz";
+	char	rest[] = "0123456789+/";
+
 	ft_bzero(ctx->block, FT_BASE64_BLOCK_SIZE);
+	ft_bzero(ctx->chars, FT_BASE64_CHARS_SIZE);
+	ft_memcpy(ctx->alphabet, capital_case, 26);
+	ft_memcpy(ctx->alphabet + 26, lower_case, 26);
+	ft_memcpy(ctx->alphabet + 52, rest, 12);
+
 }

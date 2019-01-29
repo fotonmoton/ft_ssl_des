@@ -64,7 +64,9 @@ SHA_SRC =						ft_sha256_init.c			\
 								ft_sha224_final.c 			\
 								ft_sha224_digest_string.c
 
-BASE64_SRC =					ft_base64_init.c
+BASE64_SRC =					ft_base64_init.c 			\
+								ft_base64_fill_buffer.c 	\
+								ft_base64_encode_buffer.c
 
 SRC =							main.c						\
 								ft_ssl_init.c				\
@@ -152,14 +154,8 @@ CC :=							clang
 
 # rules
 
-all: $(NAME)
-
-$(NAME): check $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(OBJ) $(LINK_FLAGS) -o $(NAME)
-
-check: $(TEST_BIN)
-	clear
-	./$(TEST_BIN)
 
 $(TEST_BIN): $(LIBFT) $(TEST_OBJ)
 	$(CC) $(TEST_OBJ) $(LINK_FLAGS) -o $(TEST_BIN)
@@ -174,6 +170,12 @@ $(OBJ_DIR)%.o: %.c
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+
+all: $(NAME)
+
+check: $(TEST_BIN)
+	clear
+	./$(TEST_BIN)
 
 clean:
 	rm -f $(OBJ)

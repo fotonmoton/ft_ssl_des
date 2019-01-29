@@ -42,6 +42,9 @@ MunitTest g_sha_tests[] = {
 
 MunitTest g_base64_tests[] = {
 	IT("/init_ctx", should_init_base64_ctx, NULL, NULL, 0, NULL),
+	IT("/fills_buffer", should_fill_base64_buffer, NULL, NULL, 0, NULL),
+	IT("/cleans_buffer", should_clean_base64_buffer, NULL, NULL, 0, NULL),
+	IT("/encodes_buffer", should_encode_base64_buffer, NULL, NULL, 0, NULL),
 	END_IT
 };
 
