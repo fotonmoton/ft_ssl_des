@@ -18,13 +18,6 @@
 # define FT_SSL_ALGS_COUNT 3
 # define FT_SSL_BUFFER_SIZE 1024
 
-typedef enum			e_alg_type
-{
-	DIGEST,
-	CIPHER,
-	END
-}						t_alg_type;
-
 typedef struct s_ft_ssl	t_ft_ssl;
 
 typedef void			(*t_process_stdin)(t_ft_ssl *ft_ssl);
@@ -32,6 +25,8 @@ typedef void			(*t_process_string)(const char *string,
 							t_ft_ssl *ft_ssl);
 typedef void			(*t_process_file)(const char *filename,
 							t_ft_ssl *ft_ssl);
+
+typedef void			(*t_alg_function)(int argc, char **argv);
 
 typedef struct			s_flags
 {
@@ -44,10 +39,7 @@ typedef struct			s_flags
 typedef struct			s_alorithm
 {
 	const char			*name;
-	t_process_stdin		process_stdin;
-	t_process_file		process_file;
-	t_process_string	process_string;
-	t_alg_type			type;
+	t_alg_function		function;
 }						t_algorithm;
 
 struct					s_ft_ssl
@@ -56,11 +48,10 @@ struct					s_ft_ssl
 	t_process_stdin		process_stdin;
 	t_process_file		process_file;
 	t_process_string	process_string;
-	t_alg_type			type;
 };
 
 void					ft_ssl_usage(void);
-void					ft_ssl_init(char *alg, t_ft_ssl *ft_ssl);
+void					ft_ssl_init(int argc, char **argv);
 
 void					ft_ssl_md5_stdin(t_ft_ssl *ft_ssl);
 void					ft_ssl_md5_string(const char *strng,

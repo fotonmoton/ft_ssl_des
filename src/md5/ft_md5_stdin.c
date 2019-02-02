@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl_md5_file.c                                  :+:      :+:    :+:   */
+/*   ft_ssl_md5_stdin.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 20:30:28 by gtertysh          #+#    #+#             */
-/*   Updated: 2018/10/23 20:30:30 by gtertysh         ###   ########.fr       */
+/*   Created: 2018/10/23 20:29:11 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 20:29:38 by gtertysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "ft_md5.h"
-#include "fcntl.h"
-#include "stdio.h"
-#include "unistd.h"
-#include "libft.h"
-#include "ft_ssl.h"
 
-void	ft_ssl_md5_file(const char *filename, t_ft_ssl *ft_ssl)
+void	ft_md5_stdin(t_md5_flags *flags)
 {
-	int			fd;
 	int			len;
 	t_byte1		digest[FT_MD5_DIGEST_LENGTH_BYTE];
 	t_md5_ctx	ctx;
-	t_byte1		buf[FT_SSL_BUFFER_SIZE];
+	t_byte1		buf[FT_MD5_READ_BLOCK_SIZE];
 
-	(void)ft_ssl;
-	if ((fd = open(filename, O_RDONLY)) == -1)
-	{
-		perror("ft_ssl");
-		exit(1);
-	}
 	ft_md5_init(&ctx);
-	while ((len = read(fd, buf, FT_SSL_BUFFER_SIZE)) > 0)
+	while ((len = read(0, buf, FT_MD5_READ_BLOCK_SIZE)))
+	{
+		if (flags->print_stdin)
+			write(1, buf, len);
 		ft_md5_update(&ctx, buf, len);
+	}
 	ft_md5_final(digest, &ctx);
-	ft_ssl_md5_print(filename, digest, ft_ssl);
+	ft_md5_print(NULL, digest, flags);
 }

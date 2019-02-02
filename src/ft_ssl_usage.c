@@ -15,13 +15,12 @@
 
 void	ft_ssl_usage(void)
 {
+	ft_putstr("\e[1;1H\e[2J");
 	ft_putstr("Message Digest commands:\n");
 	ft_putstr("md5\nsha256\nsha224\n\n");
-	ft_putstr("Digest command usage:\n");
-	ft_putstr("ft_ssl digest [-p|-q|-r] [[-s string...] [file...]]\n\n");
 	ft_putstr("Cipher commands:\n");
-	ft_putstr("base64\n");
-	ft_putstr("Cipher command usage:\n");
-	ft_putstr("ft_ssl cipher [-p|-q|-r] [[-s string...] [file...]]\n\n");
+	ft_putstr("base64\n\n");
+	ft_putstr("To get help for specific command:\n");
+	ft_putstr("ft_ssl command -h\n\n");
 	exit(1);
 }

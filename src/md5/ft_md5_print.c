@@ -11,46 +11,45 @@
 /* ************************************************************************** */
 
 #include "ft_md5.h"
-#include "ft_ssl.h"
 #include "libft.h"
 
-static void	print_name(const char *name, int reverse)
+static void	print_name(t_byte1 *name, int reverse)
 {
 	if (reverse)
 	{
 		ft_putstr(" ");
-		ft_putstr(name);
+		ft_putstr((const char *)name);
 	}
 	else
 	{
 		ft_putstr("MD5 (");
-		ft_putstr(name);
+		ft_putstr((const char *)name);
 		ft_putstr(") = ");
 	}
 }
 
-void		ft_ssl_md5_print
+void		ft_md5_print
 (
-	const char *target,
-	unsigned char *digest,
-	t_ft_ssl *ft_ssl
+	t_byte1 *message,
+	t_byte1 *digest,
+	t_md5_flags *flags
 )
 {
 	t_byte1 digest_string[FT_MD5_STRING_SIZE_BYTE];
 
 	ft_md5_digest_string(digest, digest_string);
-	if (target && !ft_ssl->flags.quiet && ft_ssl->flags.reverse)
+	if (message && !flags->quiet && flags->reverse)
 	{
 		ft_putstr((const char *)digest_string);
-		print_name(target, 1);
+		print_name(message, 1);
 	}
-	else if (target && !ft_ssl->flags.quiet)
+	else if (message && !flags->quiet)
 	{
-		print_name(target, 0);
+		print_name(message, 0);
 		ft_putstr((const char *)digest_string);
 	}
 	else
 		ft_putstr((const char *)digest_string);
 	ft_putstr("\n");
-	ft_ssl->flags.something_printed = 1;
+	flags->something_printed = 1;
 }

@@ -27,6 +27,13 @@ LIB_DIR :=						$(ROOT)/lib/
 TST_DIR :=						$(ROOT)/t/
 
 
+# project headers
+MD5_HEADER :=					$(INC_DIR)/ft_md5.h
+SHA_HEADER :=					$(INC_DIR)/ft_sha.h
+SSL_HEADER :=					$(INC_DIR)/ft_ssl.h
+HEADERS :=						$(MD5_HEADER)		\
+								$(SHA_HEADER)		\
+								$(SSL_HEADER)
 # libraries
 
 LIBFT_DIR :=					$(LIB_DIR)libft/
@@ -39,7 +46,12 @@ MUINUT_INC :=					-I $(MUINUT_DIR)
 
 # project source files
 
-MD5_SRC =						ft_md5_init.c				\
+MD5_SRC =						ft_md5.c 					\
+								ft_md5_stdin.c 				\
+								ft_md5_string.c 			\
+								ft_md5_file.c 			\
+								ft_md5_print.c				\
+								ft_md5_init.c				\
 								ft_md5_update.c				\
 								ft_md5_transform.c			\
 								ft_md5_decode.c				\
@@ -69,11 +81,6 @@ BASE64_SRC =					ft_base64_init.c 			\
 								ft_base64_encode.c
 
 SRC =							main.c						\
-								ft_ssl_init.c				\
-								ft_ssl_md5_file.c			\
-								ft_ssl_md5_stdin.c			\
-								ft_ssl_md5_string.c			\
-								ft_ssl_md5_print.c			\
 								ft_ssl_sha256_file.c 		\
 								ft_ssl_sha256_stdin.c 		\
 								ft_ssl_sha256_string.c		\
@@ -165,7 +172,7 @@ $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c
+$(OBJ_DIR)%.o: %.c $(HEADERS)
 	$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):
