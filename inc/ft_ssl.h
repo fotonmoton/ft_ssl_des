@@ -13,8 +13,17 @@
 #ifndef FT_SSL_H
 # define FT_SSL_H
 
+# include <stddef.h>
+
 # define FT_SSL_ALGS_COUNT 3
 # define FT_SSL_BUFFER_SIZE 1024
+
+typedef enum			e_alg_type
+{
+	DIGEST,
+	CIPHER,
+	END
+}						t_alg_type;
 
 typedef struct s_ft_ssl	t_ft_ssl;
 
@@ -38,6 +47,7 @@ typedef struct			s_alorithm
 	t_process_stdin		process_stdin;
 	t_process_file		process_file;
 	t_process_string	process_string;
+	t_alg_type			type;
 }						t_algorithm;
 
 struct					s_ft_ssl
@@ -46,6 +56,7 @@ struct					s_ft_ssl
 	t_process_stdin		process_stdin;
 	t_process_file		process_file;
 	t_process_string	process_string;
+	t_alg_type			type;
 };
 
 void					ft_ssl_usage(void);

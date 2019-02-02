@@ -66,7 +66,7 @@ SHA_SRC =						ft_sha256_init.c			\
 
 BASE64_SRC =					ft_base64_init.c 			\
 								ft_base64_fill_buffer.c 	\
-								ft_base64_encode_buffer.c
+								ft_base64_encode.c
 
 SRC =							main.c						\
 								ft_ssl_init.c				\

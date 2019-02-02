@@ -75,7 +75,6 @@ MunitResult	should_init_base64_ctx(const MunitParameter test_params[],
 MunitResult	should_fill_base64_buffer(const MunitParameter test_params[],
 			void *test_data);
 
-MunitResult should_clean_base64_buffer(const MunitParameter [], void *);
-MunitResult should_encode_base64_buffer(const MunitParameter test_params[],
+MunitResult should_encode_base64_data(const MunitParameter test_params[],
 			void *test_data);
 #endif
