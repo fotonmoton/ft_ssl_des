@@ -12,12 +12,21 @@
 
 #include "ft_ssl.h"
 #include "ft_md5.h"
+#include "ft_sha.h"
 #include "libft.h"
 
 t_algorithm g_algorithms[] = {
 	{
 		"md5",
 		ft_md5,
+	},
+	{
+		"sha256",
+		ft_sha256,
+	},
+	{
+		"sha224",
+		ft_sha224,
 	},
 	{NULL, NULL}
 };
@@ -34,7 +43,7 @@ int			main(int argc, char **argv)
 	while (alg_walker->function)
 	{
 		if (ft_strcmp(alg_walker->name, alg_name) == 0)
-			alg_walker->function(argc, argv);
+			alg_walker->function(argc - 1, ++argv);
 		alg_walker++;
 	}
 	ft_ssl_usage();

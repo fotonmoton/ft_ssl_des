@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_md5.c                                           :+:      :+:    :+:   */
+/*   ft_sha256.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/02 22:21:59 by gtertysh          #+#    #+#             */
-/*   Updated: 2019/02/02 22:26:35 by gtertysh         ###   ########.fr       */
+/*   Created: 2019/02/03 22:03:58 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/02/03 22:04:16 by gtertysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_md5.h"
+#include "ft_sha.h"
 #include "libft.h"
 
-static void		ft_md5_usage(void)
-{
-	ft_putstr("MD5 Digest usage:\n");
-	ft_putstr("ft_ssl md5 [-p|-q|-r] [[-s string...] [file...]]\n\n");
-	exit(1);
-}
-
-static void		init_flags(t_md5_flags *flags)
+static void		init_flags(t_sha_flags *flags)
 {
 	flags->quiet = 0;
 	flags->print_stdin = 0;
@@ -28,7 +21,7 @@ static void		init_flags(t_md5_flags *flags)
 	flags->something_printed = 0;
 }
 
-static int		read_flags(int argc, char **argv, t_md5_flags *flags)
+static int		read_flags(int argc, char **argv, t_sha_flags *flags)
 {
 	int		i;
 
@@ -50,37 +43,42 @@ static int		read_flags(int argc, char **argv, t_md5_flags *flags)
 
 static void		process_strings_and_files
 (
-	int i,
 	int argc,
 	char **argv,
-	t_md5_flags *flags
+	t_sha_flags *flags,
+	t_sha256_ctx *ctx
 )
 {
+	int i;
+
+	i = 0;
 	while (i < argc)
 	{
 		if (ft_strcmp("-s", argv[i]) == 0)
 		{
 			if (i + 1 >= argc)
-				ft_md5_usage();
-			ft_md5_string(argv[++i], flags);
+				ft_sha_usage("SHA256");
+			ft_sha256_string(ctx, (t_byte1 *)argv[++i], flags);
 			i++;
 		}
 		else
-			ft_md5_file(argv[i++], flags);
+			ft_sha256_file(ctx, (t_byte1 *)argv[i++], flags);
 	}
 }
 
-void			ft_md5(int argc, char **argv)
+void			ft_sha256(int argc, char **argv)
 {
-	int			flags_readed;
-	t_md5_flags	flags;
+	int				flags_readed;
+	t_sha_flags		flags;
+	t_sha256_ctx	ctx;
 
 	init_flags(&flags);
 	flags_readed = read_flags(argc, argv, &flags);
 	if (flags.print_stdin)
-		ft_md5_stdin(&flags);
-	process_strings_and_files(flags_readed, argc, argv, &flags);
+		ft_sha256_stdin(&ctx, &flags);
+	process_strings_and_files(
+			argc - flags_readed, argv + flags_readed, &flags, &ctx);
 	if (!flags.something_printed)
-		ft_md5_stdin(&flags);
+		ft_sha256_stdin(&ctx, &flags);
 	exit(0);
 }

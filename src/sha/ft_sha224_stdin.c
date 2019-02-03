@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl_sha256_file.c                               :+:      :+:    :+:   */
+/*   ft_ssl_sha224_stdin.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 20:33:03 by gtertysh          #+#    #+#             */
-/*   Updated: 2018/10/23 20:33:23 by gtertysh         ###   ########.fr       */
+/*   Created: 2018/10/23 20:31:54 by gtertysh          #+#    #+#             */
+/*   Updated: 2018/10/23 20:32:14 by gtertysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
 #include "ft_sha.h"
 #include "fcntl.h"
 #include "stdio.h"
 #include "unistd.h"
 #include "libft.h"
 
-void	ft_ssl_sha256_file(const char *filename, t_ft_ssl *ft_ssl)
+void	ft_sha224_stdin(t_sha256_ctx *ctx, t_sha_flags *flags)
 {
-	int				fd;
 	int				len;
-	t_byte1			digest[FT_SHA256_DIGEST_LENGTH_BYTE];
-	t_sha256_ctx	ctx;
-	t_byte1			buf[FT_SSL_BUFFER_SIZE];
+	t_byte1			buf[FT_SHA256_READ_BLOCK_SIZE];
+	t_byte1			digest[FT_SHA224_DIGEST_LENGTH_BYTE];
+	t_byte1			digest_string[FT_SHA224_STRING_SIZE_BYTE];
 
-	(void)ft_ssl;
-	if ((fd = open(filename, O_RDONLY)) == -1)
+	ft_sha224_init(ctx);
+	while ((len = read(0, buf, FT_SHA256_READ_BLOCK_SIZE)))
 	{
-		perror("ft_ssl");
-		exit(1);
+		if (flags->print_stdin)
+			write(1, buf, len);
+		ft_sha224_update(ctx, buf, len);
 	}
-	ft_sha256_init(&ctx);
-	while ((len = read(fd, buf, FT_SSL_BUFFER_SIZE)) > 0)
-		ft_sha256_update(&ctx, buf, len);
-	ft_sha256_final(digest, &ctx);
-	ft_ssl_sha256_print(filename, digest, ft_ssl);
+	ft_sha224_final(digest, ctx);
+	ft_sha224_digest_string(digest, digest_string);
+	ft_sha_print("SHA224", NULL, digest_string, flags);
 }

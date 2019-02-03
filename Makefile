@@ -49,7 +49,7 @@ MUINUT_INC :=					-I $(MUINUT_DIR)
 MD5_SRC =						ft_md5.c 					\
 								ft_md5_stdin.c 				\
 								ft_md5_string.c 			\
-								ft_md5_file.c 			\
+								ft_md5_file.c 				\
 								ft_md5_print.c				\
 								ft_md5_init.c				\
 								ft_md5_update.c				\
@@ -61,7 +61,11 @@ MD5_SRC =						ft_md5.c 					\
 								ft_md5_padding.c			\
 								ft_md5_digest_string.c
 
-SHA_SRC =						ft_sha256_init.c			\
+SHA_SRC =						ft_sha256.c 				\
+								ft_sha256_string.c 			\
+								ft_sha256_file.c 			\
+								ft_sha256_stdin.c 			\
+								ft_sha256_init.c			\
 								ft_sha256_update.c			\
 								ft_sha256_decode.c			\
 								ft_sha256_encode_len.c		\
@@ -71,24 +75,22 @@ SHA_SRC =						ft_sha256_init.c			\
 								ft_sha256_final.c			\
 								ft_sha256_digest_string.c	\
 								ft_sha256_constants.c 		\
+								ft_sha224_string.c 			\
+								ft_sha224_file.c 			\
+								ft_sha224_stdin.c 			\
+								ft_sha224.c 				\
 								ft_sha224_init.c 			\
 								ft_sha224_update.c 			\
 								ft_sha224_final.c 			\
-								ft_sha224_digest_string.c
+								ft_sha224_digest_string.c	\
+								ft_sha_print.c 				\
+								ft_sha_usage.c
 
 BASE64_SRC =					ft_base64_init.c 			\
 								ft_base64_fill_buffer.c 	\
 								ft_base64_encode.c
 
 SRC =							main.c						\
-								ft_ssl_sha256_file.c 		\
-								ft_ssl_sha256_stdin.c 		\
-								ft_ssl_sha256_string.c		\
-								ft_ssl_sha256_print.c		\
-								ft_ssl_sha224_file.c 		\
-								ft_ssl_sha224_stdin.c 		\
-								ft_ssl_sha224_string.c 		\
-								ft_ssl_sha224_print.c 		\
 								ft_ssl_usage.c
 
 SRC +=							$(MD5_SRC)					\

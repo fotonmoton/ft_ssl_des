@@ -11,46 +11,44 @@
 /* ************************************************************************** */
 
 #include "ft_sha.h"
-#include "ft_ssl.h"
 #include "libft.h"
 
-static void	print_name(const char *name, int reverse)
+static void	print_message(const char *algorithm, t_byte1 *message, int reverse)
 {
 	if (reverse)
 	{
 		ft_putstr(" ");
-		ft_putstr(name);
+		ft_putstr((const char *)message);
 	}
 	else
 	{
-		ft_putstr("SHA256 (");
-		ft_putstr(name);
+		ft_putstr(algorithm);
+		ft_putstr(" (");
+		ft_putstr((const char *)message);
 		ft_putstr(") = ");
 	}
 }
 
-void		ft_ssl_sha256_print
+void		ft_sha_print
 (
-	const char *target,
-	unsigned char *digest,
-	t_ft_ssl *ft_ssl
+	const char *algorithm,
+	t_byte1 *target,
+	t_byte1 *digest,
+	t_sha_flags *flags
 )
 {
-	t_byte1 digest_string[FT_SHA256_STRING_SIZE_BYTE];
-
-	ft_sha256_digest_string(digest, digest_string);
-	if (target && !ft_ssl->flags.quiet && ft_ssl->flags.reverse)
+	if (target && !flags->quiet && flags->reverse)
 	{
-		ft_putstr((const char *)digest_string);
-		print_name(target, 1);
+		ft_putstr((const char *)digest);
+		print_message(algorithm, target, 1);
 	}
-	else if (target && !ft_ssl->flags.quiet)
+	else if (target && !flags->quiet)
 	{
-		print_name(target, 0);
-		ft_putstr((const char *)digest_string);
+		print_message(algorithm, target, 0);
+		ft_putstr((const char *)digest);
 	}
 	else
-		ft_putstr((const char *)digest_string);
+		ft_putstr((const char *)digest);
 	ft_putstr("\n");
-	ft_ssl->flags.something_printed = 1;
+	flags->something_printed = 1;
 }
