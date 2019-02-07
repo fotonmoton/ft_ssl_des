@@ -86,8 +86,11 @@ SHA_SRC =						ft_sha256.c 				\
 								ft_sha_print.c 				\
 								ft_sha_usage.c
 
-BASE64_SRC =					ft_base64_init.c 			\
+BASE64_SRC =					ft_base64.c 				\
+								ft_base64_init.c 			\
 								ft_base64_fill_buffer.c 	\
+								ft_base64_transform.c 		\
+								ft_base64_decode.c 			\
 								ft_base64_encode.c
 
 SRC =							main.c						\
@@ -163,10 +166,10 @@ CC :=							clang
 
 # rules
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ) $(HEADERS)
 	$(CC) $(OBJ) $(LINK_FLAGS) -o $(NAME)
 
-$(TEST_BIN): $(LIBFT) $(TEST_OBJ)
+$(TEST_BIN): $(LIBFT) $(TEST_OBJ) $(HEADERS)
 	$(CC) $(TEST_OBJ) $(LINK_FLAGS) -o $(TEST_BIN)
 
 $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
@@ -174,7 +177,7 @@ $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c $(HEADERS)
+$(OBJ_DIR)%.o: %.c
 	$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):

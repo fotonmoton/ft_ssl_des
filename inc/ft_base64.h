@@ -24,15 +24,51 @@ typedef unsigned char	t_byte1;
 
 typedef struct			s_base64_ctx
 {
+	int					input_fd;
+	int					output_fd;
 	t_byte8				glue_block_bytes_count;
 	t_byte1				glue_block[FT_BASE64_GLUE_BLOCK_SIZE];
 	t_byte1				alphabet[FT_BASE64_ALPHABET_LENGTH];
 	t_byte1				chars[FT_BASE64_CHARS_SIZE];
 }						t_base64_ctx;
 
-void					ft_base64_init(t_base64_ctx *ctx);
-void					ft_base64_fill_buffer(
-							t_base64_ctx *ctx, t_byte1 *data, t_byte8 size);
-void					ft_base64_encode(t_base64_ctx *ctx, t_byte1 *data);
+typedef struct 			s_base64_flags
+{
+	int					decode;
+}						t_base64_flags;
+
+void					ft_base64
+(
+	int argc,
+	char **argv
+);
+
+void					ft_base64_init
+(
+	t_base64_ctx *ctx
+);
+
+void					ft_base64_decode
+(
+	t_base64_ctx *ctx
+);
+
+void					ft_base64_encode
+(
+	t_base64_ctx *ctx
+);
+
+void					ft_base64_fill_buffer
+(
+	t_base64_ctx *ctx,
+	t_byte1 *data,
+	t_byte8 size
+);
+
+void					ft_base64_transform
+(
+	t_base64_ctx *ctx,
+	t_byte1 *data
+);
 
 #endif

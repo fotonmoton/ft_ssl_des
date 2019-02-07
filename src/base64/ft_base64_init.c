@@ -12,10 +12,13 @@
 
 #include "ft_base64.h"
 #include "libft.h"
+#include <unistd.h>
 
 void	ft_base64_init(t_base64_ctx *ctx)
 {
 	ctx->glue_block_bytes_count = 0;
+	ctx->input_fd = STDIN_FILENO;
+	ctx->output_fd = STDOUT_FILENO;
 	ft_bzero(ctx->glue_block, FT_BASE64_GLUE_BLOCK_SIZE);
 	ft_bzero(ctx->chars, FT_BASE64_CHARS_SIZE);
 	ft_memcpy(ctx->alphabet, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 26);
