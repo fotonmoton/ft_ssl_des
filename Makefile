@@ -31,9 +31,11 @@ TST_DIR :=						$(ROOT)/t/
 MD5_HEADER :=					$(INC_DIR)/ft_md5.h
 SHA_HEADER :=					$(INC_DIR)/ft_sha.h
 SSL_HEADER :=					$(INC_DIR)/ft_ssl.h
+B64_HEADER :=					$(INC_DIR)/ft_base64.h
 HEADERS :=						$(MD5_HEADER)		\
 								$(SHA_HEADER)		\
-								$(SSL_HEADER)
+								$(SSL_HEADER)		\
+								$(B64_HEADER)
 # libraries
 
 LIBFT_DIR :=					$(LIB_DIR)libft/
@@ -88,10 +90,12 @@ SHA_SRC =						ft_sha256.c 				\
 
 BASE64_SRC =					ft_base64.c 				\
 								ft_base64_init.c 			\
-								ft_base64_fill_buffer.c 	\
 								ft_base64_transform.c 		\
 								ft_base64_decode.c 			\
-								ft_base64_encode.c
+								ft_base64_encode.c			\
+								ft_base64_encode_step.c 	\
+								ft_base64_encode_finish.c 	\
+								ft_base64_write.c
 
 SRC =							main.c						\
 								ft_ssl_usage.c
@@ -166,10 +170,10 @@ CC :=							clang
 
 # rules
 
-$(NAME): $(LIBFT) $(OBJ) $(HEADERS)
+$(NAME): $(LIBFT) $(OBJ)
 	$(CC) $(OBJ) $(LINK_FLAGS) -o $(NAME)
 
-$(TEST_BIN): $(LIBFT) $(TEST_OBJ) $(HEADERS)
+$(TEST_BIN): $(LIBFT) $(TEST_OBJ)
 	$(CC) $(TEST_OBJ) $(LINK_FLAGS) -o $(TEST_BIN)
 
 $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
@@ -177,7 +181,7 @@ $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c
+$(OBJ_DIR)%.o: %.c $(HEADERS)
 	$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):

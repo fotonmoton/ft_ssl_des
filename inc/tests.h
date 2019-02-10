@@ -72,9 +72,6 @@ MunitResult	create_digest_string_sha224(const MunitParameter test_params[],
 MunitResult	should_init_base64_ctx(const MunitParameter test_params[],
 			void *test_data);
 
-MunitResult	should_fill_base64_buffer(const MunitParameter test_params[],
-			void *test_data);
-
 MunitResult should_transform_base64_block(const MunitParameter test_params[],
 			void *test_data);
 #endif

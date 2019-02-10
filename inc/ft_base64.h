@@ -15,7 +15,8 @@
 
 # include <stdint.h>
 
-# define FT_BASE64_GLUE_BLOCK_SIZE 3
+# define FT_BASE64_READ_SIZE 3
+# define FT_BASE64_TRANS_SIZE 3
 # define FT_BASE64_CHARS_SIZE 4
 # define FT_BASE64_ALPHABET_LENGTH 64
 
@@ -26,8 +27,6 @@ typedef struct			s_base64_ctx
 {
 	int					input_fd;
 	int					output_fd;
-	t_byte8				glue_block_bytes_count;
-	t_byte1				glue_block[FT_BASE64_GLUE_BLOCK_SIZE];
 	t_byte1				alphabet[FT_BASE64_ALPHABET_LENGTH];
 	t_byte1				chars[FT_BASE64_CHARS_SIZE];
 }						t_base64_ctx;
@@ -58,6 +57,21 @@ void					ft_base64_encode
 	t_base64_ctx *ctx
 );
 
+t_byte8					ft_base64_encode_step
+(
+	t_base64_ctx *ctx,
+	t_byte8 readed,
+	t_byte1 *buff
+);
+
+void					ft_base64_encode_finish
+(
+
+	t_base64_ctx *ctx,
+	t_byte8 reminder,
+	t_byte1 *buff
+);
+
 void					ft_base64_fill_buffer
 (
 	t_base64_ctx *ctx,
@@ -69,6 +83,11 @@ void					ft_base64_transform
 (
 	t_base64_ctx *ctx,
 	t_byte1 *data
+);
+
+void					ft_base64_write
+(
+	t_base64_ctx *ctx
 );
 
 #endif
