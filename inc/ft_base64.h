@@ -15,7 +15,7 @@
 
 # include <stdint.h>
 
-# define FT_BASE64_READ_SIZE 3
+# define FT_BASE64_READ_SIZE 1048576
 # define FT_BASE64_TRANS_SIZE 3
 # define FT_BASE64_CHARS_SIZE 4
 # define FT_BASE64_ALPHABET_LENGTH 64
