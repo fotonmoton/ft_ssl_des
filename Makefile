@@ -93,7 +93,7 @@ BASE64_SRC =					ft_base64.c 				\
 								ft_base64_transform.c 		\
 								ft_base64_decode.c 			\
 								ft_base64_encode.c			\
-								ft_base64_encode_step.c 	\
+								ft_base64_chunk.c 			\
 								ft_base64_encode_finish.c 	\
 								ft_base64_write.c
 

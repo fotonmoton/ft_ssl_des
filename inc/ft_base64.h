@@ -15,7 +15,7 @@
 
 # include <stdint.h>
 
-# define FT_BASE64_READ_SIZE 1048576
+# define FT_BASE64_READ_SIZE 1
 # define FT_BASE64_TRANS_SIZE 3
 # define FT_BASE64_CHARS_SIZE 4
 # define FT_BASE64_ALPHABET_LENGTH 64
@@ -27,6 +27,8 @@ typedef struct			s_base64_ctx
 {
 	int					input_fd;
 	int					output_fd;
+	t_byte8				in_buffer;
+	t_byte1				buffer[FT_BASE64_TRANS_SIZE];
 	t_byte1				alphabet[FT_BASE64_ALPHABET_LENGTH];
 	t_byte1				chars[FT_BASE64_CHARS_SIZE];
 }						t_base64_ctx;
@@ -60,7 +62,6 @@ void					ft_base64_encode
 t_byte8					ft_base64_encode_step
 (
 	t_base64_ctx *ctx,
-	t_byte8 readed,
 	t_byte1 *buff
 );
 
@@ -88,6 +89,14 @@ void					ft_base64_transform
 void					ft_base64_write
 (
 	t_base64_ctx *ctx
+);
+
+
+t_byte8					ft_base64_chunk
+(
+	t_base64_ctx *ctx,
+	t_byte8 len,
+	t_byte1 *message
 );
 
 #endif
