@@ -2,11 +2,12 @@
 #include "libft.h"
 #include "ft_base64.h"
 #include "fcntl.h"
+#include "sys/stat.h"
 
-static int	open_stream(char *filename)
+static int	open_stream(char *filename, int flags, int mode)
 {
 	int fd;
-	if ((fd = open((const char *)filename, O_RDONLY)) == -1)
+	if ((fd = open((const char *)filename, flags, mode)) == -1)
 	{
 		perror("base64");
 		exit(1);
@@ -38,13 +39,14 @@ static void read_args
 		next_arg = i + 1 < argc ? argv[i + 1] : NULL;
 		if (ft_strcmp(current_arg, "-d") == 0)
 			flags->decode = 1;
-		else if (ft_strcmp(current_arg, "-e") == 0 && i++)
+		else if (ft_strcmp(current_arg, "-e") == 0 && ++i)
 			continue;
 		else if (ft_strcmp(current_arg, "-i") == 0)
-			ctx->input_fd = open_stream(next_arg);
+			ctx->input_fd = open_stream(next_arg, O_RDONLY, 0);
 		else if (ft_strcmp(current_arg, "-o") == 0)
-			ctx->output_fd = open_stream(next_arg);
-		else if (i++)
+			ctx->output_fd = open_stream(next_arg, O_CREAT | O_WRONLY,
+			S_IRUSR | S_IWUSR);
+		else if (++i)
 			continue;
 		i++;
 	}

@@ -17,12 +17,12 @@ void		ft_base64_encode_finish
 		return ;
 	if (!buffer_index)
 	{
-		ft_putstr("\n");
+		write(ctx->output_fd, "\n", 1);
 		return ;
 	}
 	ft_bzero(&buff->block[buffer_index], padding_size);
 	ft_base64_encode_transform(ctx, buff->block, chars);
 	ft_memset(chars + FT_BASE64_CHARS_SIZE - padding_size, '=', padding_size);
 	write(ctx->output_fd, chars, FT_BASE64_CHARS_SIZE);
-	ft_putstr("\n");
+	write(ctx->output_fd, "\n", 1);
 }
