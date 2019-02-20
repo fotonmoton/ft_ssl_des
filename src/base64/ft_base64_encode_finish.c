@@ -4,21 +4,25 @@
 void		ft_base64_encode_finish
 (
 	t_base64_ctx *ctx,
-	t_byte8 reminder,
-	t_byte1 *buffer
+	t_base64_encode_buffer *buff
 )
 {
-	t_byte8 padding_size;
+	t_byte8 buffer_index;
+	t_byte8	padding_size;
+	t_byte1	chars[FT_BASE64_CHARS_SIZE];
 
-	if (!reminder)
+	buffer_index = buff->readed % FT_BASE64_TRANS_SIZE;
+	padding_size = FT_BASE64_TRANS_SIZE - buffer_index;
+	if (!buff->readed)
+		return ;
+	if (!buffer_index)
 	{
 		ft_putstr("\n");
 		return ;
 	}
-	padding_size = reminder == 2 ? 1 : 2;
-	ft_bzero(buffer + reminder, FT_BASE64_TRANS_SIZE - reminder);
-	ft_base64_transform(ctx, buffer);
-	ft_memset(ctx->chars + FT_BASE64_CHARS_SIZE - padding_size, '=', FT_BASE64_CHARS_SIZE - padding_size);
-	ft_base64_write(ctx);
+	ft_bzero(&buff->block[buffer_index], padding_size);
+	ft_base64_encode_transform(ctx, buff->block, chars);
+	ft_memset(chars + FT_BASE64_CHARS_SIZE - padding_size, '=', padding_size);
+	write(ctx->output_fd, chars, FT_BASE64_CHARS_SIZE);
 	ft_putstr("\n");
 }

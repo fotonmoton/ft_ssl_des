@@ -32,9 +32,9 @@ MD5_HEADER :=					$(INC_DIR)/ft_md5.h
 SHA_HEADER :=					$(INC_DIR)/ft_sha.h
 SSL_HEADER :=					$(INC_DIR)/ft_ssl.h
 B64_HEADER :=					$(INC_DIR)/ft_base64.h
-HEADERS :=						$(MD5_HEADER)		\
-								$(SHA_HEADER)		\
-								$(SSL_HEADER)		\
+HEADERS :=						$(MD5_HEADER)								\
+								$(SHA_HEADER)								\
+								$(SSL_HEADER)								\
 								$(B64_HEADER)
 # libraries
 
@@ -48,60 +48,60 @@ MUINUT_INC :=					-I $(MUINUT_DIR)
 
 # project source files
 
-MD5_SRC =						ft_md5.c 					\
-								ft_md5_stdin.c 				\
-								ft_md5_string.c 			\
-								ft_md5_file.c 				\
-								ft_md5_print.c				\
-								ft_md5_init.c				\
-								ft_md5_update.c				\
-								ft_md5_transform.c			\
-								ft_md5_decode.c				\
-								ft_md5_encode_len.c			\
-								ft_md5_encode_register.c	\
-								ft_md5_final.c				\
-								ft_md5_padding.c			\
+MD5_SRC =						ft_md5.c 									\
+								ft_md5_stdin.c 								\
+								ft_md5_string.c 							\
+								ft_md5_file.c 								\
+								ft_md5_print.c								\
+								ft_md5_init.c								\
+								ft_md5_update.c								\
+								ft_md5_transform.c							\
+								ft_md5_decode.c								\
+								ft_md5_encode_len.c							\
+								ft_md5_encode_register.c					\
+								ft_md5_final.c								\
+								ft_md5_padding.c							\
 								ft_md5_digest_string.c
 
-SHA_SRC =						ft_sha256.c 				\
-								ft_sha256_string.c 			\
-								ft_sha256_file.c 			\
-								ft_sha256_stdin.c 			\
-								ft_sha256_init.c			\
-								ft_sha256_update.c			\
-								ft_sha256_decode.c			\
-								ft_sha256_encode_len.c		\
-								ft_sha256_encode_register.c	\
-								ft_sha256_transform.c		\
-								ft_sha256_padding.c			\
-								ft_sha256_final.c			\
-								ft_sha256_digest_string.c	\
-								ft_sha256_constants.c 		\
-								ft_sha224_string.c 			\
-								ft_sha224_file.c 			\
-								ft_sha224_stdin.c 			\
-								ft_sha224.c 				\
-								ft_sha224_init.c 			\
-								ft_sha224_update.c 			\
-								ft_sha224_final.c 			\
-								ft_sha224_digest_string.c	\
-								ft_sha_print.c 				\
+SHA_SRC =						ft_sha256.c 								\
+								ft_sha256_string.c 							\
+								ft_sha256_file.c 							\
+								ft_sha256_stdin.c 							\
+								ft_sha256_init.c							\
+								ft_sha256_update.c							\
+								ft_sha256_decode.c							\
+								ft_sha256_encode_len.c						\
+								ft_sha256_encode_register.c					\
+								ft_sha256_transform.c						\
+								ft_sha256_padding.c							\
+								ft_sha256_final.c							\
+								ft_sha256_digest_string.c					\
+								ft_sha256_constants.c 						\
+								ft_sha224_string.c 							\
+								ft_sha224_file.c 							\
+								ft_sha224_stdin.c 							\
+								ft_sha224.c 								\
+								ft_sha224_init.c 							\
+								ft_sha224_update.c 							\
+								ft_sha224_final.c 							\
+								ft_sha224_digest_string.c					\
+								ft_sha_print.c 								\
 								ft_sha_usage.c
 
-BASE64_SRC =					ft_base64.c 				\
-								ft_base64_init.c 			\
-								ft_base64_transform.c 		\
-								ft_base64_decode.c 			\
-								ft_base64_encode.c			\
-								ft_base64_chunk.c 			\
-								ft_base64_encode_finish.c 	\
-								ft_base64_write.c
+BASE64_SRC =					ft_base64.c 								\
+								ft_base64_init.c 							\
+								ft_base64_decode.c 							\
+								ft_base64_encode.c							\
+								ft_base64_init_encode_buffer.c				\
+								ft_base64_encode_chunk.c 					\
+								ft_base64_encode_transform.c 				\
+								ft_base64_encode_finish.c 					
 
-SRC =							main.c						\
+SRC =							main.c										\
 								ft_ssl_usage.c
 
-SRC +=							$(MD5_SRC)					\
-								$(SHA_SRC)					\
+SRC +=							$(MD5_SRC)									\
+								$(SHA_SRC)									\
 								$(BASE64_SRC)
 # project object files
 
@@ -121,11 +121,11 @@ SHA_TESTS +=					$(SHA_SRC)
 BASE64_TESTS =					base64_tests.c
 BASE64_TESTS +=					$(BASE64_SRC)
 
-TEST_SRC =						tests.c			\
+TEST_SRC =						tests.c										\
 								munit.c
 
-TEST_SRC +=						$(MD5_TESTS)	\
-								$(SHA_TESTS)	\
+TEST_SRC +=						$(MD5_TESTS)								\
+								$(SHA_TESTS)								\
 								$(BASE64_TESTS)
 
 TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
@@ -160,8 +160,8 @@ LINK_FLAGS =					$(LIBFT_LIB)
 
 # header flags
 
-HEADER_FLAGS =					-I $(INC_DIR)		\
-								$(MUINUT_INC)		\
+HEADER_FLAGS =					-I $(INC_DIR)								\
+								$(MUINUT_INC)								\
 								$(LIBFT_INC)
 
 # compiler
@@ -212,11 +212,11 @@ multi:
 
 # special stuff
 
-vpath %.c						$(SRC_DIR)		\
-								$(MD5_DIR)		\
-								$(SHA_DIR)		\
-								$(B64_DIR)		\
-								$(TST_DIR)		\
+vpath %.c						$(SRC_DIR)									\
+								$(MD5_DIR)									\
+								$(SHA_DIR)									\
+								$(B64_DIR)									\
+								$(TST_DIR)									\
 								$(MUINUT_DIR)
 
 

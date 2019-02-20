@@ -18,7 +18,6 @@ void	ft_base64_init(t_base64_ctx *ctx)
 {
 	ctx->input_fd = STDIN_FILENO;
 	ctx->output_fd = STDOUT_FILENO;
-	ft_bzero(ctx->chars, FT_BASE64_CHARS_SIZE);
 	ft_memcpy(ctx->alphabet, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 26);
 	ft_memcpy(ctx->alphabet + 26, "abcdefghijklmnopqrstuvwxyz", 26);
 	ft_memcpy(ctx->alphabet + 52, "0123456789+/", 12);

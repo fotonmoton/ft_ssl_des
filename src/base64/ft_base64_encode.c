@@ -16,14 +16,12 @@
 
 void	ft_base64_encode(t_base64_ctx *c)
 {
-	t_byte1		buffer[FT_BASE64_READ_SIZE];
-	int			readed;
-	int			head;
-	int			reminder;
+	t_byte1					read_buff[FT_BASE64_READ_SIZE];
+	t_base64_encode_buffer	enc_buff;
+	int						readed;
 
-	reminder = 0;
-	head = 0;
-	while ((readed = read(c->input_fd, buffer, FT_BASE64_READ_SIZE)) > 0)
-		ft_base64_chunk(c, readed, buffer);
-	ft_base64_encode_finish(c, reminder, buffer);
+	ft_base64_init_encode_buffer(&enc_buff);
+	while ((readed = read(c->input_fd, read_buff, FT_BASE64_READ_SIZE)) > 0)
+		ft_base64_encode_chunk(c, readed, read_buff, &enc_buff);
+	ft_base64_encode_finish(c, &enc_buff);
 }
