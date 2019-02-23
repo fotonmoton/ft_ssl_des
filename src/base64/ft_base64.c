@@ -1,8 +1,8 @@
 #include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "libft.h"
 #include "ft_base64.h"
-#include "fcntl.h"
-#include "sys/stat.h"
 
 static int	open_stream(char *filename, int flags, int mode)
 {

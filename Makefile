@@ -95,7 +95,12 @@ BASE64_SRC =					ft_base64.c 								\
 								ft_base64_init_encode_buffer.c				\
 								ft_base64_encode_chunk.c 					\
 								ft_base64_encode_transform.c 				\
-								ft_base64_encode_finish.c 					
+								ft_base64_encode_finish.c 					\
+								ft_base64_init_decode_buffer.c 				\
+								ft_base64_decode_chunk.c 					\
+								ft_base64_decode_filter.c 					\
+								ft_base64_decode_transform.c 				\
+								ft_base64_decode_finish.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c

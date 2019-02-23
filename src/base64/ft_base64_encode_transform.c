@@ -16,8 +16,8 @@
 void	ft_base64_encode_transform
 (
 	t_base64_ctx *ctx,
-	t_byte1 data[FT_BASE64_TRANS_SIZE],
-	t_byte1 chars[FT_BASE64_CHARS_SIZE]
+	t_byte1 data[FT_BASE64_ENCODE_BLOCK_SIZE],
+	t_byte1 chars[FT_BASE64_DECODE_BLOCK_SIZE]
 )
 {
 	t_byte1		first_char;
