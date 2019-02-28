@@ -12,7 +12,9 @@ static t_byte1 get_alphabet_index
 	alphabet_addr = ft_strchr((const char*)alphabet, ch);
 	if (!alphabet_addr)
 	{
-		ft_putstr("base64: invalid input\n");
+		ft_putstr("base64: invalid input: \"");
+		ft_putchar(ch);
+		ft_putstr("\" char not in base64 alphabet\n");
 		exit(1);
 	}
 	return (alphabet_addr - (char *)alphabet);

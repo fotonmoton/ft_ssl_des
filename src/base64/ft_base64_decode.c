@@ -13,5 +13,5 @@ void	ft_base64_decode(t_base64_ctx *ctx)
 		readed = ft_base64_decode_filter(readed, read_buff);
 		ft_base64_decode_chunk(ctx, readed, read_buff, &decode_buff);
 	}
-	ft_base64_decode_finish(ctx, &decode_buff);
+	ft_base64_decode_finish(&decode_buff);
 }

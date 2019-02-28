@@ -130,7 +130,6 @@ void 					ft_base64_decode_transform
 
 void					ft_base64_decode_finish
 (
-	t_base64_ctx *ctx,
 	t_base64_decode_buffer *buff
 );
 
