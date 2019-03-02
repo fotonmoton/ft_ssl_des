@@ -10,35 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
-#include "tests_macros.h"
+#include "t.h"
 #include "ft_md5.h"
 #include "libft.h"
 
-TEST_RESULT should_init_md5_ctx(TEST_PARAMS, TEST_DATA)
+static int init_ctx()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
 	t_md5_ctx ctx;
 
 	ft_md5_init(&ctx);
 
-	munit_assert_uint(ctx.a, ==, 0x67452301);
-	munit_assert_uint(ctx.b, ==, 0xefcdab89);
-	munit_assert_uint(ctx.c, ==, 0x98badcfe);
-	munit_assert_uint(ctx.d, ==, 0x10325476);
-	munit_assert_true(ctx.bit_len == 0);
-	for (int i = 0; i < 64; i++)
-		munit_assert_uchar(ctx.block[i], ==, 0);
+	_is(ctx.a == 0x67452301);
+	_is(ctx.b == 0xefcdab89);
+	_is(ctx.c == 0x98badcfe);
+	_is(ctx.d == 0x10325476);
+	_is(ctx.bit_len == 0);
+	for (int i = 0; i < FT_MD5_BLOCK_SIZE; i++)
+		_is(ctx.block[i] == 0);
 
-	return MUNIT_OK;
+	_end("init ctx");
 }
 
-TEST_RESULT md5_decode_string_to_int(TEST_PARAMS, TEST_DATA)
+static int decode_string_to_int()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte1 block[FT_MD5_BLOCK_SIZE];
 	t_byte4 words[FT_MD5_WORDS_COUNT];
 
@@ -49,17 +43,15 @@ TEST_RESULT md5_decode_string_to_int(TEST_PARAMS, TEST_DATA)
 
 	ft_md5_decode(words, block);
 
-	munit_assert_true((words[0] & 0xff) == 97);
-	munit_assert_true(((words[2] >> 8) & 0xff) == 98);
-	munit_assert_true(((words[15] >> 24) & 0xff) == 99);
+	_is((words[0] & 0xff) == 97);
+	_is(((words[2] >> 8) & 0xff) == 98);
+	_is(((words[15] >> 24) & 0xff) == 99);
 
-	return MUNIT_OK;
+	_end("decode string to int");
 }
 
-TEST_RESULT md5_update_change_count(TEST_PARAMS, TEST_DATA)
+static int update_change_count()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
 	t_md5_ctx ctx;
 	char message[] = "hello, World!";
 	t_byte8 size = ft_strlen(message);
@@ -67,16 +59,13 @@ TEST_RESULT md5_update_change_count(TEST_PARAMS, TEST_DATA)
 	ft_md5_init(&ctx);
 	ft_md5_update(&ctx, (t_byte1 *)message, size);
 
-	munit_assert_true(size * 8 == ctx.bit_len);
+	_is(size * 8 == ctx.bit_len);
 
-	return MUNIT_OK;
+	_end("update change count");
 }
 
-TEST_RESULT md5_encode_bits_to_string(TEST_PARAMS, TEST_DATA)
+static int encode_bits_to_string()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte8 len;
 	t_byte1 bits[FT_MD5_MESSAGE_LENGTH_BYTE];
 
@@ -94,18 +83,15 @@ TEST_RESULT md5_encode_bits_to_string(TEST_PARAMS, TEST_DATA)
 
 	ft_md5_encode_len(bits, len);
 
-	munit_assert_true(bits[7] == (t_byte1)((len >> 56) & 0xff));
-	munit_assert_true(bits[0] == (t_byte1)(len & 0xff));
-	munit_assert_true(bits[1] == (t_byte1)((len >> 8) & 0xff));
+	_is(bits[7] == (t_byte1)((len >> 56) & 0xff));
+	_is(bits[0] == (t_byte1)(len & 0xff));
+	_is(bits[1] == (t_byte1)((len >> 8) & 0xff));
 
-	return MUNIT_OK;
+	_end("encode bits to string");
 }
 
-TEST_RESULT md5_encode_register(TEST_PARAMS, TEST_DATA)
+static int encode_register()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte1 digest_part[4];
 	t_byte4 reg;
 
@@ -119,19 +105,16 @@ TEST_RESULT md5_encode_register(TEST_PARAMS, TEST_DATA)
 
 	ft_md5_encode_register(digest_part, reg);
 
-	munit_assert_true(digest_part[0] == (t_byte1)(reg & 0xff));
-	munit_assert_true(digest_part[1] == (t_byte1)((reg >> 8) & 0xff));
-	munit_assert_true(digest_part[2] == (t_byte1)((reg >> 16) & 0xff));
-	munit_assert_true(digest_part[3] == (t_byte1)((reg >> 24) & 0xff));
+	_is(digest_part[0] == (t_byte1)(reg & 0xff));
+	_is(digest_part[1] == (t_byte1)((reg >> 8) & 0xff));
+	_is(digest_part[2] == (t_byte1)((reg >> 16) & 0xff));
+	_is(digest_part[3] == (t_byte1)((reg >> 24) & 0xff));
 
-	return MUNIT_OK;
+	_end("encode register");
 }
 
-TEST_RESULT md5_create_digest(TEST_PARAMS, TEST_DATA)
+static int create_digest()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_md5_ctx	ctx;
 	t_byte1		digest[FT_MD5_DIGEST_LENGTH_BYTE];
 	t_byte1		digest_string[FT_MD5_STRING_SIZE_BYTE];
@@ -146,33 +129,30 @@ TEST_RESULT md5_create_digest(TEST_PARAMS, TEST_DATA)
 	ft_md5_final(digest, &ctx);
 	ft_md5_digest_string(digest, digest_string);
 
-	munit_assert_string_equal((const char *)digest_string,
-								"d41d8cd98f00b204e9800998ecf8427e");
+	_is(ft_strcmp((const char *)digest_string,
+					"d41d8cd98f00b204e9800998ecf8427e") == 0);
 
 	ft_md5_init(&ctx);
 	ft_md5_update(&ctx, case2, ft_strlen((const char *)case2));
 	ft_md5_final(digest, &ctx);
 	ft_md5_digest_string(digest, digest_string);
 
-	munit_assert_string_equal((const char *)digest_string,
-								"0cc175b9c0f1b6a831c399e269772661");
+	_is(ft_strcmp((const char *)digest_string,
+					"0cc175b9c0f1b6a831c399e269772661") == 0);
 
 	ft_md5_init(&ctx);
 	ft_md5_update(&ctx, case7, ft_strlen((const char *)case7));
 	ft_md5_final(digest, &ctx);
 	ft_md5_digest_string(digest, digest_string);
 
-	munit_assert_string_equal((const char *)digest_string,
-								"2580a0aff7ef5e80f6b5432666530926");
+	_is(ft_strcmp((const char *)digest_string,
+					"2580a0aff7ef5e80f6b5432666530926") == 0);
 
-	return MUNIT_OK;
+	_end("create digest");
 }
 
-TEST_RESULT md5_create_string(TEST_PARAMS, TEST_DATA)
+static int create_digest_string()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte1 digest[FT_MD5_DIGEST_LENGTH_BYTE];
 	t_byte1 digest_string[FT_MD5_STRING_SIZE_BYTE];
 	t_byte4 a;
@@ -193,7 +173,20 @@ TEST_RESULT md5_create_string(TEST_PARAMS, TEST_DATA)
 
 	ft_md5_digest_string(digest, digest_string);
 
-	munit_assert_string_equal((const char *)digest_string, "d41d8cd98f00b204e9800998ecf8427e");
+	_is(ft_strcmp((const char *)digest_string,
+		"d41d8cd98f00b204e9800998ecf8427e") == 0);
 
-	return MUNIT_OK;
+	_end("create digest string");
+}
+
+int md5_tests()
+{
+	_should(init_ctx);
+	_should(decode_string_to_int);
+	_should(update_change_count);
+	_should(encode_bits_to_string);
+	_should(encode_register);
+	_should(create_digest);
+	_should(create_digest_string);
+	return 0;
 }

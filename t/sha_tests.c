@@ -10,62 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
-#include "tests_macros.h"
+#include "t.h"
 #include "ft_sha.h"
 #include "libft.h"
 
-TEST_RESULT should_init_ctx_sha256(TEST_PARAMS, TEST_DATA)
+static int init_sha256_ctx()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
 	t_sha256_ctx ctx;
 
 	ft_sha256_init(&ctx);
 
-	munit_assert_uint(ctx.a, ==, 0x6a09e667);
-	munit_assert_uint(ctx.b, ==, 0xbb67ae85);
-	munit_assert_uint(ctx.c, ==, 0x3c6ef372);
-	munit_assert_uint(ctx.d, ==, 0xa54ff53a);
-	munit_assert_uint(ctx.e, ==, 0x510e527f);
-	munit_assert_uint(ctx.f, ==, 0x9b05688c);
-	munit_assert_uint(ctx.g, ==, 0x1f83d9ab);
-	munit_assert_uint(ctx.h, ==, 0x5be0cd19);
-	munit_assert_true(ctx.bit_len == 0);
+	_is(ctx.a == 0x6a09e667);
+	_is(ctx.b == 0xbb67ae85);
+	_is(ctx.c == 0x3c6ef372);
+	_is(ctx.d == 0xa54ff53a);
+	_is(ctx.e == 0x510e527f);
+	_is(ctx.f == 0x9b05688c);
+	_is(ctx.g == 0x1f83d9ab);
+	_is(ctx.h == 0x5be0cd19);
+	_is(ctx.bit_len == 0);
 	for (int i = 0; i < 64; i++)
-		munit_assert_uchar(ctx.block[i], ==, 0);
+		_is(ctx.block[i] == 0);
 
-	return MUNIT_OK;
+	_end("init sha256 ctx");
 }
 
-TEST_RESULT should_init_ctx_sha224(TEST_PARAMS, TEST_DATA)
+static int init_sha224_ctx()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
 	t_sha256_ctx ctx;
 
 	ft_sha224_init(&ctx);
 
-	munit_assert_uint(ctx.a, ==, 0xc1059ed8);
-	munit_assert_uint(ctx.b, ==, 0x367cd507);
-	munit_assert_uint(ctx.c, ==, 0x3070dd17);
-	munit_assert_uint(ctx.d, ==, 0xf70e5939);
-	munit_assert_uint(ctx.e, ==, 0xffc00b31);
-	munit_assert_uint(ctx.f, ==, 0x68581511);
-	munit_assert_uint(ctx.g, ==, 0x64f98fa7);
-	munit_assert_uint(ctx.h, ==, 0xbefa4fa4);
-	munit_assert_true(ctx.bit_len == 0);
+	_is(ctx.a == 0xc1059ed8);
+	_is(ctx.b == 0x367cd507);
+	_is(ctx.c == 0x3070dd17);
+	_is(ctx.d == 0xf70e5939);
+	_is(ctx.e == 0xffc00b31);
+	_is(ctx.f == 0x68581511);
+	_is(ctx.g == 0x64f98fa7);
+	_is(ctx.h == 0xbefa4fa4);
+	_is(ctx.bit_len == 0);
 	for (int i = 0; i < 64; i++)
-		munit_assert_uchar(ctx.block[i], ==, 0);
+		_is(ctx.block[i] == 0);
 
-	return MUNIT_OK;
+	_end("init sha224 ctx");
 }
 
-TEST_RESULT decode_string_to_int_sha256(TEST_PARAMS, TEST_DATA)
+static int decode_string_to_int_sha256()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte1 block[FT_SHA256_BLOCK_SIZE];
 	t_byte4 words[FT_SHA256_WORDS_COUNT];
 
@@ -76,16 +68,13 @@ TEST_RESULT decode_string_to_int_sha256(TEST_PARAMS, TEST_DATA)
 
 	ft_sha256_decode(words, block);
 
-	munit_assert_uint(words[0], ==, 0x61626300);
+	_is(words[0] == 0x61626300);
 
-	return MUNIT_OK;
+	_end("decode string to int sha256");
 }
 
-TEST_RESULT encode_len_to_string_sha256(TEST_PARAMS, TEST_DATA)
+static int  encode_len_to_string_sha256()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte8 len;
 	t_byte1 bits[FT_SHA256_MESSAGE_LENGTH_BYTE];
 
@@ -103,18 +92,15 @@ TEST_RESULT encode_len_to_string_sha256(TEST_PARAMS, TEST_DATA)
 
 	ft_sha256_encode_len(bits, len);
 
-	munit_assert_uchar(bits[0], ==, (t_byte1)((len >> 56) & 0xff));
-	munit_assert_uchar(bits[7], ==, (t_byte1)(len & 0xff));
-	munit_assert_uchar(bits[6], ==, (t_byte1)((len >> 8) & 0xff));
+	_is(bits[0] == (t_byte1)((len >> 56) & 0xff));
+	_is(bits[7] == (t_byte1)(len & 0xff));
+	_is(bits[6] == (t_byte1)((len >> 8) & 0xff));
 
-	return MUNIT_OK;
+	_end("encode len to string sha256");
 }
 
-TEST_RESULT encode_register_to_string_sha256(TEST_PARAMS, TEST_DATA)
+static int encode_register_to_string_sha256()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_byte1 digest_part[4];
 	t_byte4 reg;
 
@@ -122,44 +108,38 @@ TEST_RESULT encode_register_to_string_sha256(TEST_PARAMS, TEST_DATA)
 
 	ft_sha256_encode_register(digest_part, reg);
 
-	munit_assert_uchar(digest_part[0], ==, 0xba);
-	munit_assert_uchar(digest_part[1], ==, 0x78);
-	munit_assert_uchar(digest_part[2], ==, 0x16);
-	munit_assert_uchar(digest_part[3], ==, 0xbf);
+	_is(digest_part[0] == 0xba);
+	_is(digest_part[1] == 0x78);
+	_is(digest_part[2] == 0x16);
+	_is(digest_part[3] == 0xbf);
 
-	return MUNIT_OK;
+	_end("encode register to string sha256");
 }
 
-TEST_RESULT update_bit_count_sha256(TEST_PARAMS, TEST_DATA)
+static int update_bit_count_sha256()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_sha256_ctx ctx;
 	t_byte1 message[] = "abc";
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
 
-	munit_assert_uint(ctx.bit_len, ==, sizeof(message) * 8);
+	_is(ctx.bit_len == sizeof(message) * 8);
 
-	return MUNIT_OK;
+	_end("update bit count sha256");
 }
 
-TEST_RESULT fill_buffer_sha256(TEST_PARAMS, TEST_DATA)
+static int fill_buffer_sha256()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_sha256_ctx ctx;
 	t_byte1 message[] = "abc";
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
 
-	munit_assert_string_equal((const char *)message, (const char *)ctx.block);
+	_is(ft_strcmp((const char *)message, (const char *)ctx.block) == 0);
 
-	return MUNIT_OK;
+	_end("fill buffer sha256");
 }
 
 static void block_with_right_padding
@@ -174,17 +154,15 @@ static void block_with_right_padding
 	padding[message_len] = 0x80;
 }
 
-TEST_RESULT add_right_padding_sha256(TEST_PARAMS, TEST_DATA)
+static int add_right_padding_sha256()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_sha256_ctx ctx;
 	t_byte1 message[] = "abc";
 	t_byte8 buff_index;
 	t_byte8 padding_len;
 	t_byte1 padding[FT_SHA256_BLOCK_SIZE];
 	t_byte1 block_with_message_and_pading[FT_SHA256_BLOCK_SIZE];
+	int i;
 
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
@@ -195,17 +173,17 @@ TEST_RESULT add_right_padding_sha256(TEST_PARAMS, TEST_DATA)
 
 	block_with_right_padding(message, sizeof(message),
 		block_with_message_and_pading);
-	munit_assert_memory_equal(FT_SHA256_BLOCK_SIZE, ctx.block,
-	block_with_message_and_pading);
 
-		return MUNIT_OK;
+	i = 0;
+
+	_is(ft_memcmp(ctx.block, block_with_message_and_pading,
+		FT_SHA256_BLOCK_SIZE) == 0);
+
+	_end("add right padding sha256");
 }
 
-TEST_RESULT compute_digest_sha256(TEST_PARAMS, TEST_DATA)
+static int compute_digest_sha256()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_byte1			message[] = "abc";
 	t_sha256_ctx	ctx;
 	t_byte1			digest[FT_SHA256_DIGEST_LENGTH_BYTE];
@@ -214,24 +192,20 @@ TEST_RESULT compute_digest_sha256(TEST_PARAMS, TEST_DATA)
 	ft_sha256_update(&ctx, message, ft_strlen((const char *)message));
 	ft_sha256_final(digest, &ctx);
 
+	_is(ctx.a == 0xba7816bf);
+	_is(ctx.b == 0x8f01cfea);
+	_is(ctx.c == 0x414140de);
+	_is(ctx.d == 0x5dae2223);
+	_is(ctx.e == 0xb00361a3);
+	_is(ctx.f == 0x96177a9c);
+	_is(ctx.g == 0xb410ff61);
+	_is(ctx.h == 0xf20015ad);
 
-	munit_assert_uint32(ctx.a, ==, 0xba7816bf);
-	munit_assert_uint32(ctx.b, ==, 0x8f01cfea);
-	munit_assert_uint32(ctx.c, ==, 0x414140de);
-	munit_assert_uint32(ctx.d, ==, 0x5dae2223);
-	munit_assert_uint32(ctx.e, ==, 0xb00361a3);
-	munit_assert_uint32(ctx.f, ==, 0x96177a9c);
-	munit_assert_uint32(ctx.g, ==, 0xb410ff61);
-	munit_assert_uint32(ctx.h, ==, 0xf20015ad);
-
-	return MUNIT_OK;
+	_end("compute digest sha256");
 }
 
-TEST_RESULT compute_digest_sha224(TEST_PARAMS, TEST_DATA)
+static int compute_digest_sha224()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_byte1 message[] = "abc";
 	t_sha256_ctx ctx;
 	t_byte1 digest[FT_SHA256_DIGEST_LENGTH_BYTE];
@@ -240,22 +214,19 @@ TEST_RESULT compute_digest_sha224(TEST_PARAMS, TEST_DATA)
 	ft_sha224_update(&ctx, message, ft_strlen((const char *)message));
 	ft_sha224_final(digest, &ctx);
 
-	munit_assert_uint32(ctx.a, ==, 0x23097d22);
-	munit_assert_uint32(ctx.b, ==, 0x3405d822);
-	munit_assert_uint32(ctx.c, ==, 0x8642a477);
-	munit_assert_uint32(ctx.d, ==, 0xbda255b3);
-	munit_assert_uint32(ctx.e, ==, 0x2aadbce4);
-	munit_assert_uint32(ctx.f, ==, 0xbda0b3f7);
-	munit_assert_uint32(ctx.g, ==, 0xe36c9da7);
+	_is(ctx.a == 0x23097d22);
+	_is(ctx.b == 0x3405d822);
+	_is(ctx.c == 0x8642a477);
+	_is(ctx.d == 0xbda255b3);
+	_is(ctx.e == 0x2aadbce4);
+	_is(ctx.f == 0xbda0b3f7);
+	_is(ctx.g == 0xe36c9da7);
 
-	return MUNIT_OK;
+	_end("computee digst sha224");
 }
 
-TEST_RESULT create_digest_string_sha256(TEST_PARAMS, TEST_DATA)
+static int create_digest_string_sha256()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_byte1 message[] = "abc";
 	t_byte1 message_digest[] =
 		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
@@ -268,17 +239,14 @@ TEST_RESULT create_digest_string_sha256(TEST_PARAMS, TEST_DATA)
 	ft_sha256_final(digest, &ctx);
 	ft_sha256_digest_string(digest, digest_string);
 
-	munit_assert_string_equal((const char *)message_digest,
-								(const char *)digest_string);
+	_is(ft_strcmp((const char *)message_digest,
+		(const char *)digest_string) == 0);
 
-	return MUNIT_OK;
+	_end("create digest string sha256");
 }
 
-TEST_RESULT create_digest_string_sha224(TEST_PARAMS, TEST_DATA)
+static int create_digest_string_sha224()
 {
-	UNUSED(test_data);
-	UNUSED(test_params);
-
 	t_byte1 message[] = "abc";
 	t_byte1 message_digest[] =
 		"23097d223405d8228642a477bda255b32aadbce4bda0b3f7e36c9da7";
@@ -291,8 +259,26 @@ TEST_RESULT create_digest_string_sha224(TEST_PARAMS, TEST_DATA)
 	ft_sha224_final(digest, &ctx);
 	ft_sha224_digest_string(digest, digest_string);
 
-	munit_assert_string_equal((const char *)message_digest,
-							  (const char *)digest_string);
+	_is(ft_strcmp((const char *)message_digest,
+		(const char *)digest_string) == 0);
 
-	return MUNIT_OK;
+	_end("create digest strinf sha224");
+}
+
+int sha_tests()
+{
+	_should(init_sha256_ctx);
+	_should(init_sha224_ctx);
+	_should(decode_string_to_int_sha256);
+	_should(encode_len_to_string_sha256);
+	_should(encode_register_to_string_sha256);
+	_should(update_bit_count_sha256);
+	_should(fill_buffer_sha256);
+	_should(add_right_padding_sha256);
+	_should(compute_digest_sha256);
+	_should(compute_digest_sha224);
+	_should(create_digest_string_sha256);
+	_should(create_digest_string_sha224);
+
+	return 0;
 }

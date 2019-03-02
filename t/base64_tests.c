@@ -1,40 +1,44 @@
 #include <unistd.h>
+#include "t.h"
 #include "tests.h"
-#include "tests_macros.h"
 #include "ft_base64.h"
+#include "libft.h"
 
-TEST_RESULT should_init_base64_ctx(TEST_PARAMS, TEST_DATA)
+static int init_ctx()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
 	t_base64_ctx ctx;
 	char		alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\
 abcdefghijklmnopqrstuvwxyz0123456789+/";
 
 	ft_base64_init(&ctx);
 
-	munit_assert_true(ctx.input_fd == STDIN_FILENO);
-	munit_assert_true(ctx.output_fd == STDOUT_FILENO);
+	_is(ctx.input_fd == STDIN_FILENO);
+	_is(ctx.output_fd == STDOUT_FILENO);
 
-	munit_assert_string_equal(alphabet, (char *)ctx.alphabet);
+	_is(ft_strcmp(alphabet, (char *)ctx.alphabet) == 0);
 
-	return MUNIT_OK;
+	_end("init ctx");
 }
 
-TEST_RESULT should_transform_base64_block(TEST_PARAMS, TEST_DATA)
+static int transform_block()
 {
-	UNUSED(test_params);
-	UNUSED(test_data);
-
 	t_base64_ctx	ctx;
 	t_byte1			buff[FT_BASE64_DECODE_BLOCK_SIZE];
 
 	ft_base64_init(&ctx);
 
 	ft_base64_encode_transform(&ctx, (t_byte1 *)"Man", buff);
-	munit_assert_string_equal((char *)buff, "TWFu");
+	_is(ft_strcmp((char *)buff, "TWFu") == 0);
 
 	ft_base64_encode_transform(&ctx, (t_byte1 *)"LOL", buff);
-	munit_assert_string_equal((char *)buff, "TE9M");
-	return MUNIT_OK;
+	_is(ft_strcmp((char *)buff, "TE9M") == 0);
+
+	_end("transform block");
+}
+
+int base64_tests(void)
+{
+	_should(init_ctx);
+	_should(transform_block);
+	return 0;
 }

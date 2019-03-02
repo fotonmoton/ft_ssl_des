@@ -43,9 +43,6 @@ LIBFT_INC :=					-I $(LIBFT_DIR)includes/
 LIBFT_LIB :=					-lft -L $(LIBFT_DIR)
 LIBFT =							$(LIBFT_DIR)libft.a
 
-MUINUT_DIR :=					$(LIB_DIR)munit/
-MUINUT_INC :=					-I $(MUINUT_DIR)
-
 # project source files
 
 MD5_SRC =						ft_md5.c 									\
@@ -126,9 +123,7 @@ SHA_TESTS +=					$(SHA_SRC)
 BASE64_TESTS =					base64_tests.c
 BASE64_TESTS +=					$(BASE64_SRC)
 
-TEST_SRC =						tests.c										\
-								munit.c
-
+TEST_SRC =						tests.c
 TEST_SRC +=						$(MD5_TESTS)								\
 								$(SHA_TESTS)								\
 								$(BASE64_TESTS)
@@ -221,8 +216,6 @@ vpath %.c						$(SRC_DIR)									\
 								$(MD5_DIR)									\
 								$(SHA_DIR)									\
 								$(B64_DIR)									\
-								$(TST_DIR)									\
-								$(MUINUT_DIR)
-
+								$(TST_DIR)
 
 .PHONY: all check clean fclean re multi
