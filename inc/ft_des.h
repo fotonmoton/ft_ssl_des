@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tests.h                                            :+:      :+:    :+:   */
+/*   ft_des.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 19:36:58 by gtertysh          #+#    #+#             */
-/*   Updated: 2018/10/23 19:40:12 by gtertysh         ###   ########.fr       */
+/*   Created: 2019/01/19 17:58:39 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/01/19 17:59:19 by gtertysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TESTS_H
-# define TESTS_H
+#ifndef FT_DES_H
+# define FT_DES_H
 
-int md5_tests(void);
-int sha_tests(void);
-int base64_tests(void);
-int des_tests(void);
+# define FT_DES_BIT_BLOCK_SIZE 64
+
+typedef unsigned char	t_byte1;
+
+void					ft_des_initial_permutation
+(
+	t_byte1 message[FT_DES_BIT_BLOCK_SIZE],
+	t_byte1 initial_permutation[FT_DES_BIT_BLOCK_SIZE]
+);
 
 #endif

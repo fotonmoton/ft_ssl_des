@@ -21,6 +21,7 @@ SRC_DIR :=						$(ROOT)/src/
 MD5_DIR :=						$(SRC_DIR)/md5/
 SHA_DIR :=						$(SRC_DIR)/sha/
 B64_DIR :=						$(SRC_DIR)/base64/
+DES_DIR :=						$(SRC_DIR)/des/
 OBJ_DIR :=						$(ROOT)/obj/
 INC_DIR :=						$(ROOT)/inc/
 LIB_DIR :=						$(ROOT)/lib/
@@ -32,10 +33,12 @@ MD5_HEADER :=					$(INC_DIR)/ft_md5.h
 SHA_HEADER :=					$(INC_DIR)/ft_sha.h
 SSL_HEADER :=					$(INC_DIR)/ft_ssl.h
 B64_HEADER :=					$(INC_DIR)/ft_base64.h
+DES_HEADER :=					$(INC_DIR)/ft_des.h
 HEADERS :=						$(MD5_HEADER)								\
 								$(SHA_HEADER)								\
 								$(SSL_HEADER)								\
-								$(B64_HEADER)
+								$(B64_HEADER)								\
+								$(DES_HEADER)
 # libraries
 
 LIBFT_DIR :=					$(LIB_DIR)libft/
@@ -99,12 +102,15 @@ BASE64_SRC =					ft_base64.c 								\
 								ft_base64_decode_transform.c 				\
 								ft_base64_decode_finish.c
 
+DES_SRC =						ft_des_initial_permutation.c
+
 SRC =							main.c										\
 								ft_ssl_usage.c
 
 SRC +=							$(MD5_SRC)									\
 								$(SHA_SRC)									\
-								$(BASE64_SRC)
+								$(BASE64_SRC)								\
+								$(DES_SRC)
 # project object files
 
 OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
@@ -123,10 +129,14 @@ SHA_TESTS +=					$(SHA_SRC)
 BASE64_TESTS =					base64_tests.c
 BASE64_TESTS +=					$(BASE64_SRC)
 
+DES_TESTS =						des_tests.c
+DES_TESTS +=					$(DES_SRC)
+
 TEST_SRC =						tests.c
 TEST_SRC +=						$(MD5_TESTS)								\
 								$(SHA_TESTS)								\
-								$(BASE64_TESTS)
+								$(BASE64_TESTS)								\
+								$(DES_TESTS)
 
 TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
 
@@ -207,7 +217,6 @@ re: fclean all
 
 multi:
 	$(MAKE) $(LIBFT)
-	$(MAKE) check
 	$(MAKE) $(NAME)
 
 # special stuff
@@ -216,6 +225,7 @@ vpath %.c						$(SRC_DIR)									\
 								$(MD5_DIR)									\
 								$(SHA_DIR)									\
 								$(B64_DIR)									\
+								$(DES_DIR)									\
 								$(TST_DIR)
 
 .PHONY: all check clean fclean re multi
