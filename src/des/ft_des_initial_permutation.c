@@ -17,12 +17,11 @@ void ft_des_initial_permutation
 		63, 55, 47, 39, 31, 23, 15, 7,
 	};
 	t_byte1	i;
-	
+
 	i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
 		initial_permutation[i] = message[table[i] - 1];
 		i++;
 	}
-
 }

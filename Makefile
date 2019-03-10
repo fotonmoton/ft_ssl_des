@@ -102,7 +102,9 @@ BASE64_SRC =					ft_base64.c 								\
 								ft_base64_decode_transform.c 				\
 								ft_base64_decode_finish.c
 
-DES_SRC =						ft_des_initial_permutation.c
+DES_SRC =						ft_des_initial_permutation.c 				\
+								ft_des_final_permutation.c 					\
+								ft_des_expansion_box.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c
