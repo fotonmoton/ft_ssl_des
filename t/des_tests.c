@@ -3,6 +3,8 @@
 #include "ft_des.h"
 #include "libft.h"
 
+#define S_BOX_CASES_NUMBER 3
+
 int perform_initial_permutation()
 {
 	// all 64 bits:
@@ -159,7 +161,222 @@ int perform_expansion_in_feistel_function()
 	_end("perform expansion in feistel function");
 }
 
+static int s_box_check
+(
+	t_byte1 inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE],
+	t_byte1 expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE],
+	void (*box)(t_byte1 in[FT_DES_S_BOX_INPUT_SIZE],
+				t_byte1 out[FT_DES_S_BOX_OUTPUT_SIZE])
+)
+{
+	t_byte1 output[FT_DES_S_BOX_OUTPUT_SIZE];
+	int j = 0;
+	while(j < S_BOX_CASES_NUMBER)
+	{
+		box(inputs[j], output);
 
+		int i = 0;
+		while(i < FT_DES_S_BOX_OUTPUT_SIZE)
+		{
+			if(output[i] != expected[j][i])
+				return 0;
+			i++;
+		}
+		j++;
+	}
+	return 1;
+}
+
+int	s_boxes_confuse()
+{
+	t_byte1 s1_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{1, 0, 0, 1, 0, 1},
+		{0, 0, 0, 0, 0, 0},
+		{0, 1, 1, 1, 1, 0},
+	};
+	t_byte1 s1_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{1, 0, 0, 0},
+		{1, 1, 1, 0},
+		{0, 1, 1, 1},
+	};
+
+	_is(s_box_check(s1_inputs, s1_expected, ft_des_s_box_1));
+
+	t_byte1 s2_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 0, 0, 0, 0},
+	};
+
+	t_byte1 s2_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{1, 1, 1, 1},
+		{1, 1, 0, 1},
+		{0, 1, 0, 1},
+	};
+
+	_is(s_box_check(s2_inputs, s2_expected, ft_des_s_box_2));
+
+	t_byte1 s3_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 0, 0, 0, 0},
+	};
+
+	t_byte1 s3_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{1, 0, 1, 0},
+		{0, 0, 0, 1},
+		{1, 0, 1, 1},
+	};
+
+	_is(s_box_check(s3_inputs, s3_expected, ft_des_s_box_3));
+
+	t_byte1 s4_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 0, 0, 0, 0},
+	};
+
+	t_byte1 s4_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{0, 1, 1, 1},
+		{0, 0, 1, 1},
+		{1, 1, 1, 1},
+	};
+
+	_is(s_box_check(s4_inputs, s4_expected, ft_des_s_box_4));
+
+	t_byte1 s5_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1},
+	};
+
+	t_byte1 s5_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{0, 0, 1, 0},
+		{1, 0, 1, 1},
+		{0, 0, 1, 1},
+	};
+
+	_is(s_box_check(s5_inputs, s5_expected, ft_des_s_box_5));
+
+	t_byte1 s6_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1},
+	};
+
+	t_byte1 s6_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{1, 1, 0, 0},
+		{0, 1, 0, 0},
+		{1, 1, 0, 1},
+	};
+
+	_is(s_box_check(s6_inputs, s6_expected, ft_des_s_box_6));
+
+	t_byte1 s7_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1},
+	};
+
+	t_byte1 s7_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{0, 1, 0, 0},
+		{0, 1, 1, 0},
+		{1, 1, 0, 0},
+	};
+
+	_is(s_box_check(s7_inputs, s7_expected, ft_des_s_box_7));
+
+	t_byte1 s8_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
+		{0, 0, 0, 0, 0, 0},
+		{1, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1},
+	};
+
+	t_byte1 s8_expected[S_BOX_CASES_NUMBER][FT_DES_S_BOX_OUTPUT_SIZE] = {
+		{1, 1, 0, 1},
+		{0, 0, 1, 0},
+		{1, 0, 1, 1},
+	};
+
+	_is(s_box_check(s8_inputs, s8_expected, ft_des_s_box_8));
+
+	_end("s boxes confuse");
+}
+
+int perform_premutation_in_feistel_function()
+{
+	t_byte1 input[FT_DES_BIT_BLOCK_SIZE / 2] = {
+		1, 0, 1, 0, 1, 0, 1, 0,
+		0, 1, 0, 1, 0, 1, 0, 1,
+		1, 0, 1, 0, 1, 0, 1, 0,
+		0, 1, 0, 1, 0, 1, 0, 1,
+	};
+
+	t_byte1 expected[FT_DES_BIT_BLOCK_SIZE / 2] = {
+		1, 1, 0, 1, 0, 1, 1, 1,
+		1, 0, 1, 1, 1, 0, 0, 1,
+		0, 0, 0, 1, 1, 0, 1, 0,
+		1, 0, 1, 0, 0, 0, 0, 0,
+	};
+
+	t_byte1 actual[FT_DES_BIT_BLOCK_SIZE / 2];
+
+	ft_des_feistel_function_permutation(input, actual);
+
+	int i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
+	{
+		_is(actual[i] == expected[i]);
+		i++;
+	}
+	_end("should perform permutation in feistel function");
+}
+
+int perform_feistel_function()
+{
+	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE] = {
+		0, 0, 0, 1, 1, 0,
+		1, 1, 0, 0, 0, 0,
+		0, 0, 1, 0, 1, 1,
+		1, 0, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 1, 1,
+		0, 0, 0, 0, 0, 1,
+		1, 1, 0, 0, 1, 0,
+	};
+	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2] = {
+		1, 1, 1, 1,
+		0, 0, 0, 0,
+		1, 0, 1, 0,
+		1, 0, 1, 0,
+		1, 1, 1, 1,
+		0, 0, 0, 0,
+		1, 0, 1, 0,
+		1, 0, 1, 0,
+	};
+	t_byte1 expected[FT_DES_BIT_BLOCK_SIZE / 2] = {
+		0, 0, 1, 0,
+		0, 0, 1, 1,
+		0, 1, 0, 0,
+		1, 0, 1, 0,
+		1, 0, 1, 0,
+		1, 0, 0, 1,
+		1, 0, 1, 1,
+		1, 0, 1, 1,
+	};
+
+	t_byte1 output[FT_DES_BIT_BLOCK_SIZE / 2];
+
+	ft_des_feistel_function(right_half, key, output);
+
+	int i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
+	{
+		_is(output[i] == expected[i]);
+		i++;
+	}
+	_end("feistel function should encode half of a block");
+}
 
 int des_tests()
 {
@@ -167,5 +384,8 @@ int des_tests()
 	_should(perform_final_permutation);
 	_should(final_permutation_is_reverse_of_initial);
 	_should(perform_expansion_in_feistel_function);
+	_should(s_boxes_confuse);
+	_should(perform_premutation_in_feistel_function);
+	_should(perform_feistel_function);
 	return 0;
 }

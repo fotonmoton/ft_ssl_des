@@ -104,7 +104,18 @@ BASE64_SRC =					ft_base64.c 								\
 
 DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_final_permutation.c 					\
-								ft_des_expansion_box.c
+								ft_des_expansion_box.c 						\
+								ft_des_s_box.c 								\
+								ft_des_s_box_1.c 							\
+								ft_des_s_box_2.c 							\
+								ft_des_s_box_3.c 							\
+								ft_des_s_box_4.c 							\
+								ft_des_s_box_5.c 							\
+								ft_des_s_box_6.c 							\
+								ft_des_s_box_7.c 							\
+								ft_des_s_box_8.c 							\
+								ft_des_feistel_function_permutation.c 		\
+								ft_des_feistel_function.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c
