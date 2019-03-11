@@ -378,6 +378,127 @@ int perform_feistel_function()
 	_end("feistel function should encode half of a block");
 }
 
+int reduce_key_to_56_bits()
+{
+	t_byte1 initial_key[FT_DES_INITIAL_KEY_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+		1, 1, 1, 1, 1, 1, 1, 0,
+	};
+
+	t_byte1 expected_reduced_key[FT_DES_REDUCED_KEY_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1,
+	};
+	t_byte1 actual_reduced[FT_DES_REDUCED_KEY_SIZE];
+
+	ft_des_key_permuted_choice_one(initial_key, actual_reduced);
+
+	int i = 0;
+	while(i < FT_DES_REDUCED_KEY_SIZE)
+	{
+		_is(actual_reduced[i] == expected_reduced_key[i]);
+		i++;
+	}
+
+	_end("should reduce key size to 56 bits");
+}
+
+int rotate_half_key()
+{
+	t_byte1 half_key[FT_DES_REDUCED_KEY_SIZE / 2] = {
+		1, 1, 1, 1, 0, 0, 0,
+		0, 1, 1, 0, 0, 1, 1,
+		0, 0, 1, 0, 1, 0, 1,
+		0, 1, 0, 1, 1, 1, 1,
+	};
+
+	t_byte1 expected[FT_DES_REDUCED_KEY_SIZE / 2];
+
+	ft_memcpy(expected, half_key, FT_DES_REDUCED_KEY_SIZE / 2);
+
+	ft_des_rotate_half_key_left(half_key, 1);
+	ft_des_rotate_half_key_left(half_key, 1);
+	ft_des_rotate_half_key_right(half_key, 2);
+
+	int i = 0;
+
+	while(i < FT_DES_REDUCED_KEY_SIZE / 2)
+	{
+		_is(half_key[i] == expected[i]);
+		i++;
+	}
+	_end("should rotate half of reduced key");
+}
+
+int derive_round_key()
+{
+	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE] = {
+		1, 1, 1, 1, 0, 0, 0,
+		0, 1, 1, 0, 0, 1, 1,
+		0, 0, 1, 0, 1, 0, 1,
+		0, 1, 0, 1, 1, 1, 1,
+		0, 1, 0, 1, 0, 1, 0,
+		1, 0, 1, 1, 0, 0, 1,
+		1, 0, 0, 1, 1, 1, 1,
+		0, 0, 0, 1, 1, 1, 1,
+	};
+
+	t_byte1 shifted_reduced_key[FT_DES_REDUCED_KEY_SIZE] = {
+		1, 1, 1, 0, 0, 0, 0,
+		1, 1, 0, 0, 1, 1, 0,
+		0, 1, 0, 1, 0, 1, 0,
+		1, 0, 1, 1, 1, 1, 1,
+		1, 0, 1, 0, 1, 0, 1,
+		0, 1, 1, 0, 0, 1, 1,
+		0, 0, 1, 1, 1, 1, 0,
+		0, 0, 1, 1, 1, 1, 0,
+	};
+
+	t_byte1 expected_round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE] = {
+		0, 0, 0, 1, 1, 0,
+		1, 1, 0, 0, 0, 0,
+		0, 0, 1, 0, 1, 1,
+		1, 0, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 1, 1,
+		0, 0, 0, 0, 0, 1,
+		1, 1, 0, 0, 1, 0,
+	};
+
+	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
+
+	ft_des_encryption_round_key(reduced_key, 1, round_key);
+
+	int i;
+
+	i = 0;
+	while(i < FT_DES_REDUCED_KEY_SIZE)
+	{
+		_is(shifted_reduced_key[i] == reduced_key[i]);
+		i++;
+	}
+
+	i = 0;
+	while(i < FT_DES_FEISTEL_FUNCTION_KEY_SIZE)
+	{
+		_is(round_key[i] == expected_round_key[i]);
+		i++;
+	}
+	_end("should derive round key");
+}
+
 int des_tests()
 {
 	_should(perform_initial_permutation);
@@ -387,5 +508,8 @@ int des_tests()
 	_should(s_boxes_confuse);
 	_should(perform_premutation_in_feistel_function);
 	_should(perform_feistel_function);
+	_should(reduce_key_to_56_bits);
+	_should(rotate_half_key);
+	_should(derive_round_key);
 	return 0;
 }

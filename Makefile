@@ -115,7 +115,12 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_s_box_7.c 							\
 								ft_des_s_box_8.c 							\
 								ft_des_feistel_function_permutation.c 		\
-								ft_des_feistel_function.c
+								ft_des_feistel_function.c 					\
+								ft_des_key_permuted_choice_one.c 			\
+								ft_des_encryption_round_key.c 				\
+								ft_des_rotate_half_key_left.c 				\
+								ft_des_rotate_half_key_right.c 				\
+								ft_des_key_permuted_choice_two.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c

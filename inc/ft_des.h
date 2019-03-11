@@ -20,6 +20,8 @@
 # define FT_DES_S_BOX_TABLE_ROWS 4
 # define FT_DES_S_BOX_TABLE_COLUMNS 16
 # define FT_DES_FEISTEL_FUNCTION_KEY_SIZE 48
+# define FT_DES_INITIAL_KEY_SIZE 64
+# define FT_DES_REDUCED_KEY_SIZE 56
 
 typedef unsigned char	t_byte1;
 
@@ -107,6 +109,37 @@ void					ft_des_feistel_function
 	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE],
 	t_byte1 output[FT_DES_BIT_BLOCK_SIZE / 2]
+);
+
+void					ft_des_key_permuted_choice_one
+(
+	t_byte1 initial_key[FT_DES_INITIAL_KEY_SIZE],
+	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE]
+);
+
+void					ft_des_key_permuted_choice_two
+(
+	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
+	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
+);
+
+void					ft_des_encryption_round_key
+(
+	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
+	t_byte1 round,
+	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
+);
+
+void					ft_des_rotate_half_key_left
+(
+	t_byte1 half[FT_DES_REDUCED_KEY_SIZE / 2],
+	t_byte1 rotation_number
+);
+
+void					ft_des_rotate_half_key_right
+(
+	t_byte1 half[FT_DES_REDUCED_KEY_SIZE / 2],
+	t_byte1 rotation_number
 );
 
 #endif
