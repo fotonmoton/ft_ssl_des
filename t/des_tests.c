@@ -424,13 +424,18 @@ int rotate_half_key()
 		0, 1, 0, 1, 1, 1, 1,
 	};
 
-	t_byte1 expected[FT_DES_REDUCED_KEY_SIZE / 2];
+	t_byte1 expected[FT_DES_REDUCED_KEY_SIZE / 2] = {
+		1, 1, 0, 0, 0, 0, 1,
+		1, 0, 0, 1, 1, 0, 0,
+		1, 0, 1, 0, 1, 0, 1,
+		0, 1, 1, 1, 1, 1, 1,
+	};
 
-	ft_memcpy(expected, half_key, FT_DES_REDUCED_KEY_SIZE / 2);
+	// ft_memcpy(expected, half_key, FT_DES_REDUCED_KEY_SIZE / 2);
 
 	ft_des_rotate_half_key_left(half_key, 1);
 	ft_des_rotate_half_key_left(half_key, 1);
-	ft_des_rotate_half_key_right(half_key, 2);
+	// ft_des_rotate_half_key_right(half_key, 2);
 
 	int i = 0;
 
@@ -479,7 +484,7 @@ int derive_round_key()
 
 	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
 
-	ft_des_encryption_round_key(reduced_key, 1, round_key);
+	ft_des_derive_encryption_round_key(reduced_key, 1, round_key);
 
 	int i;
 
@@ -499,6 +504,102 @@ int derive_round_key()
 	_end("should derive round key");
 }
 
+int perform_encryption_round()
+{
+	t_byte1 key[FT_DES_INITIAL_KEY_SIZE] = {
+		0, 0, 1, 1, 1, 0, 1, 1,
+		0, 0, 1, 1, 1, 0, 0, 0,
+		1, 0, 0, 1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0, 1, 1, 1,
+		0, 0, 0, 1, 0, 1, 0, 1,
+		0, 0, 1, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 0, 1, 1, 1,
+		0, 1, 0, 1, 1, 1, 1, 0,
+	};
+	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE];
+	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
+	t_byte1 message[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+		0, 1, 1, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+		0, 1, 1, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+	};
+	t_byte1 initial_permuatation[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1 expected_message[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 0, 1, 1, 0, 0, 0, 1,
+		0, 0, 0, 0, 0, 0, 0, 1,
+		0, 1, 1, 0, 0, 0, 1, 0,
+		1, 1, 0, 1, 1, 1, 0, 1,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		1, 0, 0, 1, 0, 0, 1, 0,
+	};
+
+	ft_des_initial_permutation(message, initial_permuatation);
+	ft_des_key_permuted_choice_one(key, reduced_key);
+	ft_des_derive_encryption_round_key(reduced_key, 1, round_key);
+	ft_des_encryption_round(initial_permuatation,
+		initial_permuatation + 32, round_key);
+
+	int i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE)
+	{
+		_is(initial_permuatation[i] == expected_message[i]);
+		i++;
+	}
+	_end("should perform encryption round");
+}
+
+int encrypt_block()
+{
+	t_byte1 message[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+		0, 1, 1, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+		0, 1, 1, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+	};
+	t_byte1 key[FT_DES_INITIAL_KEY_SIZE] = {
+		0, 0, 1, 1, 1, 0, 1, 1,
+		0, 0, 1, 1, 1, 0, 0, 0,
+		1, 0, 0, 1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0, 1, 1, 1,
+		0, 0, 0, 1, 0, 1, 0, 1,
+		0, 0, 1, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 0, 1, 1, 1,
+		0, 1, 0, 1, 1, 1, 1, 0,
+	};
+	t_byte1 expected_cypertext[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 0, 0, 0, 0, 1, 1, 0,
+		1, 0, 1, 0, 1, 1, 1, 1,
+		0, 1, 1, 0, 0, 0, 1, 1,
+		1, 1, 0, 1, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 1, 1, 1,
+		1, 0, 0, 1, 1, 1, 1, 0,
+		1, 0, 1, 0, 1, 1, 1, 1,
+		0, 0, 0, 1, 1, 1, 0, 0,
+	};
+	t_byte1 cyphertext[FT_DES_BIT_BLOCK_SIZE];
+
+	ft_des_encrypt_block(message, key, cyphertext);
+
+	int i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE)
+	{
+		_is(cyphertext[i] == expected_cypertext[i]);
+		i++;
+	}
+	_end("should encrypt block");
+}
+
 int des_tests()
 {
 	_should(perform_initial_permutation);
@@ -511,5 +612,7 @@ int des_tests()
 	_should(reduce_key_to_56_bits);
 	_should(rotate_half_key);
 	_should(derive_round_key);
+	_should(perform_encryption_round);
+	_should(encrypt_block);
 	return 0;
 }

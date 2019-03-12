@@ -22,6 +22,7 @@
 # define FT_DES_FEISTEL_FUNCTION_KEY_SIZE 48
 # define FT_DES_INITIAL_KEY_SIZE 64
 # define FT_DES_REDUCED_KEY_SIZE 56
+# define FT_DES_ROUND_COUNT 16
 
 typedef unsigned char	t_byte1;
 
@@ -123,7 +124,7 @@ void					ft_des_key_permuted_choice_two
 	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
 );
 
-void					ft_des_encryption_round_key
+void					ft_des_derive_encryption_round_key
 (
 	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
 	t_byte1 round,
@@ -140,6 +141,20 @@ void					ft_des_rotate_half_key_right
 (
 	t_byte1 half[FT_DES_REDUCED_KEY_SIZE / 2],
 	t_byte1 rotation_number
+);
+
+void					ft_des_encryption_round
+(
+	t_byte1 left_half[FT_DES_BIT_BLOCK_SIZE / 2],
+	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],
+	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
+);
+
+void					ft_des_encrypt_block
+(
+	t_byte1 plaintext[FT_DES_BIT_BLOCK_SIZE],
+	t_byte1 key[FT_DES_INITIAL_KEY_SIZE],
+	t_byte1 ciphertext[FT_DES_BIT_BLOCK_SIZE]
 );
 
 #endif

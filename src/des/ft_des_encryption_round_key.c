@@ -1,6 +1,6 @@
 #include "ft_des.h"
 
-void	ft_des_encryption_round_key
+void	ft_des_derive_encryption_round_key
 (
 	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
 	t_byte1 round,
