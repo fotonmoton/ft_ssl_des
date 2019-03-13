@@ -587,9 +587,13 @@ int encrypt_block()
 		1, 0, 1, 0, 1, 1, 1, 1,
 		0, 0, 0, 1, 1, 1, 0, 0,
 	};
+	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE];
+	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
 	t_byte1 cyphertext[FT_DES_BIT_BLOCK_SIZE];
 
-	ft_des_encrypt_block(message, key, cyphertext);
+	ft_des_key_permuted_choice_one(key, reduced_key);
+	ft_des_generate_round_keys(reduced_key, round_keys);
+	ft_des_encrypt_block(message, round_keys, cyphertext);
 
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
