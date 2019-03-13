@@ -1,6 +1,6 @@
 #include "ft_des.h"
 
-void	ft_des_generate_round_keys
+void	ft_des_generate_encryption_round_keys
 (
 	t_byte1 key[FT_DES_INITIAL_KEY_SIZE],
 	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE]

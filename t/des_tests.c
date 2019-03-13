@@ -543,7 +543,7 @@ int perform_encryption_round()
 	ft_des_initial_permutation(message, initial_permuatation);
 	ft_des_key_permuted_choice_one(key, reduced_key);
 	ft_des_derive_encryption_round_key(reduced_key, 1, round_key);
-	ft_des_encryption_round(initial_permuatation,
+	ft_des_round(initial_permuatation,
 		initial_permuatation + 32, round_key);
 
 	int i = 0;
@@ -592,8 +592,8 @@ int encrypt_block()
 	t_byte1 cyphertext[FT_DES_BIT_BLOCK_SIZE];
 
 	ft_des_key_permuted_choice_one(key, reduced_key);
-	ft_des_generate_round_keys(reduced_key, round_keys);
-	ft_des_encrypt_block(message, round_keys, cyphertext);
+	ft_des_generate_encryption_round_keys(reduced_key, round_keys);
+	ft_des_process_block(message, round_keys, cyphertext);
 
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
@@ -602,6 +602,55 @@ int encrypt_block()
 		i++;
 	}
 	_end("should encrypt block");
+}
+
+int	decrypt_block()
+{
+	t_byte1 cypertext[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 0, 0, 0, 0, 1, 1, 0,
+		1, 0, 1, 0, 1, 1, 1, 1,
+		0, 1, 1, 0, 0, 0, 1, 1,
+		1, 1, 0, 1, 0, 0, 0, 0,
+		0, 1, 0, 0, 0, 1, 1, 1,
+		1, 0, 0, 1, 1, 1, 1, 0,
+		1, 0, 1, 0, 1, 1, 1, 1,
+		0, 0, 0, 1, 1, 1, 0, 0,
+	};
+	t_byte1 expected_plaintext[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+		0, 1, 1, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+		0, 1, 1, 0, 0, 1, 0, 0,
+		0, 1, 1, 0, 0, 0, 0, 1,
+		0, 1, 1, 1, 0, 0, 1, 1,
+	};
+	t_byte1 key[FT_DES_INITIAL_KEY_SIZE] = {
+		0, 0, 1, 1, 1, 0, 1, 1,
+		0, 0, 1, 1, 1, 0, 0, 0,
+		1, 0, 0, 1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0, 1, 1, 1,
+		0, 0, 0, 1, 0, 1, 0, 1,
+		0, 0, 1, 0, 0, 0, 0, 0,
+		1, 1, 1, 1, 0, 1, 1, 1,
+		0, 1, 0, 1, 1, 1, 1, 0,
+	};
+	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE];
+	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
+	t_byte1 plaintext[FT_DES_BIT_BLOCK_SIZE];
+
+	ft_des_key_permuted_choice_one(key, reduced_key);
+	ft_des_generate_decryption_round_keys(reduced_key, round_keys);
+	ft_des_process_block(cypertext, round_keys, plaintext);
+
+	int i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE)
+	{
+		_is(plaintext[i] == expected_plaintext[i]);
+		i++;
+	}
+	_end("should decrypt block");
 }
 
 int des_tests()
@@ -618,5 +667,6 @@ int des_tests()
 	_should(derive_round_key);
 	_should(perform_encryption_round);
 	_should(encrypt_block);
+	_should(decrypt_block);
 	return 0;
 }

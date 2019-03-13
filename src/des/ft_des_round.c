@@ -16,7 +16,7 @@ static void xor
 	}
 }
 
-void	ft_des_encryption_round
+void	ft_des_round
 (
 	t_byte1 left_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],

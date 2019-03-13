@@ -131,7 +131,20 @@ void					ft_des_derive_encryption_round_key
 	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
 );
 
-void					ft_des_generate_round_keys
+void					ft_des_derive_decryption_round_key
+(
+	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
+	t_byte1 round,
+	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
+);
+
+void					ft_des_generate_encryption_round_keys
+(
+	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
+	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
+);
+
+void					ft_des_generate_decryption_round_keys
 (
 	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
@@ -149,14 +162,14 @@ void					ft_des_rotate_half_key_right
 	t_byte1 rotation_number
 );
 
-void					ft_des_encryption_round
+void					ft_des_round
 (
 	t_byte1 left_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
 );
 
-void					ft_des_encrypt_block
+void					ft_des_process_block
 (
 	t_byte1 plaintext[FT_DES_BIT_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE],

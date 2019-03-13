@@ -10,10 +10,10 @@ void	ft_des_rotate_half_key_right
 	t_byte1 j;
 	t_byte1 tmp;
 
-	tmp = half[FT_DES_REDUCED_KEY_SIZE / 2 - 1];
 	i = 0;
 	while(i < rotation_number)
 	{
+		tmp = half[FT_DES_REDUCED_KEY_SIZE / 2 - 1];
 		j = FT_DES_REDUCED_KEY_SIZE / 2 - 1;
 		while(j > 0)
 		{
