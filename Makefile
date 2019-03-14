@@ -126,6 +126,7 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_process_block.c 						\
 								ft_des_generate_encryption_round_keys.c 	\
 								ft_des_generate_decryption_round_keys.c 	\
+								ft_des_ecb.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c

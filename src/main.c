@@ -14,6 +14,7 @@
 #include "ft_md5.h"
 #include "ft_sha.h"
 #include "ft_base64.h"
+#include "ft_des.h"
 #include "libft.h"
 
 t_algorithm g_algorithms[] = {
@@ -32,6 +33,10 @@ t_algorithm g_algorithms[] = {
 	{
 		"base64",
 		ft_base64,
+	},
+	{
+		"des-ecb",
+		ft_des_ecb,
 	},
 	{NULL, NULL}
 };

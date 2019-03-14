@@ -26,6 +26,17 @@
 
 typedef unsigned char	t_byte1;
 
+typedef	struct			s_des_ctx
+{
+	int					input_fd;
+	int					output_fd;
+	int					decode;
+	int					output_in_base64;
+	char				*key;
+	char				*init_vector;
+	char				*pass;
+}						t_des_ctx;
+
 void					ft_des_initial_permutation
 (
 	t_byte1 message[FT_DES_BIT_BLOCK_SIZE],
@@ -174,6 +185,12 @@ void					ft_des_process_block
 	t_byte1 plaintext[FT_DES_BIT_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE],
 	t_byte1 ciphertext[FT_DES_BIT_BLOCK_SIZE]
+);
+
+void					ft_des_ecb
+(
+	int argc,
+	char **argv
 );
 
 #endif
