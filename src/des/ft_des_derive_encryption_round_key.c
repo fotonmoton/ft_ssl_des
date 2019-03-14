@@ -4,7 +4,7 @@ void	ft_des_derive_encryption_round_key
 (
 	t_byte1 input_key[FT_DES_REDUCED_KEY_SIZE],
 	t_byte1 round,
-	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE]
+	t_byte1 round_key[FT_DES_ROUND_KEY_SIZE]
 )
 {
 	if (round == 1 || round == 2 || round == 9 || round == 16)

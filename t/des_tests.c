@@ -2,6 +2,8 @@
 #include "tests.h"
 #include "ft_des.h"
 #include "libft.h"
+#include <unistd.h>
+
 
 #define S_BOX_CASES_NUMBER 3
 
@@ -334,7 +336,7 @@ int perform_premutation_in_feistel_function()
 
 int perform_feistel_function()
 {
-	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE] = {
+	t_byte1 key[FT_DES_ROUND_KEY_SIZE] = {
 		0, 0, 0, 1, 1, 0,
 		1, 1, 0, 0, 0, 0,
 		0, 0, 1, 0, 1, 1,
@@ -471,7 +473,7 @@ int derive_round_key()
 		0, 0, 1, 1, 1, 1, 0,
 	};
 
-	t_byte1 expected_round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE] = {
+	t_byte1 expected_round_key[FT_DES_ROUND_KEY_SIZE] = {
 		0, 0, 0, 1, 1, 0,
 		1, 1, 0, 0, 0, 0,
 		0, 0, 1, 0, 1, 1,
@@ -482,7 +484,7 @@ int derive_round_key()
 		1, 1, 0, 0, 1, 0,
 	};
 
-	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
+	t_byte1 round_key[FT_DES_ROUND_KEY_SIZE];
 
 	ft_des_derive_encryption_round_key(reduced_key, 1, round_key);
 
@@ -496,7 +498,7 @@ int derive_round_key()
 	}
 
 	i = 0;
-	while(i < FT_DES_FEISTEL_FUNCTION_KEY_SIZE)
+	while(i < FT_DES_ROUND_KEY_SIZE)
 	{
 		_is(round_key[i] == expected_round_key[i]);
 		i++;
@@ -517,7 +519,7 @@ int perform_encryption_round()
 		0, 1, 0, 1, 1, 1, 1, 0,
 	};
 	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE];
-	t_byte1 round_key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
+	t_byte1 round_key[FT_DES_ROUND_KEY_SIZE];
 	t_byte1 message[FT_DES_BIT_BLOCK_SIZE] = {
 		0, 1, 1, 0, 0, 0, 0, 1,
 		0, 1, 1, 1, 0, 0, 1, 1,
@@ -557,15 +559,11 @@ int perform_encryption_round()
 
 int encrypt_block()
 {
-	t_byte1 message[FT_DES_BIT_BLOCK_SIZE] = {
-		0, 1, 1, 0, 0, 0, 0, 1,
-		0, 1, 1, 1, 0, 0, 1, 1,
-		0, 1, 1, 0, 0, 1, 0, 0,
-		0, 1, 1, 0, 0, 0, 0, 1,
-		0, 1, 1, 1, 0, 0, 1, 1,
-		0, 1, 1, 0, 0, 1, 0, 0,
-		0, 1, 1, 0, 0, 0, 0, 1,
-		0, 1, 1, 1, 0, 0, 1, 1,
+	t_byte1 message[FT_DES_BYTE_BLOCK_SIZE] = {
+		97, 115, 100, 97, 115, 100, 97, 115
+	};
+	t_byte1 expected_cypertext[FT_DES_BYTE_BLOCK_SIZE] = {
+		6, 175, 99, 208, 71, 158, 175, 28
 	};
 	t_byte1 key[FT_DES_INITIAL_KEY_SIZE] = {
 		0, 0, 1, 1, 1, 0, 1, 1,
@@ -577,26 +575,14 @@ int encrypt_block()
 		1, 1, 1, 1, 0, 1, 1, 1,
 		0, 1, 0, 1, 1, 1, 1, 0,
 	};
-	t_byte1 expected_cypertext[FT_DES_BIT_BLOCK_SIZE] = {
-		0, 0, 0, 0, 0, 1, 1, 0,
-		1, 0, 1, 0, 1, 1, 1, 1,
-		0, 1, 1, 0, 0, 0, 1, 1,
-		1, 1, 0, 1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0, 1, 1, 1,
-		1, 0, 0, 1, 1, 1, 1, 0,
-		1, 0, 1, 0, 1, 1, 1, 1,
-		0, 0, 0, 1, 1, 1, 0, 0,
-	};
-	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE];
-	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
-	t_byte1 cyphertext[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE];
+	t_byte1 cyphertext[FT_DES_BYTE_BLOCK_SIZE];
 
-	ft_des_key_permuted_choice_one(key, reduced_key);
-	ft_des_generate_encryption_round_keys(reduced_key, round_keys);
+	ft_des_generate_encryption_round_keys(key, round_keys);
 	ft_des_process_block(message, round_keys, cyphertext);
 
 	int i = 0;
-	while(i < FT_DES_BIT_BLOCK_SIZE)
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
 		_is(cyphertext[i] == expected_cypertext[i]);
 		i++;
@@ -606,25 +592,11 @@ int encrypt_block()
 
 int	decrypt_block()
 {
-	t_byte1 cypertext[FT_DES_BIT_BLOCK_SIZE] = {
-		0, 0, 0, 0, 0, 1, 1, 0,
-		1, 0, 1, 0, 1, 1, 1, 1,
-		0, 1, 1, 0, 0, 0, 1, 1,
-		1, 1, 0, 1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0, 1, 1, 1,
-		1, 0, 0, 1, 1, 1, 1, 0,
-		1, 0, 1, 0, 1, 1, 1, 1,
-		0, 0, 0, 1, 1, 1, 0, 0,
+	t_byte1 cypertext[FT_DES_BYTE_BLOCK_SIZE] = {
+		6, 175, 99, 208, 71, 158, 175, 28
 	};
-	t_byte1 expected_plaintext[FT_DES_BIT_BLOCK_SIZE] = {
-		0, 1, 1, 0, 0, 0, 0, 1,
-		0, 1, 1, 1, 0, 0, 1, 1,
-		0, 1, 1, 0, 0, 1, 0, 0,
-		0, 1, 1, 0, 0, 0, 0, 1,
-		0, 1, 1, 1, 0, 0, 1, 1,
-		0, 1, 1, 0, 0, 1, 0, 0,
-		0, 1, 1, 0, 0, 0, 0, 1,
-		0, 1, 1, 1, 0, 0, 1, 1,
+	t_byte1 expected_plaintext[FT_DES_BYTE_BLOCK_SIZE] = {
+		97, 115, 100, 97, 115, 100, 97, 115
 	};
 	t_byte1 key[FT_DES_INITIAL_KEY_SIZE] = {
 		0, 0, 1, 1, 1, 0, 1, 1,
@@ -636,21 +608,58 @@ int	decrypt_block()
 		1, 1, 1, 1, 0, 1, 1, 1,
 		0, 1, 0, 1, 1, 1, 1, 0,
 	};
-	t_byte1 reduced_key[FT_DES_REDUCED_KEY_SIZE];
-	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_FEISTEL_FUNCTION_KEY_SIZE];
-	t_byte1 plaintext[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1 round_keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE];
+	t_byte1 plaintext[FT_DES_BYTE_BLOCK_SIZE];
 
-	ft_des_key_permuted_choice_one(key, reduced_key);
-	ft_des_generate_decryption_round_keys(reduced_key, round_keys);
+	ft_des_generate_decryption_round_keys(key, round_keys);
 	ft_des_process_block(cypertext, round_keys, plaintext);
 
 	int i = 0;
-	while(i < FT_DES_BIT_BLOCK_SIZE)
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
 		_is(plaintext[i] == expected_plaintext[i]);
 		i++;
 	}
 	_end("should decrypt block");
+}
+
+int	init_ctx()
+{
+	t_des_ctx ctx;
+	int i;
+	int j;
+	ft_des_init_ctx(&ctx);
+
+	i = 0;
+	while(i < FT_DES_INITIAL_KEY_SIZE)
+	{
+		_is(ctx.key[i] == 0);
+		i++;
+	}
+
+	i = 0;
+	while(i < FT_DES_ROUND_COUNT)
+	{
+		j = 0;
+		while(j < FT_DES_ROUND_KEY_SIZE)
+		{
+			_is(ctx.round_keys[i][j] == 0);
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	{
+		_is(ctx.buffer[i] == 0);
+		i++;
+	}
+	_is(ctx.readed == 0);
+	_is(ctx.input_fd == STDIN_FILENO);
+	_is(ctx.output_fd == STDOUT_FILENO);
+	_is(ctx.decode == 0);
+	_is(ctx.output_in_base64 == 0);
+	_end("shoud init ctx");
 }
 
 int des_tests()
@@ -668,5 +677,6 @@ int des_tests()
 	_should(perform_encryption_round);
 	_should(encrypt_block);
 	_should(decrypt_block);
+	_should(init_ctx);
 	return 0;
 }

@@ -3,7 +3,7 @@
 static void merge_key
 (
 	t_byte1 expanded_half[FT_DES_EXPANDED_HALF_BLOCK_SIZE],
-	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE],
+	t_byte1 key[FT_DES_ROUND_KEY_SIZE],
 	t_byte1 output[FT_DES_EXPANDED_HALF_BLOCK_SIZE]
 )
 {
@@ -18,7 +18,7 @@ static void merge_key
 void	ft_des_feistel_function
 (
 	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],
-	t_byte1 key[FT_DES_FEISTEL_FUNCTION_KEY_SIZE],
+	t_byte1 key[FT_DES_ROUND_KEY_SIZE],
 	t_byte1 output[FT_DES_BIT_BLOCK_SIZE / 2]
 )
 {
