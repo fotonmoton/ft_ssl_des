@@ -130,7 +130,8 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_init_ctx.c 							\
 								ft_des_print_error.c 						\
 								ft_des_arg_parsers.c 						\
-								ft_des_ecb_process.c
+								ft_des_ecb_process.c 						\
+								ft_des_ecb_process_chunk.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c

@@ -49,6 +49,6 @@ void		ft_des_ecb
 
 	ft_des_init_ctx(&ctx);
 	parse_args(argc, argv, &ctx);
-	// ft_des_ecb_process(&ctx);
+	ft_des_ecb_process(&ctx);
 	exit(0);
 }
