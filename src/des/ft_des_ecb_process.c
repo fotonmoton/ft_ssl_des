@@ -12,5 +12,5 @@ void	ft_des_ecb_process
 	ft_des_generate_encryption_round_keys(ctx->key, ctx->round_keys);
 	while((readed = read(ctx->input_fd, buffer, FT_DES_READ_SIZE)) > 0)
 		ft_des_ecb_process_chunk(ctx, readed, buffer);
-	// ft_des_ecb_finish_process(ctx);
+	ft_des_ecb_finish_process(ctx);
 }

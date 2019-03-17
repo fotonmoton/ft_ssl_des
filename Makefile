@@ -131,7 +131,9 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_print_error.c 						\
 								ft_des_arg_parsers.c 						\
 								ft_des_ecb_process.c 						\
-								ft_des_ecb_process_chunk.c
+								ft_des_ecb_process_chunk.c 					\
+								ft_des_hex_to_bit_key.c 					\
+								ft_des_ecb_finish_process.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c

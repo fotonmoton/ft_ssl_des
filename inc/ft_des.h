@@ -27,6 +27,7 @@
 # define FT_DES_REDUCED_KEY_SIZE 56
 # define FT_DES_ROUND_COUNT 16
 # define FT_DES_READ_SIZE 1024
+# define FT_DES_MAX_HEX_KEY 16
 
 typedef uint64_t					t_byte8;
 typedef unsigned char				t_byte1;
@@ -319,6 +320,12 @@ void								ft_des_generete_key_from_hex
 (
 	char *hex_key,
 	t_byte1 initla_key[FT_DES_INITIAL_KEY_SIZE]
+);
+
+const char							*ft_des_hex_to_bit_key
+(
+	const char *hex_key,
+	t_byte1 bits_key[FT_DES_INITIAL_KEY_SIZE]
 );
 
 #endif

@@ -662,6 +662,101 @@ int	init_ctx()
 	_end("shoud init ctx");
 }
 
+int convert_hex_string_to_bits()
+{
+	t_byte1 expected_key[FT_DES_INITIAL_KEY_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+	};
+	t_byte1 actual_key[FT_DES_INITIAL_KEY_SIZE];
+	const char *wrong_key_char;
+	int i;
+
+	wrong_key_char = ft_des_hex_to_bit_key("FFFFFFFFFFFFFFFF", actual_key);
+	_is(wrong_key_char == NULL);
+
+	i = 0;
+	while(i < FT_DES_INITIAL_KEY_SIZE)
+	{
+		_is(expected_key[i] == actual_key[i]);
+		i++;
+	}
+
+	wrong_key_char = ft_des_hex_to_bit_key("ffffffffffffffff", actual_key);
+	_is(wrong_key_char == NULL);
+
+	i = 0;
+	while(i < FT_DES_INITIAL_KEY_SIZE)
+	{
+		_is(expected_key[i] == actual_key[i]);
+		i++;
+	}
+	_end("should convert hex string to 64 bit key");
+}
+
+int convert_short_hex_string_to_bits()
+{
+	t_byte1 expected_key[FT_DES_INITIAL_KEY_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+		1, 1, 0, 0, 1, 1, 0, 1,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0,
+	};
+	t_byte1 actual_key[FT_DES_INITIAL_KEY_SIZE];
+	const char *wrong_key_char;
+	int i;
+
+	ft_bzero(actual_key, FT_DES_INITIAL_KEY_SIZE);
+	wrong_key_char = ft_des_hex_to_bit_key("FF12CD", actual_key);
+	_is(wrong_key_char == NULL);
+
+	i = 0;
+	while(i < FT_DES_INITIAL_KEY_SIZE)
+	{
+		_is(expected_key[i] == actual_key[i]);
+		i++;
+	}
+	_end("should convert shorter hex string to 64 bit key");
+}
+
+int convert_longer_hex_string_to_bits()
+{
+	t_byte1 expected_key[FT_DES_INITIAL_KEY_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+		1, 1, 0, 0, 1, 1, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+		1, 1, 0, 0, 1, 1, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+	};
+	t_byte1 actual_key[FT_DES_INITIAL_KEY_SIZE];
+	const char *wrong_key_char;
+	int i;
+
+	ft_bzero(actual_key, FT_DES_INITIAL_KEY_SIZE);
+	wrong_key_char = ft_des_hex_to_bit_key("FF12CDFF12CDFF12CD", actual_key);
+	_is(wrong_key_char == NULL);
+
+	i = 0;
+	while(i < FT_DES_INITIAL_KEY_SIZE)
+	{
+		_is(expected_key[i] == actual_key[i]);
+		i++;
+	}
+	_end("should convert longer hex string to 64 bit key");
+}
+
 int des_tests()
 {
 	_should(perform_initial_permutation);
@@ -678,5 +773,8 @@ int des_tests()
 	_should(encrypt_block);
 	_should(decrypt_block);
 	_should(init_ctx);
+	_should(convert_hex_string_to_bits);
+	_should(convert_short_hex_string_to_bits);
+	_should(convert_longer_hex_string_to_bits);
 	return 0;
 }
