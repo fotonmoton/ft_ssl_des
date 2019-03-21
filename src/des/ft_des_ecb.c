@@ -6,6 +6,14 @@ t_des_argument_parser	g_arg_parsers[] = {
 		"-k",
 		ft_des_key_arg_parser,
 	},
+	{
+		"-d",
+		ft_des_decode_arg_parser,
+	},
+	{
+		"-a",
+		ft_des_base64_arg_parser,
+	},
 	{ NULL, NULL},
 };
 
@@ -49,6 +57,15 @@ void		ft_des_ecb
 
 	ft_des_init_ctx(&ctx);
 	parse_args(argc, argv, &ctx);
-	ft_des_ecb_process(&ctx);
+	if (ctx.decode)
+	{
+		ft_des_generate_decryption_round_keys(ctx.key, ctx.round_keys);
+		ft_des_ecb_decrypt(&ctx);
+	}
+	else
+	{
+		ft_des_generate_encryption_round_keys(ctx.key, ctx.round_keys);
+		ft_des_ecb_encrypt(&ctx);
+	}
 	exit(0);
 }

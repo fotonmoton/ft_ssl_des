@@ -14,6 +14,7 @@
 # define FT_DES_H
 
 # include <stdint.h>
+# include "ft_base64.h"
 
 # define FT_DES_BYTE_BLOCK_SIZE 8
 # define FT_DES_BIT_BLOCK_SIZE 64
@@ -38,12 +39,16 @@ typedef	struct						s_des_ctx
 	int								input_fd;
 	int								output_fd;
 	int								decode;
+	int								b64;
 	int								output_in_base64;
 	int								readed;
 	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1							key[FT_DES_INITIAL_KEY_SIZE];
 	t_byte1							round_keys[FT_DES_ROUND_COUNT]
 									[FT_DES_ROUND_KEY_SIZE];
+	t_base64_ctx					b64_ctx;
+	t_base64_encode_buffer			b64_encode_buffer;
+	t_base64_decode_buffer			b64_decode_buffer;
 }									t_des_ctx;
 
 typedef int (*t_ft_des_arg_parser_function)
@@ -299,19 +304,24 @@ int									ft_des_salt_arg_parser
 	t_des_ctx *c
 );
 
-void								ft_des_ecb_process
+void								ft_des_ecb_decrypt
 (
 	t_des_ctx *ctx
 );
 
-void								ft_des_ecb_process_chunk
+void								ft_des_ecb_encrypt
+(
+	t_des_ctx *ctx
+);
+
+void								ft_des_ecb_encode_process_chunk
 (
 	t_des_ctx *ctx,
 	t_byte8 reaed,
 	t_byte1 buffer[FT_DES_READ_SIZE]
 );
 
-void								ft_des_ecb_finish_process
+void								ft_des_ecb_finish_encrypt
 (
 	t_des_ctx *ctx
 );
