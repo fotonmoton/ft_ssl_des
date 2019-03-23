@@ -20,7 +20,6 @@ void	ft_des_init_ctx
 	ctx->readed = 0;
 	ctx->decode = 0;
 	ctx->b64 = 0;
-	ctx->output_in_base64 = 0;
 	ctx->input_fd = STDIN_FILENO;
 	ctx->output_fd = STDOUT_FILENO;
 }

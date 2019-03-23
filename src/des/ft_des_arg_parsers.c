@@ -47,3 +47,17 @@ int ft_des_decode_arg_parser
 	ctx->decode = 1;
 	return (++position);
 }
+
+int ft_des_encode_arg_parser
+(
+	int argc,
+	char **argv,
+	int position,
+	t_des_ctx *ctx
+)
+{
+	(void)argc;
+	(void)argv;
+	ctx->encode = 1;
+	return (++position);
+}

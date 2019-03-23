@@ -39,7 +39,6 @@ typedef	struct						s_des_ctx
 	int								output_fd;
 	int								decode;
 	int								b64;
-	int								output_in_base64;
 	int								readed;
 	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1							key[FT_DES_INITIAL_KEY_SIZE];

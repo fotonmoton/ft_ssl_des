@@ -11,6 +11,10 @@ t_des_argument_parser	g_arg_parsers[] = {
 		ft_des_decode_arg_parser,
 	},
 	{
+		"-e",
+		ft_des_encode_arg_parser,
+	},
+	{
 		"-a",
 		ft_des_base64_arg_parser,
 	},
