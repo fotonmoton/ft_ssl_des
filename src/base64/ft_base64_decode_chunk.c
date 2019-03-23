@@ -11,7 +11,12 @@ static void	ft_base64_decode_write
 	t_byte1		decoded_block[FT_BASE64_ENCODE_BLOCK_SIZE];
 
 	ft_base64_decode_transform(ctx, block, decoded_block);
-	write(ctx->output_fd, decoded_block, FT_BASE64_ENCODE_BLOCK_SIZE);
+	if (block[3] == '=' && block[2] == '=')
+		write(ctx->output_fd, decoded_block, FT_BASE64_ENCODE_BLOCK_SIZE - 2);
+	else if (block[3] == '=')
+		write(ctx->output_fd, decoded_block, FT_BASE64_ENCODE_BLOCK_SIZE - 1);
+	else
+		write(ctx->output_fd, decoded_block, FT_BASE64_ENCODE_BLOCK_SIZE);
 }
 
 void		ft_base64_decode_chunk

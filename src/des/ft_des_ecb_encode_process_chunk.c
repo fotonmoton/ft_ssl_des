@@ -10,15 +10,7 @@ static void	ft_des_ecb_write
 {
 	t_byte1 cyphertext[FT_DES_BYTE_BLOCK_SIZE];
 	ft_des_process_block(buffer, ctx->round_keys, cyphertext);
-	if (ctx->b64)
-		ft_base64_encode_chunk(
-			&ctx->b64_ctx,
-			FT_DES_BYTE_BLOCK_SIZE,
-			cyphertext,
-			&ctx->b64_encode_buffer
-		);
-	else
-		write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
+	write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
 }
 
 void	ft_des_ecb_encode_process_chunk

@@ -25,37 +25,6 @@ static t_byte8 buffered_read
 	return (total_readed);
 }
 
-static void	ouput
-(
-	t_des_ctx *ctx,
-	t_byte1 buffer[FT_DES_BYTE_BLOCK_SIZE]
-)
-{
-	if (ctx->b64)
-		ft_base64_decode_chunk(
-			&ctx->b64_ctx,
-			FT_DES_BYTE_BLOCK_SIZE, buffer, &ctx->b64_decode_buffer);
-	else
-		write(ctx->output_fd, buffer, FT_DES_BYTE_BLOCK_SIZE);
-}
-
-static void	finish
-(
-	t_des_ctx *ctx,
-	t_byte1 buffer[FT_DES_BYTE_BLOCK_SIZE]
-)
-{
-	if (ctx->b64)
-	{
-	}
-	else
-	{
-		if (buffer[7] < 0 || buffer[7] > 8)
-			ft_des_print_error("wrong padding");
-		write(ctx->output_fd, buffer, FT_DES_BYTE_BLOCK_SIZE - buffer[7]);
-	}
-}
-
 void		ft_des_ecb_decrypt
 (
 	t_des_ctx *c
@@ -72,9 +41,11 @@ void		ft_des_ecb_decrypt
 		if (readed != FT_DES_BYTE_BLOCK_SIZE)
 			ft_des_print_error("wrong message size");
 		if (last_read)
-			ouput(c, message);
+			write(c->output_fd, message, FT_DES_BYTE_BLOCK_SIZE);
 		ft_des_process_block(buffer, c->round_keys, message);
 		last_read = readed;
 	}
-	finish(c, message);
+	if (message[7] < 0 || message[7] > 8)
+		ft_des_print_error("wrong padding");
+	write(c->output_fd, message, FT_DES_BYTE_BLOCK_SIZE - message[7]);
 }

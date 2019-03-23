@@ -19,14 +19,5 @@ void	ft_des_ecb_finish_encrypt
 		buffer_index++;
 	}
 	ft_des_process_block(ctx->buffer, ctx->round_keys, cyphertext);
-	if (ctx->b64)
-	{
-		ft_base64_encode_chunk(&ctx->b64_ctx, FT_DES_BYTE_BLOCK_SIZE,
-			cyphertext,
-			&ctx->b64_encode_buffer
-		);
-		ft_base64_encode_finish(&ctx->b64_ctx, &ctx->b64_encode_buffer);
-	}
-	else
-		write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
+	write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
 }

@@ -132,6 +132,8 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_arg_parsers.c 						\
 								ft_des_ecb_encrypt.c 						\
 								ft_des_ecb_decrypt.c 						\
+								ft_des_ecb_decrypt_b64.c 					\
+								ft_des_ecb_encrypt_b64.c 					\
 								ft_des_ecb_encode_process_chunk.c 			\
 								ft_des_hex_to_bit_key.c 					\
 								ft_des_ecb_finish_encrypt.c
