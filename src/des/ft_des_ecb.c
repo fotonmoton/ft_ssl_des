@@ -18,6 +18,14 @@ t_des_argument_parser	g_arg_parsers[] = {
 		"-a",
 		ft_des_base64_arg_parser,
 	},
+	{
+		"-i",
+		ft_des_input_file_arg_parser,
+	},
+	{
+		"-o",
+		ft_des_output_file_arg_parser,
+	},
 	{ NULL, NULL},
 };
 

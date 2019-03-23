@@ -1,3 +1,4 @@
+#include <fcntl.h>
 #include "ft_base64.h"
 #include "libft.h"
 
@@ -13,8 +14,8 @@ void		ft_base64_decode_finish
 		return ;
 	if (buffer_index != 0)
 	{
-		ft_putstr("\nbase64: invalid input: readed \
-bytes count isn't multiple of 4\n");
+		ft_putstr_fd("\nbase64: invalid input: readed \
+bytes count isn't multiple of 4\n", STDERR_FILENO);
 		exit(1);
 	}
 }

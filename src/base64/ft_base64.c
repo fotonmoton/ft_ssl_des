@@ -1,15 +1,36 @@
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/stat.h>
 #include <fcntl.h>
 #include "libft.h"
 #include "ft_base64.h"
 
-static int	open_stream(char *filename, int flags, int mode)
+static int	open_input(char *filename)
 {
 	int fd;
-	if ((fd = open((const char *)filename, flags, mode)) == -1)
+	struct stat stat_buff;
+
+	if ((fd = open((const char *)filename, O_RDONLY, 0)) == -1)
 	{
-		perror("base64");
+		perror("base64: input stream error");
+		exit(1);
+	}
+	stat(filename, &stat_buff);
+	if (S_ISDIR(stat_buff.st_mode))
+	{
+		ft_putstr_fd("base64: input path is not a file", STDERR_FILENO);
+		exit(1);
+	}
+	return fd;
+}
+
+static int	open_output(char *filename)
+{
+	int fd;
+	if ((fd = open((const char *)filename,
+		O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR)) == -1)
+	{
+		perror("base64: output stream error");
 		exit(1);
 	}
 	return fd;
@@ -42,10 +63,9 @@ static void read_args
 		else if (ft_strcmp(current_arg, "-e") == 0 && ++i)
 			continue;
 		else if (ft_strcmp(current_arg, "-i") == 0)
-			ctx->input_fd = open_stream(next_arg, O_RDONLY, 0);
+			ctx->input_fd = open_input(next_arg);
 		else if (ft_strcmp(current_arg, "-o") == 0)
-			ctx->output_fd = open_stream(next_arg, O_CREAT | O_WRONLY,
-			S_IRUSR | S_IWUSR);
+			ctx->output_fd = open_output(next_arg);
 		else if (++i)
 			continue;
 		i++;
