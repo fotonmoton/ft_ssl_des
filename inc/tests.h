@@ -17,5 +17,6 @@ int md5_tests(void);
 int sha_tests(void);
 int base64_tests(void);
 int des_tests(void);
+int pbkdf2_tests(void);
 
 #endif

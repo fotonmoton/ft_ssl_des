@@ -658,7 +658,7 @@ int	init_ctx()
 	_is(ctx.input_fd == STDIN_FILENO);
 	_is(ctx.output_fd == STDOUT_FILENO);
 	_is(ctx.decode == 0);
-	_is(ctx.output_in_base64 == 0);
+	_is(ctx.b64 == 0);
 	_end("shoud init ctx");
 }
 

@@ -22,6 +22,7 @@ MD5_DIR :=						$(SRC_DIR)/md5/
 SHA_DIR :=						$(SRC_DIR)/sha/
 B64_DIR :=						$(SRC_DIR)/base64/
 DES_DIR :=						$(SRC_DIR)/des/
+KD2_DIR :=						$(SRC_DIR)/pbkdf2/
 OBJ_DIR :=						$(ROOT)/obj/
 INC_DIR :=						$(ROOT)/inc/
 LIB_DIR :=						$(ROOT)/lib/
@@ -34,11 +35,13 @@ SHA_HEADER :=					$(INC_DIR)/ft_sha.h
 SSL_HEADER :=					$(INC_DIR)/ft_ssl.h
 B64_HEADER :=					$(INC_DIR)/ft_base64.h
 DES_HEADER :=					$(INC_DIR)/ft_des.h
+KD2_HEADER :=					$(INC_DIR)/ft_pbkdf2.h
 HEADERS :=						$(MD5_HEADER)								\
 								$(SHA_HEADER)								\
 								$(SSL_HEADER)								\
 								$(B64_HEADER)								\
-								$(DES_HEADER)
+								$(DES_HEADER)								\
+								$(PBKDF2_HEADER)
 # libraries
 
 LIBFT_DIR :=					$(LIB_DIR)libft/
@@ -137,7 +140,9 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_ecb_encode_process_chunk.c 			\
 								ft_des_hex_to_bit_key.c 					\
 								ft_des_ecb_finish_encrypt.c
-								# ft_des_ecb_finish_decrypt.c
+
+KD2_SRC =						ft_hmac_sha256_init_ctx.c 					\
+								ft_hmac_sha256.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c
@@ -145,7 +150,8 @@ SRC =							main.c										\
 SRC +=							$(MD5_SRC)									\
 								$(SHA_SRC)									\
 								$(BASE64_SRC)								\
-								$(DES_SRC)
+								$(DES_SRC)									\
+								$(KD2_SRC)
 # project object files
 
 OBJ =							$(addprefix $(OBJ_DIR), $(SRC:.c=.o))
@@ -167,11 +173,15 @@ BASE64_TESTS +=					$(BASE64_SRC)
 DES_TESTS =						des_tests.c
 DES_TESTS +=					$(DES_SRC)
 
+KD2_TESTS =						pbkdf2_tests.c
+KD2_TESTS +=					$(KD2_SRC)
+
 TEST_SRC =						tests.c
 TEST_SRC +=						$(MD5_TESTS)								\
 								$(SHA_TESTS)								\
 								$(BASE64_TESTS)								\
-								$(DES_TESTS)
+								$(DES_TESTS)								\
+								$(KD2_TESTS)
 
 TEST_OBJ =						$(addprefix $(OBJ_DIR), $(TEST_SRC:.c=.o))
 
@@ -261,6 +271,7 @@ vpath %.c						$(SRC_DIR)									\
 								$(SHA_DIR)									\
 								$(B64_DIR)									\
 								$(DES_DIR)									\
+								$(KD2_DIR)									\
 								$(TST_DIR)
 
 .PHONY: all check clean fclean re multi

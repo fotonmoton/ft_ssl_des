@@ -19,6 +19,7 @@ int all_tests()
 	_verify("sha:", sha_tests);
 	_verify("base64:", base64_tests);
 	_verify("des:", des_tests);
+	_verify("pbkdf2:", pbkdf2_tests);
 	return 0;
 }
 
