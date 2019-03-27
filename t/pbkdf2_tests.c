@@ -1,6 +1,7 @@
 #include "t.h"
 #include "tests.h"
 #include "ft_pbkdf2.h"
+#include "ft_sha.h"
 
 static int init_hmac_sha256_ctx()
 {

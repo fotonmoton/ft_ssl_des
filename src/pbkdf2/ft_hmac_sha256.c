@@ -1,5 +1,6 @@
 #include "ft_pbkdf2.h"
 #include "libft.h"
+#include "ft_sha.h"
 
 static void	set_padding
 (

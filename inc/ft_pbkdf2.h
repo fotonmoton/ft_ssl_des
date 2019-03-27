@@ -1,10 +1,14 @@
-#include "ft_sha.h"
+
+#ifndef FT_PBKDF2_H
+# define FT_PBKDF2_H
+
+#define FT_PBKDF2_RESULT 32
 
 typedef struct 		s_hmac_sha256_ctx
 {
 	unsigned char	*key;
 	unsigned char	*msg;
-	unsigned char	out[FT_SHA256_DIGEST_LENGTH_BYTE];
+	unsigned char	out[FT_PBKDF2_RESULT];
 	unsigned int	key_size;
 	unsigned int	msg_size;
 }					t_hmac_sha256_ctx;
@@ -18,3 +22,5 @@ void	ft_hmac_sha256
 (
 	t_hmac_sha256_ctx *ctx
 );
+
+#endif
