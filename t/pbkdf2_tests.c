@@ -2,20 +2,22 @@
 #include "tests.h"
 #include "ft_pbkdf2.h"
 #include "ft_sha.h"
+#include "libft.h"
 
 static int init_hmac_sha256_ctx()
 {
 	t_hmac_sha256_ctx ctx;
-	int i = 0;
 
 	ft_hmac_sha256_init_ctx(&ctx);
 	_is(ctx.key == NULL);
 	_is(ctx.msg == NULL);
 	_is(ctx.key_size == 0);
 	_is(ctx.msg_size == 0);
-	while(i < FT_SHA256_DIGEST_LENGTH_BYTE)
+	int i = 0;
+	while(i < FT_SHA256_BLOCK_SIZE)
 	{
-		_is(ctx.out[i] == 0);
+		_is(ctx.opad[i] == 0);
+		_is(ctx.ipad[i] == 0);
 		i++;
 	}
 	_end("init hmac sha256 ctx");
@@ -39,17 +41,18 @@ static int perform_hmac_256_computation_short_key()
 		0x88, 0x1d, 0xc2, 0x00, 0xc9, 0x83, 0x3d, 0xa7,
 		0x26, 0xe9, 0x37, 0x6c, 0x2e, 0x32, 0xcf, 0xf7,
 	};
+	unsigned char 	out[FT_SHA256_DIGEST_LENGTH_BYTE];
 	ft_hmac_sha256_init_ctx(&ctx);
 	ctx.key = key;
 	ctx.msg = msg;
 	ctx.key_size = 20;
 	ctx.msg_size = 8;
-	ft_hmac_sha256(&ctx);
+	ft_hmac_sha256(&ctx, out);
 
 	int i = 0;
 	while(i < FT_SHA256_DIGEST_LENGTH_BYTE)
 	{
-		_is(ctx.out[i] == expected_result[i]);
+		_is(out[i] == expected_result[i]);
 		i++;
 	}
 	_end("perform hamc sha256 computation with short key");
@@ -104,20 +107,149 @@ static int perform_hmac_256_computation_long_key()
 		0xbf, 0xdc, 0x63, 0x64, 0x4f, 0x07, 0x13, 0x93,
 		0x8a, 0x7f, 0x51, 0x53, 0x5c, 0x3a, 0x35, 0xe2,
 	};
+	unsigned char out[FT_SHA256_DIGEST_LENGTH_BYTE];
+
 	ft_hmac_sha256_init_ctx(&ctx);
 	ctx.key = key;
 	ctx.msg = msg;
 	ctx.key_size = 131;
 	ctx.msg_size = 152;
-	ft_hmac_sha256(&ctx);
+	ft_hmac_sha256(&ctx, out);
 
 	int i = 0;
 	while(i < FT_SHA256_DIGEST_LENGTH_BYTE)
 	{
-		_is(ctx.out[i] == expected_result[i]);
+		_is(out[i] == expected_result[i]);
 		i++;
 	}
 	_end("perform hamc sha256 computation with long key");
+}
+
+int init_pbkdf2_sha256_ctx()
+{
+	t_pbkdf2_sha256_ctx ctx;
+
+	ft_pbkdf2_sha256_init_ctx(&ctx);
+
+	_is(ctx.iterations == 0);
+	_is(ctx.key_len == 0);
+	_is(ctx.salt_len == 0);
+	_is(ctx.pass_len == 0);
+	_is(ctx.salt == NULL);
+	_is(ctx.key == NULL);
+	_is(ctx.pass == NULL);
+
+	_end("init pbkdf2 sha256 ctx");
+}
+
+int perform_pbkdf2_sha256()
+{
+	t_pbkdf2_sha256_ctx	ctx;
+	int					i;
+
+	unsigned char		pass1[] = "password";
+	unsigned char		salt1[] = "salt";
+	unsigned char		expected1[32] = {
+		0x12, 0x0f, 0xb6, 0xcf, 0xfc, 0xf8, 0xb3, 0x2c,
+		0x43, 0xe7, 0x22, 0x52, 0x56, 0xc4, 0xf8, 0x37,
+		0xa8, 0x65, 0x48, 0xc9, 0x2c, 0xcc, 0x35, 0x48,
+		0x08, 0x05, 0x98, 0x7c, 0xb7, 0x0b, 0xe1, 0x7b,
+	};
+	unsigned char		key1[32];
+
+	ft_pbkdf2_sha256_init_ctx(&ctx);
+	ctx.key = key1;
+	ctx.pass = pass1;
+	ctx.salt = salt1;
+	ctx.pass_len = 8;
+	ctx.salt_len = 4;
+	ctx.key_len = 32;
+	ctx.iterations = 1;
+	ft_pbkdf2_sha256(&ctx);
+
+	i = 0;
+	while(i < 32)
+	{
+		_is(ctx.key[i] == expected1[i]);
+		i++;
+	}
+
+	unsigned char		expected2[32] = {
+		0xae, 0x4d, 0x0c, 0x95, 0xaf, 0x6b, 0x46, 0xd3,
+		0x2d, 0x0a, 0xdf, 0xf9, 0x28, 0xf0, 0x6d, 0xd0,
+		0x2a, 0x30, 0x3f, 0x8e, 0xf3, 0xc2, 0x51, 0xdf,
+		0xd6, 0xe2, 0xd8, 0x5a, 0x95, 0x47, 0x4c, 0x43,
+	};
+
+	ft_pbkdf2_sha256_init_ctx(&ctx);
+	ctx.key = key1;
+	ctx.pass = pass1;
+	ctx.salt = salt1;
+	ctx.pass_len = 8;
+	ctx.salt_len = 4;
+	ctx.key_len = 32;
+	ctx.iterations = 2;
+	ft_pbkdf2_sha256(&ctx);
+
+	i = 0;
+	while(i < 32)
+	{
+		_is(ctx.key[i] == expected2[i]);
+		i++;
+	}
+
+	unsigned char		expected3[32] = {
+		0xc5, 0xe4, 0x78, 0xd5, 0x92, 0x88, 0xc8, 0x41,
+		0xaa, 0x53, 0x0d, 0xb6, 0x84, 0x5c, 0x4c, 0x8d,
+		0x96, 0x28, 0x93, 0xa0, 0x01, 0xce, 0x4e, 0x11,
+		0xa4, 0x96, 0x38, 0x73, 0xaa, 0x98, 0x13, 0x4a,
+	};
+
+	ft_pbkdf2_sha256_init_ctx(&ctx);
+	ctx.key = key1;
+	ctx.pass = pass1;
+	ctx.salt = salt1;
+	ctx.pass_len = 8;
+	ctx.salt_len = 4;
+	ctx.key_len = 32;
+	ctx.iterations = 4096;
+	ft_pbkdf2_sha256(&ctx);
+
+	i = 0;
+	while(i < 32)
+	{
+		_is(ctx.key[i] == expected3[i]);
+		i++;
+	}
+
+	unsigned char		password4[24] = "passwordPASSWORDpassword";
+	unsigned char		salt4[36] = "saltSALTsaltSALTsaltSALTsaltSALTsalt";
+	unsigned char		expected4[40] = {
+		0x34, 0x8c, 0x89, 0xdb, 0xcb, 0xd3, 0x2b, 0x2f,
+		0x32, 0xd8, 0x14, 0xb8, 0x11, 0x6e, 0x84, 0xcf,
+		0x2b, 0x17, 0x34, 0x7e, 0xbc, 0x18, 0x00, 0x18,
+		0x1c, 0x4e, 0x2a, 0x1f, 0xb8, 0xdd, 0x53, 0xe1,
+		0xc6, 0x35, 0x51, 0x8c, 0x7d, 0xac, 0x47, 0xe9,
+	};
+	unsigned char key4[40];
+
+	ft_pbkdf2_sha256_init_ctx(&ctx);
+	ctx.key = key4;
+	ctx.pass = password4;
+	ctx.salt = salt4;
+	ctx.pass_len = 24;
+	ctx.salt_len = 36;
+	ctx.key_len = 40;
+	ctx.iterations = 4096;
+	ft_pbkdf2_sha256(&ctx);
+
+	i = 0;
+	while(i < 40)
+	{
+		_is(ctx.key[i] == expected4[i]);
+		i++;
+	}
+	_end("perform pbkdf2 sha256");
 }
 
 int pbkdf2_tests()
@@ -125,5 +257,7 @@ int pbkdf2_tests()
 	_should(init_hmac_sha256_ctx);
 	_should(perform_hmac_256_computation_short_key);
 	_should(perform_hmac_256_computation_long_key);
+	_should(init_pbkdf2_sha256_ctx);
+	_should(perform_pbkdf2_sha256);
 	return 0;
 }

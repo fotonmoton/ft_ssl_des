@@ -142,7 +142,9 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_ecb_finish_encrypt.c
 
 KD2_SRC =						ft_hmac_sha256_init_ctx.c 					\
-								ft_hmac_sha256.c
+								ft_hmac_sha256.c 							\
+								ft_pbkdf2_sha256_init_ctx.c 				\
+								ft_pbkdf2_sha256.c
 
 SRC =							main.c										\
 								ft_ssl_usage.c

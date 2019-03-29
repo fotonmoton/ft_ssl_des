@@ -12,5 +12,6 @@ void ft_hmac_sha256_init_ctx
 	ctx->msg = NULL;
 	ctx->key_size = 0;
 	ctx->msg_size = 0;
-	ft_bzero(ctx->out, FT_SHA256_DIGEST_LENGTH_BYTE);
+	ft_bzero(ctx->opad, FT_SHA256_BLOCK_SIZE);
+	ft_bzero(ctx->ipad, FT_SHA256_BLOCK_SIZE);
 }
