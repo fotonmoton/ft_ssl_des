@@ -251,11 +251,17 @@ $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c $(LIBFT) $(HEADERS)
+$(OBJ_DIR)%.o: %.c $(LIBFT) $(OPENSSL_CRY) $(OPENSSL_SSL) $(HEADERS)
 	$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+
+$(OPENSSL_CRY) $(OPENSSL_SSL):
+	cd $(OPENSSL_DIR)					&& \
+	./config --prefix=$(OPENSSL_BLD)	&& \
+	make -j 4 							&& \
+	make -j 4 install
 
 all: $(NAME)
 

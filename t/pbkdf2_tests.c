@@ -3,6 +3,7 @@
 #include "ft_pbkdf2.h"
 #include "ft_sha.h"
 #include "libft.h"
+#include "openssl/evp.h"
 
 static int init_hmac_sha256_ctx()
 {
@@ -252,6 +253,49 @@ int perform_pbkdf2_sha256()
 	_end("perform pbkdf2 sha256");
 }
 
+int copy_openssl_pbkdf2()
+{
+	t_pbkdf2_sha256_ctx	ctx;
+	int					i;
+	int					iterations = 10000;
+	int					salt_len = 8;
+	int					pass_len = 8;
+	int					key_len = 8;
+	unsigned char		my_key[8];
+	unsigned char		orig_key[8];
+	unsigned char		pass[] = "password";
+	unsigned char		salt[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+	ft_pbkdf2_sha256_init_ctx(&ctx);
+	ctx.key = my_key;
+	ctx.pass = pass;
+	ctx.salt = salt;
+	ctx.pass_len = pass_len;
+	ctx.salt_len = salt_len;
+	ctx.key_len = key_len;
+	ctx.iterations = iterations;
+	ft_pbkdf2_sha256(&ctx);
+
+	PKCS5_PBKDF2_HMAC(
+		(const char *)pass,
+		pass_len,
+		salt,
+		salt_len,
+		iterations,
+		EVP_sha256(),
+		key_len,
+		orig_key
+	);
+
+	i = 0;
+	while(i < 8)
+	{
+		_is(my_key[i] == orig_key[i]);
+		i++;
+	}
+	_end("copy openssl pbkdf2");
+}
+
 int pbkdf2_tests()
 {
 	_should(init_hmac_sha256_ctx);
@@ -259,5 +303,6 @@ int pbkdf2_tests()
 	_should(perform_hmac_256_computation_long_key);
 	_should(init_pbkdf2_sha256_ctx);
 	_should(perform_pbkdf2_sha256);
+	_should(copy_openssl_pbkdf2);
 	return 0;
 }
