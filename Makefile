@@ -51,6 +51,13 @@ LIBFT_INC :=					-I $(LIBFT_DIR)includes/
 LIBFT_LIB :=					-lft -L $(LIBFT_DIR)
 LIBFT =							$(LIBFT_DIR)libft.a
 
+OPENSSL_DIR :=					$(LIB_DIR)openssl/
+OPENSSL_BLD :=					$(OPENSSL_DIR)bld/
+OPENSSL_LIB :=					-lssl -lcrypto -L $(OPENSSL_BLD)lib/
+OPENSSL_INC :=					-I $(OPENSSL_BLD)include/
+OPENSSL_SSL :=					$(OPENSSL_BLD)lib/libssl.a
+OPENSSL_CRY :=					$(OPENSSL_BLD)lib/libcrypto.a
+
 # project source files
 
 MD5_SRC =						ft_md5.c 									\
@@ -218,13 +225,14 @@ endif
 
 # linking flags
 
-LINK_FLAGS =					$(LIBFT_LIB)
+LINK_FLAGS =					$(LIBFT_LIB)								\
+								$(OPENSSL_LIB)
 
 # header flags
 
 HEADER_FLAGS =					-I $(INC_DIR)								\
-								$(MUINUT_INC)								\
-								$(LIBFT_INC)
+								$(LIBFT_INC)								\
+								$(OPENSSL_INC)
 
 # compiler
 
@@ -232,10 +240,10 @@ CC :=							clang
 
 # rules
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LINK_FLAGS) -o $(NAME)
 
-$(TEST_BIN): $(LIBFT) $(TEST_OBJ)
+$(TEST_BIN): $(TEST_OBJ)
 	$(CC) $(TEST_OBJ) $(LINK_FLAGS) -o $(TEST_BIN)
 
 $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
@@ -243,7 +251,7 @@ $(TEST_OBJ) $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: %.c $(HEADERS)
+$(OBJ_DIR)%.o: %.c $(LIBFT) $(HEADERS)
 	$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)
 
 $(LIBFT):
