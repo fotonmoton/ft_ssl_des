@@ -42,8 +42,13 @@ typedef	struct						s_des_ctx
 	int								readed;
 	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1							key[FT_DES_INITIAL_KEY_SIZE];
+	t_byte1							salt[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1							iv[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1							round_keys[FT_DES_ROUND_COUNT]
 									[FT_DES_ROUND_KEY_SIZE];
+	const char						*raw_password;
+	const char						*raw_salt;
+	const char						*raw_key;
 }									t_des_ctx;
 
 typedef int (*t_ft_des_arg_parser_function)
@@ -337,10 +342,31 @@ void								ft_des_generete_key_from_hex
 	t_byte1 initla_key[FT_DES_INITIAL_KEY_SIZE]
 );
 
-const char							*ft_des_hex_to_bit_key
+const char							*ft_des_hex_to_bit
 (
-	const char *hex_key,
-	t_byte1 bits_key[FT_DES_INITIAL_KEY_SIZE]
+	const char *hex,
+	t_byte1 *bits,
+	t_byte8 bit_len
+);
+
+const char							*ft_des_hex_to_byte
+(
+	const char *hex,
+	t_byte1 *bytes,
+	t_byte8 byte_len
+);
+
+void								ft_des_byte_to_bits
+(
+	t_byte1 *bytes,
+	t_byte8 byte_len,
+	t_byte1 *bits,
+	t_byte8 bits_len
+);
+
+void								ft_des_derive_key
+(
+	t_des_ctx *ctx
 );
 
 #endif

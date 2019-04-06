@@ -1,11 +1,8 @@
 #include "ft_des.h"
+#include "ft_pbkdf2.h"
 #include "libft.h"
 
 t_des_argument_parser	g_arg_parsers[] = {
-	{
-		"-k",
-		ft_des_key_arg_parser,
-	},
 	{
 		"-d",
 		ft_des_decode_arg_parser,
@@ -25,6 +22,18 @@ t_des_argument_parser	g_arg_parsers[] = {
 	{
 		"-o",
 		ft_des_output_file_arg_parser,
+	},
+	{
+		"-k",
+		ft_des_key_arg_parser,
+	},
+	{
+		"-p",
+		ft_des_password_arg_parser,
+	},
+	{
+		"-s",
+		ft_des_salt_arg_parser,
 	},
 	{ NULL, NULL},
 };
@@ -69,6 +78,7 @@ void		ft_des_ecb
 
 	ft_des_init_ctx(&ctx);
 	parse_args(argc, argv, &ctx);
+	ft_des_derive_key(&ctx);
 	if (ctx.decode)
 	{
 		ft_des_generate_decryption_round_keys(ctx.key, ctx.round_keys);

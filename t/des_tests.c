@@ -4,7 +4,6 @@
 #include "libft.h"
 #include <unistd.h>
 
-
 #define S_BOX_CASES_NUMBER 3
 
 int perform_initial_permutation()
@@ -654,11 +653,26 @@ int	init_ctx()
 		_is(ctx.buffer[i] == 0);
 		i++;
 	}
+	i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE)
+	{
+		_is(ctx.salt[i] == 0);
+		i++;
+	}
+	i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE)
+	{
+		_is(ctx.iv[i] == 0);
+		i++;
+	}
 	_is(ctx.readed == 0);
 	_is(ctx.input_fd == STDIN_FILENO);
 	_is(ctx.output_fd == STDOUT_FILENO);
 	_is(ctx.decode == 0);
 	_is(ctx.b64 == 0);
+	_is(ctx.raw_password == NULL);
+	_is(ctx.raw_key == NULL);
+	_is(ctx.raw_salt == NULL);
 	_end("shoud init ctx");
 }
 
@@ -678,7 +692,8 @@ int convert_hex_string_to_bits()
 	const char *wrong_key_char;
 	int i;
 
-	wrong_key_char = ft_des_hex_to_bit_key("FFFFFFFFFFFFFFFF", actual_key);
+	wrong_key_char = ft_des_hex_to_bit("FFFFFFFFFFFFFFFF", actual_key,
+		FT_DES_INITIAL_KEY_SIZE);
 	_is(wrong_key_char == NULL);
 
 	i = 0;
@@ -688,7 +703,8 @@ int convert_hex_string_to_bits()
 		i++;
 	}
 
-	wrong_key_char = ft_des_hex_to_bit_key("ffffffffffffffff", actual_key);
+	wrong_key_char = ft_des_hex_to_bit("ffffffffffffffff", actual_key,
+		FT_DES_INITIAL_KEY_SIZE);
 	_is(wrong_key_char == NULL);
 
 	i = 0;
@@ -716,7 +732,8 @@ int convert_short_hex_string_to_bits()
 	int i;
 
 	ft_bzero(actual_key, FT_DES_INITIAL_KEY_SIZE);
-	wrong_key_char = ft_des_hex_to_bit_key("FF12CD", actual_key);
+	wrong_key_char = ft_des_hex_to_bit("FF12CD", actual_key,
+		FT_DES_INITIAL_KEY_SIZE);
 	_is(wrong_key_char == NULL);
 
 	i = 0;
@@ -745,7 +762,8 @@ int convert_longer_hex_string_to_bits()
 	int i;
 
 	ft_bzero(actual_key, FT_DES_INITIAL_KEY_SIZE);
-	wrong_key_char = ft_des_hex_to_bit_key("FF12CDFF12CDFF12CD", actual_key);
+	wrong_key_char = ft_des_hex_to_bit("FF12CDFF12CDFF12CD", actual_key,
+		FT_DES_INITIAL_KEY_SIZE);
 	_is(wrong_key_char == NULL);
 
 	i = 0;
@@ -755,6 +773,84 @@ int convert_longer_hex_string_to_bits()
 		i++;
 	}
 	_end("should convert longer hex string to 64 bit key");
+}
+
+int convert_hex_string_to_bytes()
+{
+	t_byte1 expected[FT_DES_BYTE_BLOCK_SIZE] = {
+		0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+	};
+	t_byte1 actual[FT_DES_BYTE_BLOCK_SIZE];
+	const char *wrong_char;
+	int i;
+
+	ft_bzero(actual, FT_DES_BYTE_BLOCK_SIZE);
+	wrong_char = ft_des_hex_to_byte("FFFFFFFFFFFFFFFF", actual,
+		FT_DES_BYTE_BLOCK_SIZE);
+	_is(wrong_char == NULL);
+
+	i = 0;
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	{
+		_is(expected[i] == actual[i]);
+		i++;
+	}
+	_end("should convert hex to 8 byte");
+}
+
+int convert_short_hex_string_to_bytes()
+{
+	t_byte1 expected[FT_DES_BYTE_BLOCK_SIZE] = {
+		0xcc, 0x56, 0x50, 0, 0, 0, 0, 0,
+	};
+	t_byte1 actual[FT_DES_BYTE_BLOCK_SIZE];
+	const char *wrong_char;
+	int i;
+
+	ft_bzero(actual, FT_DES_BYTE_BLOCK_SIZE);
+	wrong_char = ft_des_hex_to_byte("CC565", actual,
+		FT_DES_BYTE_BLOCK_SIZE);
+	_is(wrong_char == NULL);
+
+	i = 0;
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	{
+		_is(expected[i] == actual[i]);
+		i++;
+	}
+	_end("should convert short hex string to 8 bytes");
+}
+
+int convert_bytes_to_bits()
+{
+	t_byte1 expected[FT_DES_BIT_BLOCK_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+		1, 1, 0, 0, 1, 1, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+		1, 1, 0, 0, 1, 1, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 1, 0, 0, 1, 0,
+	};
+	t_byte1 actual[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1 bytes[FT_DES_BYTE_BLOCK_SIZE];
+	const char *wrong_char;
+	int i;
+
+	ft_bzero(actual, FT_DES_BYTE_BLOCK_SIZE);
+	wrong_char = ft_des_hex_to_byte("FF12CDFF12CDFF12CD", bytes,
+		FT_DES_BYTE_BLOCK_SIZE);
+	ft_des_byte_to_bits(bytes, FT_DES_BYTE_BLOCK_SIZE, actual,
+		FT_DES_BIT_BLOCK_SIZE);
+
+	i = 0;
+	while(i < FT_DES_BIT_BLOCK_SIZE)
+	{
+		_is(expected[i] == actual[i]);
+		i++;
+	}
+	_end("should convert 8 bytes to 64 bits");
 }
 
 int des_tests()
@@ -776,5 +872,8 @@ int des_tests()
 	_should(convert_hex_string_to_bits);
 	_should(convert_short_hex_string_to_bits);
 	_should(convert_longer_hex_string_to_bits);
+	_should(convert_hex_string_to_bytes);
+	_should(convert_short_hex_string_to_bytes);
+	_should(convert_bytes_to_bits);
 	return 0;
 }

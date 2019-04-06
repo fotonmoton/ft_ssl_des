@@ -36,7 +36,9 @@ SSL_HEADER :=					$(INC_DIR)/ft_ssl.h
 B64_HEADER :=					$(INC_DIR)/ft_base64.h
 DES_HEADER :=					$(INC_DIR)/ft_des.h
 KD2_HEADER :=					$(INC_DIR)/ft_pbkdf2.h
-HEADERS :=						$(MD5_HEADER)								\
+TST_HEADER :=					$(INC_DIR)/t.h
+HEADERS :=						$(TST_HEADER)								\
+								$(MD5_HEADER)								\
 								$(SHA_HEADER)								\
 								$(SSL_HEADER)								\
 								$(B64_HEADER)								\
@@ -131,6 +133,7 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_generate_decryption_round_keys.c 	\
 								ft_des_ecb.c 								\
 								ft_des_init_ctx.c 							\
+								ft_des_derive_key.c 						\
 								ft_des_print_error.c 						\
 								ft_des_arg_parsers.c 						\
 								ft_des_ecb_encrypt.c 						\
@@ -138,7 +141,9 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_ecb_decrypt_b64.c 					\
 								ft_des_ecb_encrypt_b64.c 					\
 								ft_des_ecb_encode_process_chunk.c 			\
-								ft_des_hex_to_bit_key.c 					\
+								ft_des_hex_to_bit.c 						\
+								ft_des_hex_to_byte.c 						\
+								ft_des_byte_to_bits.c 						\
 								ft_des_ecb_finish_encrypt.c
 
 KD2_SRC =						ft_hmac_sha256_init_ctx.c 					\
