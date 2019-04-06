@@ -28,10 +28,10 @@ static int transform_block()
 	ft_base64_init(&ctx);
 
 	ft_base64_encode_transform(&ctx, (t_byte1 *)"Man", buff);
-	_is(ft_strcmp((char *)buff, "TWFu") == 0);
+	_is(ft_strncmp((char *)buff, "TWFu", 4) == 0);
 
 	ft_base64_encode_transform(&ctx, (t_byte1 *)"LOL", buff);
-	_is(ft_strcmp((char *)buff, "TE9M") == 0);
+	_is(ft_strncmp((char *)buff, "TE9M", 4) == 0);
 
 	_end("transform block");
 }

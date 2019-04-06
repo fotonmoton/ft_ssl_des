@@ -1,0 +1,29 @@
+// ENCRYPTING
+
+1. "openssl des-ecb -S a"
+	prompts to enter password, generate key with given pass and salt,
+	prepend salt header.
+
+2. "openssl des-ecb -pass pass:asd"
+	generate salt and key, prepend salt header.
+
+3. "openssl des-ecb -S a -pass:asd"
+	generate key from givent salt and pass, prepend header.
+
+4. "openssl des-ecb -S a -pass:asd -K 1"
+	encrypt with GIVEN key, prepend GIVEN salt hedaer.
+
+5. "openssl des-ecb -K 1"
+	encrypt with given key, doesn't generate and prepend salt.
+
+6. "openssl des-ecb -S 0 -pass pass:asd -P -pbkdf2"
+	generate key using PKCS5_PBKDF2_HMAC with 10000 iteration,
+	8 byte salt, 3 byte key, sha256 hash function
+
+// DECRYPTING
+
+7. "echo -n Salted__ | openssl des-ecb -d"
+	prompts to enter password, generate key but fails to decode.
+
+8. "echo -n Salted__aaaaaaaa | openssl des-ecb -d"
+	prompts to enter password, generate key but fails to validate padding.

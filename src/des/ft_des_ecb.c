@@ -81,7 +81,6 @@ void		ft_des_ecb
 	ft_des_derive_key(&ctx);
 	if (ctx.decode)
 	{
-		ft_des_generate_decryption_round_keys(ctx.key, ctx.round_keys);
 		if (ctx.b64)
 			ft_des_ecb_decrypt_b64(&ctx);
 		else
@@ -89,7 +88,6 @@ void		ft_des_ecb
 	}
 	else
 	{
-		ft_des_generate_encryption_round_keys(ctx.key, ctx.round_keys);
 		if (ctx.b64)
 			ft_des_ecb_encrypt_b64(&ctx);
 		else

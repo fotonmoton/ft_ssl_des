@@ -21,4 +21,5 @@ void	ft_base64_init(t_base64_ctx *ctx)
 	ft_memcpy(ctx->alphabet, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", 26);
 	ft_memcpy(ctx->alphabet + 26, "abcdefghijklmnopqrstuvwxyz", 26);
 	ft_memcpy(ctx->alphabet + 52, "0123456789+/", 12);
+	ctx->alphabet[64] = 0;
 }

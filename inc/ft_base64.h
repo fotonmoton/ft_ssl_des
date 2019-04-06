@@ -18,7 +18,7 @@
 # define FT_BASE64_READ_SIZE 1024
 # define FT_BASE64_ENCODE_BLOCK_SIZE 3
 # define FT_BASE64_DECODE_BLOCK_SIZE 4
-# define FT_BASE64_ALPHABET_LENGTH 64
+# define FT_BASE64_ALPHABET_LENGTH 65
 
 typedef uint64_t		t_byte8;
 typedef unsigned char	t_byte1;
