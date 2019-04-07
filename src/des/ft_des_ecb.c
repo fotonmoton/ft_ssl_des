@@ -78,7 +78,6 @@ void		ft_des_ecb
 
 	ft_des_init_ctx(&ctx);
 	parse_args(argc, argv, &ctx);
-	ft_des_derive_key(&ctx);
 	if (ctx.decode)
 	{
 		if (ctx.b64)
@@ -88,6 +87,7 @@ void		ft_des_ecb
 	}
 	else
 	{
+		ft_des_encryption_key_routine(&ctx);
 		if (ctx.b64)
 			ft_des_ecb_encrypt_b64(&ctx);
 		else

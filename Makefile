@@ -140,7 +140,7 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_generate_decryption_round_keys.c 	\
 								ft_des_ecb.c 								\
 								ft_des_init_ctx.c 							\
-								ft_des_derive_key.c 						\
+								ft_des_encryption_key_routine.c 			\
 								ft_des_print_error.c 						\
 								ft_des_arg_parsers.c 						\
 								ft_des_ecb_encrypt.c 						\
@@ -277,6 +277,7 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(TEST_BIN)
+	rm -rf $(OPENSSL_BLD)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all

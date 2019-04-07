@@ -41,8 +41,8 @@ typedef	struct						s_des_ctx
 	int								b64;
 	int								readed;
 	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
+	t_byte1							salt[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1							key[FT_DES_INITIAL_KEY_SIZE];
-	t_byte1							salt[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1							iv[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1							round_keys[FT_DES_ROUND_COUNT]
 									[FT_DES_ROUND_KEY_SIZE];
@@ -364,7 +364,7 @@ void								ft_des_byte_to_bits
 	t_byte8 bits_len
 );
 
-void								ft_des_derive_key
+void								ft_des_encryption_key_routine
 (
 	t_des_ctx *ctx
 );
