@@ -656,12 +656,6 @@ int	init_ctx()
 	i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(ctx.salt[i] == 0);
-		i++;
-	}
-	i = 0;
-	while(i < FT_DES_BIT_BLOCK_SIZE)
-	{
 		_is(ctx.iv[i] == 0);
 		i++;
 	}

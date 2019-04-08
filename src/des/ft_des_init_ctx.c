@@ -17,7 +17,6 @@ void	ft_des_init_ctx
 	}
 	ft_bzero(ctx->key, FT_DES_INITIAL_KEY_SIZE);
 	ft_bzero(ctx->buffer, FT_DES_BYTE_BLOCK_SIZE);
-	ft_bzero(ctx->salt, FT_DES_BIT_BLOCK_SIZE);
 	ft_bzero(ctx->iv, FT_DES_BIT_BLOCK_SIZE);
 	ctx->readed = 0;
 	ctx->decode = 0;

@@ -87,7 +87,6 @@ void		ft_des_ecb
 	}
 	else
 	{
-		ft_des_encryption_key_routine(&ctx);
 		if (ctx.b64)
 			ft_des_ecb_encrypt_b64(&ctx);
 		else

@@ -35,6 +35,7 @@ void		ft_des_ecb_decrypt
 	t_byte1 buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1 message[FT_DES_BYTE_BLOCK_SIZE];
 
+	ft_des_decryption_key_routine(c);
 	ft_des_generate_decryption_round_keys(c->key, c->round_keys);
 	last_read = 0;
 	while((readed = buffered_read(c, buffer)))

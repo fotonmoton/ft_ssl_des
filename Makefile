@@ -138,11 +138,15 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_process_block.c 						\
 								ft_des_generate_encryption_round_keys.c 	\
 								ft_des_generate_decryption_round_keys.c 	\
+								ft_des_arg_parsers.c 						\
 								ft_des_ecb.c 								\
 								ft_des_init_ctx.c 							\
+								ft_des_set_raw_key.c 						\
+								ft_des_get_password.c 						\
+								ft_des_derive_key.c 						\
 								ft_des_encryption_key_routine.c 			\
+								ft_des_decryption_key_routine.c 			\
 								ft_des_print_error.c 						\
-								ft_des_arg_parsers.c 						\
 								ft_des_ecb_encrypt.c 						\
 								ft_des_ecb_decrypt.c 						\
 								ft_des_ecb_decrypt_b64.c 					\
