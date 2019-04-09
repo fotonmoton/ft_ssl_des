@@ -1,6 +1,6 @@
 #include "ft_des.h"
 
-static	void mode
+static	void encrypt
 (
 	t_byte1 input[FT_DES_BYTE_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE],
@@ -22,6 +22,7 @@ void		ft_des_ecb
 
 	ft_des_init_ctx(&ctx);
 	ft_des_parse_args(argc, argv, &ctx);
-	ctx.mode = mode;
+	ctx.encrypt = encrypt;
+	ctx.decrypt = encrypt;
 	ft_des(&ctx);
 }

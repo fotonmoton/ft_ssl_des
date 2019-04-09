@@ -32,13 +32,14 @@ void	ft_des_decryption_key_routine
 	char pass[128];
 	if (ctx->raw_password || !ctx->raw_key)
 		get_salt(ctx, salt);
-	if (!ctx->raw_password && !ctx->raw_key)
+	if (!ctx->raw_key && !ctx->raw_password)
 	{
 		ft_des_get_password(pass);
 		ctx->raw_password = pass;
+	}
+	if (ctx->raw_password)
 		ft_des_derive_key_and_iv(ctx->key, ctx->iv, salt,
 			 (char *)ctx->raw_password);
-	}
 	if (ctx->raw_key)
 		ft_des_set_raw_key(ctx);
 	if (ctx->raw_iv)

@@ -27,5 +27,6 @@ void	ft_des_init_ctx
 	ctx->raw_salt = NULL;
 	ctx->raw_key = NULL;
 	ctx->raw_iv = NULL;
-	ctx->mode = NULL;
+	ctx->encrypt = NULL;
+	ctx->decrypt = NULL;
 }

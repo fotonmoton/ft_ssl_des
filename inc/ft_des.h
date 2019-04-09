@@ -57,7 +57,8 @@ typedef	struct						s_des_ctx
 	const char						*raw_salt;
 	const char						*raw_key;
 	const char						*raw_iv;
-	t_ft_des_mode					mode;
+	t_ft_des_mode					encrypt;
+	t_ft_des_mode					decrypt;
 }									t_des_ctx;
 
 typedef int (*t_ft_des_arg_parser_function)

@@ -668,7 +668,8 @@ int	init_ctx()
 	_is(ctx.raw_key == NULL);
 	_is(ctx.raw_salt == NULL);
 	_is(ctx.raw_iv == NULL);
-	_is(ctx.mode == NULL);
+	_is(ctx.encrypt == NULL);
+	_is(ctx.decrypt == NULL);
 	_end("shoud init ctx");
 }
 

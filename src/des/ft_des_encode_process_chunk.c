@@ -9,7 +9,7 @@ static void	ft_des_ecb_write
 )
 {
 	t_byte1 cyphertext[FT_DES_BYTE_BLOCK_SIZE];
-	ctx->mode(buffer, ctx->round_keys, ctx->iv, cyphertext);
+	ctx->encrypt(buffer, ctx->round_keys, ctx->iv, cyphertext);
 	write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
 }
 

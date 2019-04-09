@@ -44,7 +44,7 @@ void		ft_des_decrypt
 			ft_des_print_error("wrong message size");
 		if (last_read)
 			write(c->output_fd, message, FT_DES_BYTE_BLOCK_SIZE);
-		c->mode(buffer, c->round_keys, c->iv, message);
+		c->decrypt(buffer, c->round_keys, c->iv, message);
 		last_read = readed;
 	}
 	if (message[7] < 0 || message[7] > 8)

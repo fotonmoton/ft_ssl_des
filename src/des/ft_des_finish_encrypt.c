@@ -18,6 +18,6 @@ void	ft_des_finish_encrypt
 		ctx->buffer[buffer_index] = padding_size;
 		buffer_index++;
 	}
-	ctx->mode(ctx->buffer, ctx->round_keys, ctx->iv, cyphertext);
+	ctx->encrypt(ctx->buffer, ctx->round_keys, ctx->iv, cyphertext);
 	write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
 }
