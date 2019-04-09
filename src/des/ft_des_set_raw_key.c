@@ -8,7 +8,7 @@ void	ft_des_set_raw_key
 	const char *wrong_char;
 
 	wrong_char = ft_des_hex_to_bit(ctx->raw_key, ctx->key,
-		FT_DES_INITIAL_KEY_SIZE);
+		FT_DES_BIT_BLOCK_SIZE);
 	if (wrong_char)
 		ft_des_print_error("wrong char in hex key");
 }

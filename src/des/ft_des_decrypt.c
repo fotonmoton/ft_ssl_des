@@ -25,7 +25,7 @@ static t_byte8 buffered_read
 	return (total_readed);
 }
 
-void		ft_des_ecb_decrypt
+void		ft_des_decrypt
 (
 	t_des_ctx *c
 )
@@ -44,7 +44,7 @@ void		ft_des_ecb_decrypt
 			ft_des_print_error("wrong message size");
 		if (last_read)
 			write(c->output_fd, message, FT_DES_BYTE_BLOCK_SIZE);
-		ft_des_process_block(buffer, c->round_keys, message);
+		c->mode(buffer, c->round_keys, c->iv, message);
 		last_read = readed;
 	}
 	if (message[7] < 0 || message[7] > 8)

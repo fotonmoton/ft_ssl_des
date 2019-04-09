@@ -9,11 +9,11 @@ static void	ft_des_ecb_write
 )
 {
 	t_byte1 cyphertext[FT_DES_BYTE_BLOCK_SIZE];
-	ft_des_process_block(buffer, ctx->round_keys, cyphertext);
+	ctx->mode(buffer, ctx->round_keys, ctx->iv, cyphertext);
 	write(ctx->output_fd, cyphertext, FT_DES_BYTE_BLOCK_SIZE);
 }
 
-void	ft_des_ecb_encode_process_chunk
+void	ft_des_encode_process_chunk
 (
 	t_des_ctx *ctx,
 	t_byte8 readed,

@@ -630,7 +630,7 @@ int	init_ctx()
 	ft_des_init_ctx(&ctx);
 
 	i = 0;
-	while(i < FT_DES_INITIAL_KEY_SIZE)
+	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
 		_is(ctx.key[i] == 0);
 		i++;
@@ -667,6 +667,8 @@ int	init_ctx()
 	_is(ctx.raw_password == NULL);
 	_is(ctx.raw_key == NULL);
 	_is(ctx.raw_salt == NULL);
+	_is(ctx.raw_iv == NULL);
+	_is(ctx.mode == NULL);
 	_end("shoud init ctx");
 }
 
@@ -847,6 +849,58 @@ int convert_bytes_to_bits()
 	_end("should convert 8 bytes to 64 bits");
 }
 
+int convert_bits_to_bytes()
+{
+	t_byte1 bits[FT_DES_BIT_BLOCK_SIZE] = {
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1,
+	};
+	t_byte1 expected[FT_DES_BYTE_BLOCK_SIZE] = {
+		0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+	};
+	t_byte1 actual[FT_DES_BIT_BLOCK_SIZE];
+	int i;
+
+	ft_bzero(actual, FT_DES_BIT_BLOCK_SIZE);
+	ft_des_bits_to_bytes(bits, FT_DES_BIT_BLOCK_SIZE, actual,
+		FT_DES_BYTE_BLOCK_SIZE);
+
+	i = 0;
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	{
+		_is(expected[i] == actual[i]);
+		i++;
+	}
+	t_byte1 bits1[FT_DES_BIT_BLOCK_SIZE] = {
+		0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0, 0, 0, 1,
+		0, 0, 1, 0, 0, 0, 1, 0,
+		0, 0, 1, 1, 0, 0, 1, 1,
+		0, 1, 0, 0, 0, 1, 0, 0,
+		0, 1, 0, 1, 0, 1, 0, 1,
+		0, 1, 1, 0, 0, 1, 1, 0,
+		0, 1, 1, 1, 0, 1, 1, 1,
+	};
+	t_byte1 expected1[FT_DES_BYTE_BLOCK_SIZE] = {
+		0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
+	};
+	ft_des_bits_to_bytes(bits1, FT_DES_BIT_BLOCK_SIZE, actual,
+		FT_DES_BYTE_BLOCK_SIZE);
+	i = 0;
+	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	{
+		_is(expected1[i] == actual[i]);
+		i++;
+	}
+	_end("should convert 64 bits to 8 bytes");
+}
+
 int des_tests()
 {
 	_should(perform_initial_permutation);
@@ -869,5 +923,6 @@ int des_tests()
 	_should(convert_hex_string_to_bytes);
 	_should(convert_short_hex_string_to_bytes);
 	_should(convert_bytes_to_bits);
+	_should(convert_bits_to_bytes);
 	return 0;
 }

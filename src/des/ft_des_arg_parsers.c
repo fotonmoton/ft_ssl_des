@@ -34,6 +34,22 @@ int	ft_des_key_arg_parser
 	return (position + 2);
 }
 
+
+int	ft_des_iv_arg_parser
+(
+	int argc,
+	char **argv,
+	int position,
+	t_des_ctx *ctx
+)
+{
+	if (position + 1 >= argc)
+		ft_des_print_error("there is no initialization vector after -k flag. \
+type -h for help.");
+	ctx->raw_iv = argv[position + 1];
+	return (position + 2);
+}
+
 int ft_des_decode_arg_parser
 (
 	int argc,

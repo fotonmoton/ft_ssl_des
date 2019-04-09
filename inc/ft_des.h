@@ -14,6 +14,7 @@
 # define FT_DES_H
 
 # include <stdint.h>
+# include <stddef.h>
 
 # define FT_DES_BYTE_BLOCK_SIZE 8
 # define FT_DES_BIT_BLOCK_SIZE 64
@@ -32,6 +33,13 @@
 typedef uint64_t					t_byte8;
 typedef unsigned char				t_byte1;
 
+typedef void (*t_ft_des_mode)
+(
+	t_byte1 input[FT_DES_BYTE_BLOCK_SIZE],
+	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE],
+	t_byte1 iv[FT_DES_BYTE_BLOCK_SIZE],
+	t_byte1 output[FT_DES_BYTE_BLOCK_SIZE]
+);
 
 typedef	struct						s_des_ctx
 {
@@ -40,14 +48,16 @@ typedef	struct						s_des_ctx
 	int								decode;
 	int								b64;
 	int								readed;
-	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
-	t_byte1							key[FT_DES_INITIAL_KEY_SIZE];
+	t_byte1							key[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1							iv[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1							round_keys[FT_DES_ROUND_COUNT]
 									[FT_DES_ROUND_KEY_SIZE];
 	const char						*raw_password;
 	const char						*raw_salt;
 	const char						*raw_key;
+	const char						*raw_iv;
+	t_ft_des_mode					mode;
 }									t_des_ctx;
 
 typedef int (*t_ft_des_arg_parser_function)
@@ -220,10 +230,9 @@ void								ft_des_print_error
 	const char *error
 );
 
-void								ft_des_ecb
+void								ft_des
 (
-	int argc,
-	char **argv
+	t_des_ctx *ctx
 );
 
 void								ft_des_init_ctx
@@ -231,7 +240,22 @@ void								ft_des_init_ctx
 	t_des_ctx *ctx
 );
 
+void								ft_des_parse_args
+(
+	int argc,
+	char **argv,
+	t_des_ctx *ctx
+);
+
 int									ft_des_key_arg_parser
+(
+	int argc,
+	char **argv,
+	int position,
+	t_des_ctx *c
+);
+
+int									ft_des_iv_arg_parser
 (
 	int argc,
 	char **argv,
@@ -303,34 +327,51 @@ int									ft_des_salt_arg_parser
 	t_des_ctx *c
 );
 
-void								ft_des_ecb_decrypt
+void								ft_des
+(
+	t_des_ctx *c
+);
+
+void								ft_des_ecb
+(
+	int argc,
+	char **argv
+);
+
+void								ft_des_cbc
+(
+	int argc,
+	char **argv
+);
+
+void								ft_des_decrypt
 (
 	t_des_ctx *ctx
 );
 
-void								ft_des_ecb_decrypt_b64
+void								ft_des_decrypt_b64
 (
 	t_des_ctx *ctx
 );
 
-void								ft_des_ecb_encrypt
+void								ft_des_encrypt
 (
 	t_des_ctx *ctx
 );
 
-void								ft_des_ecb_encrypt_b64
+void								ft_des_encrypt_b64
 (
 	t_des_ctx *ctx
 );
 
-void								ft_des_ecb_encode_process_chunk
+void								ft_des_encode_process_chunk
 (
 	t_des_ctx *ctx,
 	t_byte8 reaed,
 	t_byte1 buffer[FT_DES_READ_SIZE]
 );
 
-void								ft_des_ecb_finish_encrypt
+void								ft_des_finish_encrypt
 (
 	t_des_ctx *ctx
 );
@@ -363,6 +404,14 @@ void								ft_des_byte_to_bits
 	t_byte8 bits_len
 );
 
+void								ft_des_bits_to_bytes
+(
+	t_byte1 *bits,
+	t_byte8 bits_len,
+	t_byte1 *bytes,
+	t_byte8 byte_len
+);
+
 void								ft_des_encryption_key_routine
 (
 	t_des_ctx *ctx
@@ -378,16 +427,36 @@ void								ft_des_set_raw_key
 	t_des_ctx *ctx
 );
 
-void								ft_des_get_password
+void								ft_des_set_raw_iv
 (
 	t_des_ctx *ctx
 );
 
-void								ft_des_derive_key
+void								ft_des_get_password
+(
+	char pass[128]
+);
+
+void								ft_des_derive_key_and_iv
 (
 	t_byte1 key[FT_DES_BIT_BLOCK_SIZE],
+	t_byte1 iv[FT_DES_BIT_BLOCK_SIZE],
 	char salt[FT_DES_BYTE_BLOCK_SIZE],
 	char *pass
+);
+
+void								ft_des_parse_args
+(
+	int argc,
+	char **argv,
+	t_des_ctx *ctx
+);
+
+int									ft_des_buffered_read
+(
+	int fd,
+	char *buffer,
+	size_t buff_size
 );
 
 #endif

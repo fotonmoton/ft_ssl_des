@@ -27,6 +27,7 @@ static void	get_salt
 			exit(1);
 		}
 		read(fd, salt, FT_DES_BYTE_BLOCK_SIZE);
+		close(fd);
 	}
 }
 
@@ -36,16 +37,24 @@ void	ft_des_encryption_key_routine
 )
 {
 	char salt[FT_DES_BYTE_BLOCK_SIZE];
+	char pass[128];
 
+	if (ctx->raw_iv)
+		ft_des_set_raw_iv(ctx);
 	if (ctx->raw_key)
 		ft_des_set_raw_key(ctx);
 	else
 	{
-		ft_des_get_password(ctx);
+		if (!ctx->raw_password)
+		{
+			ft_des_get_password(pass);
+			ctx->raw_password = pass;
+		}
 		get_salt(ctx, salt);
-		ft_des_derive_key(ctx->key, salt, (char *)ctx->raw_password);
+		ft_des_derive_key_and_iv(ctx->key, ctx->iv, salt,
+			(char *)ctx->raw_password);
 	}
-	if (ctx->raw_password  || !ctx->raw_key)
+	if (ctx->raw_password)
 	{
 		write(ctx->output_fd, "Salted__", 8);
 		write(ctx->output_fd, salt, FT_DES_BYTE_BLOCK_SIZE);

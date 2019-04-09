@@ -19,7 +19,7 @@ static void base64_encode
 	ft_base64_encode(&b64_ctx);
 }
 
-static void	des_ecb_encrypt
+static void	des_encrypt
 (
 	t_des_ctx *ctx,
 	int pipe_fd[2]
@@ -27,10 +27,10 @@ static void	des_ecb_encrypt
 {
 	close(pipe_fd[0]);
 	ctx->output_fd = pipe_fd[1];
-	ft_des_ecb_encrypt(ctx);
+	ft_des_encrypt(ctx);
 }
 
-void	ft_des_ecb_encrypt_b64
+void	ft_des_encrypt_b64
 (
 	t_des_ctx *ctx
 )
@@ -38,12 +38,11 @@ void	ft_des_ecb_encrypt_b64
 	pid_t pid;
 	int pipe_fd[2];
 
-	(void)ctx;
 	if (pipe(pipe_fd))
 		ft_des_print_error("failded to create pipe");
 	pid = fork();
 	if (pid == 0)
-		des_ecb_encrypt(ctx, pipe_fd);
+		des_encrypt(ctx, pipe_fd);
 	else if (pid < 0)
 		ft_des_print_error("failded to create child process");
 	else
