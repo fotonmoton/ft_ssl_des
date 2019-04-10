@@ -25,15 +25,17 @@ static	void encrypt
 )
 {
 	t_byte1		input_bits[FT_DES_BIT_BLOCK_SIZE];
+	t_byte1		input_with_iv[FT_DES_BYTE_BLOCK_SIZE];
 
 	ft_des_byte_to_bits(input, FT_DES_BYTE_BLOCK_SIZE, input_bits,
 		FT_DES_BIT_BLOCK_SIZE);
-	xor(input_bits, iv);
-	ft_des_bits_to_bytes(input_bits, FT_DES_BIT_BLOCK_SIZE, input,
+	xor(iv, input_bits);
+	ft_des_bits_to_bytes(input_bits, FT_DES_BIT_BLOCK_SIZE, input_with_iv,
 		FT_DES_BYTE_BLOCK_SIZE);
-	ft_des_process_block(input, keys, output);
+	ft_des_process_block(input_with_iv, keys, output);
 	ft_des_byte_to_bits(output, FT_DES_BYTE_BLOCK_SIZE, iv,
 		FT_DES_BIT_BLOCK_SIZE);
+	xor(iv, input_bits);
 }
 
 static	void decrypt
@@ -52,11 +54,10 @@ static	void decrypt
 	xor(output_bits, iv);
 	ft_des_byte_to_bits(input, FT_DES_BYTE_BLOCK_SIZE, iv,
 		FT_DES_BIT_BLOCK_SIZE);
-	ft_des_bits_to_bytes(output_bits, FT_DES_BIT_BLOCK_SIZE, output,
-		FT_DES_BYTE_BLOCK_SIZE);
+	xor(iv, output_bits);
 }
 
-void		ft_des_cbc
+void		ft_des_pcbc
 (
 	int argc,
 	char **argv

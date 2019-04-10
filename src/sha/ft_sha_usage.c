@@ -15,7 +15,7 @@
 void		ft_sha_usage(const char *algorithm)
 {
 	ft_putstr(algorithm);
-	ft_putstr(" Digest usage:\n");
+	ft_putstr(" digest usage:\n");
 	ft_putstr("ft_ssl ");
 	ft_putstr(algorithm);
 	ft_putstr(" [-p|-q|-r] [[-s string...] [file...]]\n\n");

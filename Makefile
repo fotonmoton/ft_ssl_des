@@ -140,9 +140,11 @@ DES_SRC =						ft_des_initial_permutation.c 				\
 								ft_des_generate_decryption_round_keys.c 	\
 								ft_des_parse_args.c 						\
 								ft_des_arg_parsers.c 						\
+								ft_des_usage.c 								\
 								ft_des.c 									\
 								ft_des_ecb.c 								\
 								ft_des_cbc.c 								\
+								ft_des_pcbc.c 								\
 								ft_des_init_ctx.c 							\
 								ft_des_set_raw_key.c 						\
 								ft_des_set_raw_iv.c 						\

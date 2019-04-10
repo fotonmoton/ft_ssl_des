@@ -5,6 +5,13 @@
 #include "libft.h"
 #include "ft_base64.h"
 
+static void	usage(void)
+{
+	ft_putstr("base64 usage:\n");
+	ft_putstr("ft_ssl base64 [-d|-e] [-i in_file] [-o out_file]\n\n");
+	exit(1);
+}
+
 static int	open_input(char *filename)
 {
 	int fd;
@@ -66,6 +73,8 @@ static void read_args
 			ctx->input_fd = open_input(next_arg);
 		else if (ft_strcmp(current_arg, "-o") == 0)
 			ctx->output_fd = open_output(next_arg);
+		else if (ft_strcmp(current_arg, "-h") == 0)
+			usage();
 		else if (++i)
 			continue;
 		i++;

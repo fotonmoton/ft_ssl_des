@@ -28,6 +28,8 @@ static int		read_flags(int argc, char **argv, t_sha_flags *flags)
 	i = 1;
 	while (i < argc)
 	{
+		if (ft_strcmp("-h", argv[i]) == 0)
+			ft_sha_usage("sha224");
 		if (ft_strcmp("-r", argv[i]) == 0)
 			flags->reverse = 1;
 		else if (ft_strcmp("-q", argv[i]) == 0)
@@ -57,7 +59,7 @@ static void		process_strings_and_files
 		if (ft_strcmp("-s", argv[i]) == 0)
 		{
 			if (i + 1 >= argc)
-				ft_sha_usage("SHA224");
+				ft_sha_usage("sha224");
 			ft_sha224_string(ctx, (t_byte1 *)argv[++i], flags);
 			i++;
 		}

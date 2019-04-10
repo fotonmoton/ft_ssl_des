@@ -15,7 +15,7 @@
 
 static void		ft_md5_usage(void)
 {
-	ft_putstr("MD5 Digest usage:\n");
+	ft_putstr("md5 digest usage:\n");
 	ft_putstr("ft_ssl md5 [-p|-q|-r] [[-s string...] [file...]]\n\n");
 	exit(1);
 }
@@ -35,6 +35,8 @@ static int		read_flags(int argc, char **argv, t_md5_flags *flags)
 	i = 1;
 	while (i < argc)
 	{
+		if (ft_strcmp("-h", argv[i]) == 0)
+			ft_md5_usage();
 		if (ft_strcmp("-r", argv[i]) == 0)
 			flags->reverse = 1;
 		else if (ft_strcmp("-q", argv[i]) == 0)

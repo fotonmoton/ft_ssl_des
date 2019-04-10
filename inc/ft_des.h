@@ -328,6 +328,19 @@ int									ft_des_salt_arg_parser
 	t_des_ctx *c
 );
 
+int									ft_des_help_arg_parser
+(
+	int argc,
+	char **argv,
+	int position,
+	t_des_ctx *c
+);
+
+void								ft_des_usage
+(
+	void
+);
+
 void								ft_des
 (
 	t_des_ctx *c
@@ -340,6 +353,12 @@ void								ft_des_ecb
 );
 
 void								ft_des_cbc
+(
+	int argc,
+	char **argv
+);
+
+void								ft_des_pcbc
 (
 	int argc,
 	char **argv

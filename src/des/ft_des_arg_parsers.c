@@ -147,3 +147,19 @@ int ft_des_salt_arg_parser
 	ctx->raw_salt = argv[position + 1];
 	return (position + 2);
 }
+
+int ft_des_help_arg_parser
+(
+	int argc,
+	char **argv,
+	int position,
+	t_des_ctx *ctx
+)
+{
+	(void)argc;
+	(void)argv;
+	(void)position;
+	(void)ctx;
+	ft_des_usage();
+	return (position);
+}

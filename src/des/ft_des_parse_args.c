@@ -39,6 +39,10 @@ t_des_argument_parser	g_arg_parsers[] = {
 		"-s",
 		ft_des_salt_arg_parser,
 	},
+	{
+		"-h",
+		ft_des_help_arg_parser,
+	},
 	{ NULL, NULL},
 };
 

@@ -42,6 +42,10 @@ t_algorithm g_algorithms[] = {
 		"des-cbc",
 		ft_des_cbc,
 	},
+	{
+		"des-pcbc",
+		ft_des_pcbc,
+	},
 	{NULL, NULL}
 };
 
