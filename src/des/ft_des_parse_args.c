@@ -72,6 +72,6 @@ void	ft_des_parse_args
 			parser_walker++;
 		}
 		if (!parser_walker->arg_parser)
-			ft_des_print_error("wrong argument. type -h for help.");
+			ft_des_usage();
 	}
 }
