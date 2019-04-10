@@ -18,7 +18,7 @@ void	ft_des_usage
 )
 {
 	ft_putstr("des cipher usage:\n\n");
-	ft_putstr("ft_ssl des-{mode} [flags]\n\n");
+	ft_putstr("ft_ssl des|des-{mode} [flags]\n\n");
 	ft_putstr("flags:\n");
 	ft_putstr(" -a\t\tdecode/encode the input/output in base64\n");
 	ft_putstr(" -e\t\tecrypt mode\n");
@@ -30,6 +30,7 @@ void	ft_des_usage
 	ft_putstr(" -s salt\tsalt in hex format\n");
 	ft_putstr(" -v vector\tinitialization vector in hex format\n\n");
 	ft_putstr("where {mode} is one of:\n");
-	ft_putstr("ecb\ncbc\npcbc\n");
+	ft_putstr("ecb\ncbc\npcbc\n\n");
+	ft_putstr("des cipher is an alias for des-cbc.\n");
 	exit(1);
 }

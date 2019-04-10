@@ -35,6 +35,10 @@ t_algorithm g_algorithms[] = {
 		ft_base64,
 	},
 	{
+		"des",
+		ft_des_cbc,
+	},
+	{
 		"des-ecb",
 		ft_des_ecb,
 	},
