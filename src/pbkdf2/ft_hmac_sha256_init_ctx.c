@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_hmac_sha256_init_ctx.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:15:12 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:15:33 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include "ft_pbkdf2.h"
 #include "ft_sha.h"
 #include "libft.h"
 
-void ft_hmac_sha256_init_ctx
+void	ft_hmac_sha256_init_ctx
 (
 	t_hmac_sha256_ctx *ctx
 )

@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_decrypt.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:23:37 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:23:58 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include "ft_des.h"
 #include "libft.h"
 
-static t_byte8 buffered_read
+static t_byte8	buffered_read
 (
 	t_des_ctx *ctx,
 	t_byte1 buffer[FT_DES_BYTE_BLOCK_SIZE]
@@ -13,7 +25,7 @@ static t_byte8 buffered_read
 
 	total_readed = 0;
 	current_read = 0;
-	while(total_readed < FT_DES_BYTE_BLOCK_SIZE)
+	while (total_readed < FT_DES_BYTE_BLOCK_SIZE)
 	{
 		if ((current_read = read(
 			ctx->input_fd,
@@ -25,7 +37,7 @@ static t_byte8 buffered_read
 	return (total_readed);
 }
 
-void		ft_des_decrypt
+void			ft_des_decrypt
 (
 	t_des_ctx *c
 )
@@ -38,7 +50,7 @@ void		ft_des_decrypt
 	ft_des_decryption_key_routine(c);
 	ft_des_generate_decryption_round_keys(c->key, c->round_keys);
 	last_read = 0;
-	while((readed = buffered_read(c, buffer)))
+	while ((readed = buffered_read(c, buffer)))
 	{
 		if (readed != FT_DES_BYTE_BLOCK_SIZE)
 			ft_des_print_error("wrong message size");

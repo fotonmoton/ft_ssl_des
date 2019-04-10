@@ -1,21 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_feistel_function.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:38:27 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:38:53 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 
-static void merge_key
+static void	merge_key
 (
 	t_byte1 expanded_half[FT_DES_EXPANDED_HALF_BLOCK_SIZE],
 	t_byte1 key[FT_DES_ROUND_KEY_SIZE],
 	t_byte1 output[FT_DES_EXPANDED_HALF_BLOCK_SIZE]
 )
 {
-	int i = 0;
-	while(i < FT_DES_EXPANDED_HALF_BLOCK_SIZE)
+	int i;
+
+	i = 0;
+	while (i < FT_DES_EXPANDED_HALF_BLOCK_SIZE)
 	{
 		output[i] = expanded_half[i] ^ key[i];
 		i++;
 	}
 }
 
-void	ft_des_feistel_function
+void		ft_des_feistel_function
 (
 	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 key[FT_DES_ROUND_KEY_SIZE],

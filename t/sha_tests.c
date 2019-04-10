@@ -20,19 +20,19 @@ static int init_sha256_ctx()
 
 	ft_sha256_init(&ctx);
 
-	_is(ctx.a == 0x6a09e667);
-	_is(ctx.b == 0xbb67ae85);
-	_is(ctx.c == 0x3c6ef372);
-	_is(ctx.d == 0xa54ff53a);
-	_is(ctx.e == 0x510e527f);
-	_is(ctx.f == 0x9b05688c);
-	_is(ctx.g == 0x1f83d9ab);
-	_is(ctx.h == 0x5be0cd19);
-	_is(ctx.bit_len == 0);
+	_IS(ctx.a == 0x6a09e667);
+	_IS(ctx.b == 0xbb67ae85);
+	_IS(ctx.c == 0x3c6ef372);
+	_IS(ctx.d == 0xa54ff53a);
+	_IS(ctx.e == 0x510e527f);
+	_IS(ctx.f == 0x9b05688c);
+	_IS(ctx.g == 0x1f83d9ab);
+	_IS(ctx.h == 0x5be0cd19);
+	_IS(ctx.bit_len == 0);
 	for (int i = 0; i < 64; i++)
-		_is(ctx.block[i] == 0);
+		_IS(ctx.block[i] == 0);
 
-	_end("init sha256 ctx");
+	_END("init sha256 ctx");
 }
 
 static int init_sha224_ctx()
@@ -41,19 +41,19 @@ static int init_sha224_ctx()
 
 	ft_sha224_init(&ctx);
 
-	_is(ctx.a == 0xc1059ed8);
-	_is(ctx.b == 0x367cd507);
-	_is(ctx.c == 0x3070dd17);
-	_is(ctx.d == 0xf70e5939);
-	_is(ctx.e == 0xffc00b31);
-	_is(ctx.f == 0x68581511);
-	_is(ctx.g == 0x64f98fa7);
-	_is(ctx.h == 0xbefa4fa4);
-	_is(ctx.bit_len == 0);
+	_IS(ctx.a == 0xc1059ed8);
+	_IS(ctx.b == 0x367cd507);
+	_IS(ctx.c == 0x3070dd17);
+	_IS(ctx.d == 0xf70e5939);
+	_IS(ctx.e == 0xffc00b31);
+	_IS(ctx.f == 0x68581511);
+	_IS(ctx.g == 0x64f98fa7);
+	_IS(ctx.h == 0xbefa4fa4);
+	_IS(ctx.bit_len == 0);
 	for (int i = 0; i < 64; i++)
-		_is(ctx.block[i] == 0);
+		_IS(ctx.block[i] == 0);
 
-	_end("init sha224 ctx");
+	_END("init sha224 ctx");
 }
 
 static int decode_string_to_int_sha256()
@@ -68,9 +68,9 @@ static int decode_string_to_int_sha256()
 
 	ft_sha256_decode(words, block);
 
-	_is(words[0] == 0x61626300);
+	_IS(words[0] == 0x61626300);
 
-	_end("decode string to int sha256");
+	_END("decode string to int sha256");
 }
 
 static int  encode_len_to_string_sha256()
@@ -92,11 +92,11 @@ static int  encode_len_to_string_sha256()
 
 	ft_sha256_encode_len(bits, len);
 
-	_is(bits[0] == (t_byte1)((len >> 56) & 0xff));
-	_is(bits[7] == (t_byte1)(len & 0xff));
-	_is(bits[6] == (t_byte1)((len >> 8) & 0xff));
+	_IS(bits[0] == (t_byte1)((len >> 56) & 0xff));
+	_IS(bits[7] == (t_byte1)(len & 0xff));
+	_IS(bits[6] == (t_byte1)((len >> 8) & 0xff));
 
-	_end("encode len to string sha256");
+	_END("encode len to string sha256");
 }
 
 static int encode_register_to_string_sha256()
@@ -108,12 +108,12 @@ static int encode_register_to_string_sha256()
 
 	ft_sha256_encode_register(digest_part, reg);
 
-	_is(digest_part[0] == 0xba);
-	_is(digest_part[1] == 0x78);
-	_is(digest_part[2] == 0x16);
-	_is(digest_part[3] == 0xbf);
+	_IS(digest_part[0] == 0xba);
+	_IS(digest_part[1] == 0x78);
+	_IS(digest_part[2] == 0x16);
+	_IS(digest_part[3] == 0xbf);
 
-	_end("encode register to string sha256");
+	_END("encode register to string sha256");
 }
 
 static int update_bit_count_sha256()
@@ -124,9 +124,9 @@ static int update_bit_count_sha256()
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
 
-	_is(ctx.bit_len == sizeof(message) * 8);
+	_IS(ctx.bit_len == sizeof(message) * 8);
 
-	_end("update bit count sha256");
+	_END("update bit count sha256");
 }
 
 static int fill_buffer_sha256()
@@ -137,9 +137,9 @@ static int fill_buffer_sha256()
 	ft_sha256_init(&ctx);
 	ft_sha256_update(&ctx, message, sizeof(message));
 
-	_is(ft_strcmp((const char *)message, (const char *)ctx.block) == 0);
+	_IS(ft_strcmp((const char *)message, (const char *)ctx.block) == 0);
 
-	_end("fill buffer sha256");
+	_END("fill buffer sha256");
 }
 
 static void block_with_right_padding
@@ -176,10 +176,10 @@ static int add_right_padding_sha256()
 
 	i = 0;
 
-	_is(ft_memcmp(ctx.block, block_with_message_and_pading,
+	_IS(ft_memcmp(ctx.block, block_with_message_and_pading,
 		FT_SHA256_BLOCK_SIZE) == 0);
 
-	_end("add right padding sha256");
+	_END("add right padding sha256");
 }
 
 static int compute_digest_sha256()
@@ -192,16 +192,16 @@ static int compute_digest_sha256()
 	ft_sha256_update(&ctx, message, ft_strlen((const char *)message));
 	ft_sha256_final(digest, &ctx);
 
-	_is(ctx.a == 0xba7816bf);
-	_is(ctx.b == 0x8f01cfea);
-	_is(ctx.c == 0x414140de);
-	_is(ctx.d == 0x5dae2223);
-	_is(ctx.e == 0xb00361a3);
-	_is(ctx.f == 0x96177a9c);
-	_is(ctx.g == 0xb410ff61);
-	_is(ctx.h == 0xf20015ad);
+	_IS(ctx.a == 0xba7816bf);
+	_IS(ctx.b == 0x8f01cfea);
+	_IS(ctx.c == 0x414140de);
+	_IS(ctx.d == 0x5dae2223);
+	_IS(ctx.e == 0xb00361a3);
+	_IS(ctx.f == 0x96177a9c);
+	_IS(ctx.g == 0xb410ff61);
+	_IS(ctx.h == 0xf20015ad);
 
-	_end("compute digest sha256");
+	_END("compute digest sha256");
 }
 
 static int compute_digest_sha224()
@@ -214,15 +214,15 @@ static int compute_digest_sha224()
 	ft_sha224_update(&ctx, message, ft_strlen((const char *)message));
 	ft_sha224_final(digest, &ctx);
 
-	_is(ctx.a == 0x23097d22);
-	_is(ctx.b == 0x3405d822);
-	_is(ctx.c == 0x8642a477);
-	_is(ctx.d == 0xbda255b3);
-	_is(ctx.e == 0x2aadbce4);
-	_is(ctx.f == 0xbda0b3f7);
-	_is(ctx.g == 0xe36c9da7);
+	_IS(ctx.a == 0x23097d22);
+	_IS(ctx.b == 0x3405d822);
+	_IS(ctx.c == 0x8642a477);
+	_IS(ctx.d == 0xbda255b3);
+	_IS(ctx.e == 0x2aadbce4);
+	_IS(ctx.f == 0xbda0b3f7);
+	_IS(ctx.g == 0xe36c9da7);
 
-	_end("computee digst sha224");
+	_END("computee digst sha224");
 }
 
 static int create_digest_string_sha256()
@@ -239,10 +239,10 @@ static int create_digest_string_sha256()
 	ft_sha256_final(digest, &ctx);
 	ft_sha256_digest_string(digest, digest_string);
 
-	_is(ft_strcmp((const char *)message_digest,
+	_IS(ft_strcmp((const char *)message_digest,
 		(const char *)digest_string) == 0);
 
-	_end("create digest string sha256");
+	_END("create digest string sha256");
 }
 
 static int create_digest_string_sha224()
@@ -259,26 +259,26 @@ static int create_digest_string_sha224()
 	ft_sha224_final(digest, &ctx);
 	ft_sha224_digest_string(digest, digest_string);
 
-	_is(ft_strcmp((const char *)message_digest,
+	_IS(ft_strcmp((const char *)message_digest,
 		(const char *)digest_string) == 0);
 
-	_end("create digest strinf sha224");
+	_END("create digest strinf sha224");
 }
 
 int sha_tests()
 {
-	_should(init_sha256_ctx);
-	_should(init_sha224_ctx);
-	_should(decode_string_to_int_sha256);
-	_should(encode_len_to_string_sha256);
-	_should(encode_register_to_string_sha256);
-	_should(update_bit_count_sha256);
-	_should(fill_buffer_sha256);
-	_should(add_right_padding_sha256);
-	_should(compute_digest_sha256);
-	_should(compute_digest_sha224);
-	_should(create_digest_string_sha256);
-	_should(create_digest_string_sha224);
+	_SHOULD(init_sha256_ctx);
+	_SHOULD(init_sha224_ctx);
+	_SHOULD(decode_string_to_int_sha256);
+	_SHOULD(encode_len_to_string_sha256);
+	_SHOULD(encode_register_to_string_sha256);
+	_SHOULD(update_bit_count_sha256);
+	_SHOULD(fill_buffer_sha256);
+	_SHOULD(add_right_padding_sha256);
+	_SHOULD(compute_digest_sha256);
+	_SHOULD(compute_digest_sha224);
+	_SHOULD(create_digest_string_sha256);
+	_SHOULD(create_digest_string_sha224);
 
 	return 0;
 }

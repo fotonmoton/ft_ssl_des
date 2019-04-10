@@ -20,15 +20,15 @@ static int init_ctx()
 
 	ft_md5_init(&ctx);
 
-	_is(ctx.a == 0x67452301);
-	_is(ctx.b == 0xefcdab89);
-	_is(ctx.c == 0x98badcfe);
-	_is(ctx.d == 0x10325476);
-	_is(ctx.bit_len == 0);
+	_IS(ctx.a == 0x67452301);
+	_IS(ctx.b == 0xefcdab89);
+	_IS(ctx.c == 0x98badcfe);
+	_IS(ctx.d == 0x10325476);
+	_IS(ctx.bit_len == 0);
 	for (int i = 0; i < FT_MD5_BLOCK_SIZE; i++)
-		_is(ctx.block[i] == 0);
+		_IS(ctx.block[i] == 0);
 
-	_end("init ctx");
+	_END("init ctx");
 }
 
 static int decode_string_to_int()
@@ -43,11 +43,11 @@ static int decode_string_to_int()
 
 	ft_md5_decode(words, block);
 
-	_is((words[0] & 0xff) == 97);
-	_is(((words[2] >> 8) & 0xff) == 98);
-	_is(((words[15] >> 24) & 0xff) == 99);
+	_IS((words[0] & 0xff) == 97);
+	_IS(((words[2] >> 8) & 0xff) == 98);
+	_IS(((words[15] >> 24) & 0xff) == 99);
 
-	_end("decode string to int");
+	_END("decode string to int");
 }
 
 static int update_change_count()
@@ -59,9 +59,9 @@ static int update_change_count()
 	ft_md5_init(&ctx);
 	ft_md5_update(&ctx, (t_byte1 *)message, size);
 
-	_is(size * 8 == ctx.bit_len);
+	_IS(size * 8 == ctx.bit_len);
 
-	_end("update change count");
+	_END("update change count");
 }
 
 static int encode_bits_to_string()
@@ -83,11 +83,11 @@ static int encode_bits_to_string()
 
 	ft_md5_encode_len(bits, len);
 
-	_is(bits[7] == (t_byte1)((len >> 56) & 0xff));
-	_is(bits[0] == (t_byte1)(len & 0xff));
-	_is(bits[1] == (t_byte1)((len >> 8) & 0xff));
+	_IS(bits[7] == (t_byte1)((len >> 56) & 0xff));
+	_IS(bits[0] == (t_byte1)(len & 0xff));
+	_IS(bits[1] == (t_byte1)((len >> 8) & 0xff));
 
-	_end("encode bits to string");
+	_END("encode bits to string");
 }
 
 static int encode_register()
@@ -105,12 +105,12 @@ static int encode_register()
 
 	ft_md5_encode_register(digest_part, reg);
 
-	_is(digest_part[0] == (t_byte1)(reg & 0xff));
-	_is(digest_part[1] == (t_byte1)((reg >> 8) & 0xff));
-	_is(digest_part[2] == (t_byte1)((reg >> 16) & 0xff));
-	_is(digest_part[3] == (t_byte1)((reg >> 24) & 0xff));
+	_IS(digest_part[0] == (t_byte1)(reg & 0xff));
+	_IS(digest_part[1] == (t_byte1)((reg >> 8) & 0xff));
+	_IS(digest_part[2] == (t_byte1)((reg >> 16) & 0xff));
+	_IS(digest_part[3] == (t_byte1)((reg >> 24) & 0xff));
 
-	_end("encode register");
+	_END("encode register");
 }
 
 static int create_digest()
@@ -129,7 +129,7 @@ static int create_digest()
 	ft_md5_final(digest, &ctx);
 	ft_md5_digest_string(digest, digest_string);
 
-	_is(ft_strcmp((const char *)digest_string,
+	_IS(ft_strcmp((const char *)digest_string,
 					"d41d8cd98f00b204e9800998ecf8427e") == 0);
 
 	ft_md5_init(&ctx);
@@ -137,7 +137,7 @@ static int create_digest()
 	ft_md5_final(digest, &ctx);
 	ft_md5_digest_string(digest, digest_string);
 
-	_is(ft_strcmp((const char *)digest_string,
+	_IS(ft_strcmp((const char *)digest_string,
 					"0cc175b9c0f1b6a831c399e269772661") == 0);
 
 	ft_md5_init(&ctx);
@@ -145,10 +145,10 @@ static int create_digest()
 	ft_md5_final(digest, &ctx);
 	ft_md5_digest_string(digest, digest_string);
 
-	_is(ft_strcmp((const char *)digest_string,
+	_IS(ft_strcmp((const char *)digest_string,
 					"2580a0aff7ef5e80f6b5432666530926") == 0);
 
-	_end("create digest");
+	_END("create digest");
 }
 
 static int create_digest_string()
@@ -173,20 +173,20 @@ static int create_digest_string()
 
 	ft_md5_digest_string(digest, digest_string);
 
-	_is(ft_strcmp((const char *)digest_string,
+	_IS(ft_strcmp((const char *)digest_string,
 		"d41d8cd98f00b204e9800998ecf8427e") == 0);
 
-	_end("create digest string");
+	_END("create digest string");
 }
 
 int md5_tests()
 {
-	_should(init_ctx);
-	_should(decode_string_to_int);
-	_should(update_change_count);
-	_should(encode_bits_to_string);
-	_should(encode_register);
-	_should(create_digest);
-	_should(create_digest_string);
+	_SHOULD(init_ctx);
+	_SHOULD(decode_string_to_int);
+	_SHOULD(update_change_count);
+	_SHOULD(encode_bits_to_string);
+	_SHOULD(encode_register);
+	_SHOULD(create_digest);
+	_SHOULD(create_digest_string);
 	return 0;
 }

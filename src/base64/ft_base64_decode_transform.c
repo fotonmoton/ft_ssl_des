@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_base64_decode_transform.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:10:34 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:11:02 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_base64.h"
 #include "libft.h"
 
-static t_byte1 get_alphabet_index
+static t_byte1	get_alphabet_index
 (
 	t_byte1 *alphabet,
 	t_byte1 ch
@@ -20,7 +32,7 @@ static t_byte1 get_alphabet_index
 	return (alphabet_addr - (char *)alphabet);
 }
 
-void	ft_base64_decode_transform
+void			ft_base64_decode_transform
 (
 	t_base64_ctx *c,
 	t_byte1 blk[FT_BASE64_DECODE_BLOCK_SIZE],

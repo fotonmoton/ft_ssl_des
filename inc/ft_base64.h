@@ -23,13 +23,13 @@
 typedef uint64_t		t_byte8;
 typedef unsigned char	t_byte1;
 
-typedef struct 			s_base64_encode_buffer
+typedef struct			s_base64_encode_buffer
 {
 	t_byte1				block[FT_BASE64_ENCODE_BLOCK_SIZE];
 	t_byte8				readed;
 }						t_base64_encode_buffer;
 
-typedef struct 			s_base64_decode_buffer
+typedef struct			s_base64_decode_buffer
 {
 	t_byte1				block[FT_BASE64_DECODE_BLOCK_SIZE];
 	t_byte8				readed;
@@ -42,7 +42,7 @@ typedef struct			s_base64_ctx
 	t_byte1				alphabet[FT_BASE64_ALPHABET_LENGTH];
 }						t_base64_ctx;
 
-typedef struct 			s_base64_flags
+typedef struct			s_base64_flags
 {
 	int					decode;
 }						t_base64_flags;
@@ -113,7 +113,7 @@ void					ft_base64_init_decode_buffer
 	t_base64_decode_buffer *buff
 );
 
-void 					ft_base64_decode_chunk
+void					ft_base64_decode_chunk
 (
 	t_base64_ctx *ctx,
 	t_byte8 len,
@@ -121,7 +121,7 @@ void 					ft_base64_decode_chunk
 	t_base64_decode_buffer *dec_buff
 );
 
-void 					ft_base64_decode_transform
+void					ft_base64_decode_transform
 (
 	t_base64_ctx *ctx,
 	t_byte1 *message,

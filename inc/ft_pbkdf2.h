@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pbkdf2.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 15:56:11 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 15:56:16 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef FT_PBKDF2_H
 # define FT_PBKDF2_H
 
 # include "ft_sha.h"
 
-typedef struct 		s_pbkdf2_sha256_ctx
+typedef struct		s_pbkdf2_sha256_ctx
 {
 	unsigned char	*pass;
 	unsigned char	*salt;
@@ -15,7 +26,7 @@ typedef struct 		s_pbkdf2_sha256_ctx
 	unsigned int	iterations;
 }					t_pbkdf2_sha256_ctx;
 
-typedef struct 		s_hmac_sha256_ctx
+typedef struct		s_hmac_sha256_ctx
 {
 	unsigned char	*key;
 	unsigned char	*msg;
@@ -64,6 +75,5 @@ void				ft_pbkdf2_sha256
 (
 	t_pbkdf2_sha256_ctx *ctx
 );
-
 
 #endif

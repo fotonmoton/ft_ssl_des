@@ -12,12 +12,12 @@ abcdefghijklmnopqrstuvwxyz0123456789+/";
 
 	ft_base64_init(&ctx);
 
-	_is(ctx.input_fd == STDIN_FILENO);
-	_is(ctx.output_fd == STDOUT_FILENO);
+	_IS(ctx.input_fd == STDIN_FILENO);
+	_IS(ctx.output_fd == STDOUT_FILENO);
 
-	_is(ft_strcmp(alphabet, (char *)ctx.alphabet) == 0);
+	_IS(ft_strcmp(alphabet, (char *)ctx.alphabet) == 0);
 
-	_end("init ctx");
+	_END("init ctx");
 }
 
 static int transform_block()
@@ -28,17 +28,17 @@ static int transform_block()
 	ft_base64_init(&ctx);
 
 	ft_base64_encode_transform(&ctx, (t_byte1 *)"Man", buff);
-	_is(ft_strncmp((char *)buff, "TWFu", 4) == 0);
+	_IS(ft_strncmp((char *)buff, "TWFu", 4) == 0);
 
 	ft_base64_encode_transform(&ctx, (t_byte1 *)"LOL", buff);
-	_is(ft_strncmp((char *)buff, "TE9M", 4) == 0);
+	_IS(ft_strncmp((char *)buff, "TE9M", 4) == 0);
 
-	_end("transform block");
+	_END("transform block");
 }
 
 int base64_tests(void)
 {
-	_should(init_ctx);
-	_should(transform_block);
+	_SHOULD(init_ctx);
+	_SHOULD(transform_block);
 	return 0;
 }

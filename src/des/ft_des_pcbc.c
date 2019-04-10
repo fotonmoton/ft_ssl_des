@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_pcbc.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:53:37 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:54:07 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 
-static void xor
+static void	xor
 (
 	t_byte1 a[FT_DES_BIT_BLOCK_SIZE],
 	t_byte1 b[FT_DES_BIT_BLOCK_SIZE]
@@ -9,14 +21,14 @@ static void xor
 	int i;
 
 	i = 0;
-	while(i < FT_DES_BIT_BLOCK_SIZE)
+	while (i < FT_DES_BIT_BLOCK_SIZE)
 	{
 		a[i] = a[i] ^ b[i];
 		i++;
 	}
 }
 
-static	void encrypt
+static void	encrypt
 (
 	t_byte1 input[FT_DES_BYTE_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE],
@@ -38,7 +50,7 @@ static	void encrypt
 	xor(iv, input_bits);
 }
 
-static	void decrypt
+static void	decrypt
 (
 	t_byte1 input[FT_DES_BYTE_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE],

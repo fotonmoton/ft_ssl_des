@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_hex_to_byte.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:45:44 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:45:51 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 #include "libft.h"
 
@@ -29,8 +41,9 @@ const char		*ft_des_hex_to_byte
 	t_byte1		first_byte_half;
 	t_byte1		second_byte_half;
 	t_byte8		i;
+
 	i = 0;
-	while(*hex && i < byte_len)
+	while (*hex && i < byte_len)
 	{
 		if (char_to_num(*hex, &first_byte_half))
 			return (hex);

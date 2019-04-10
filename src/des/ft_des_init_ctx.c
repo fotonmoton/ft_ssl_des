@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_init_ctx.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:46:08 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:46:12 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include "ft_des.h"
 #include "libft.h"
@@ -10,7 +22,7 @@ void	ft_des_init_ctx
 	int i;
 
 	i = 0;
-	while(i < FT_DES_ROUND_COUNT)
+	while (i < FT_DES_ROUND_COUNT)
 	{
 		ft_bzero(ctx->round_keys[i], FT_DES_ROUND_KEY_SIZE);
 		i++;

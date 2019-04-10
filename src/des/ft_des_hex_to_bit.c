@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_hex_to_bit.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:45:24 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:45:33 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 #include "libft.h"
 
@@ -10,8 +22,9 @@ const char		*ft_des_hex_to_bit
 {
 	t_byte1		bits4;
 	t_byte8		i;
+
 	i = 0;
-	while(*hex && i < bit_len)
+	while (*hex && i < bit_len)
 	{
 		bits4 = ft_tolower(*hex);
 		if (bits4 >= '0' && bits4 <= '9')

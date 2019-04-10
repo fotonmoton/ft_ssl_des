@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pbkdf2_sha256.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:15:38 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:17:16 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_pbkdf2.h"
 #include "ft_sha.h"
 #include "libft.h"
 
-static void set_key_and_message
+static void	set_key_and_message
 (
 	t_pbkdf2_sha256_ctx *ctx,
 	t_hmac_sha256_ctx *hmac_ctx
@@ -14,7 +26,7 @@ static void set_key_and_message
 	hmac_ctx->msg_size = ctx->salt_len;
 }
 
-static void xor
+static void	xor
 (
 	unsigned char x[FT_SHA256_DIGEST_LENGTH_BYTE],
 	unsigned char y[FT_SHA256_DIGEST_LENGTH_BYTE],
@@ -24,7 +36,7 @@ static void xor
 	unsigned int i;
 
 	i = 0;
-	while(i < FT_SHA256_DIGEST_LENGTH_BYTE)
+	while (i < FT_SHA256_DIGEST_LENGTH_BYTE)
 	{
 		result[i] = x[i] ^ y[i];
 		i++;
@@ -37,17 +49,16 @@ static int	ceil
 	unsigned int y
 )
 {
-	return 1 + ((x - 1) / y);
+	return (1 + ((x - 1) / y));
 }
 
-static void block_function
+static void	block_function
 (
 	t_pbkdf2_sha256_ctx *ctx,
 	t_hmac_sha256_ctx *hmac_ctx,
 	unsigned int iteration,
 	unsigned char block[FT_SHA256_DIGEST_LENGTH_BYTE]
 )
-
 {
 	unsigned int		i;
 	unsigned char		c[4];
@@ -89,7 +100,7 @@ void		ft_pbkdf2_sha256
 	block_count = ceil(c->key_len, FT_SHA256_DIGEST_LENGTH_BYTE);
 	i = 1;
 	key_index = 0;
-	while(i < block_count)
+	while (i < block_count)
 	{
 		block_function(c, &hmac_ctx, i, block);
 		ft_memcpy(c->key + key_index, block, FT_SHA256_DIGEST_LENGTH_BYTE);
@@ -97,6 +108,6 @@ void		ft_pbkdf2_sha256
 		i++;
 	}
 	block_function(c, &hmac_ctx, i, block);
-	ft_memcpy(c->key + key_index ,block,
+	ft_memcpy(c->key + key_index, block,
 	c->key_len - (block_count - 1) * FT_SHA256_DIGEST_LENGTH_BYTE);
 }

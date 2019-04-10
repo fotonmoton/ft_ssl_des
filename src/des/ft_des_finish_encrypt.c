@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_finish_encrypt.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:43:34 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:43:55 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 #include <unistd.h>
 
@@ -12,8 +24,7 @@ void	ft_des_finish_encrypt
 
 	buffer_index = ctx->readed % FT_DES_BYTE_BLOCK_SIZE;
 	padding_size = FT_DES_BYTE_BLOCK_SIZE - buffer_index;
-
-	while(buffer_index < FT_DES_BYTE_BLOCK_SIZE)
+	while (buffer_index < FT_DES_BYTE_BLOCK_SIZE)
 	{
 		ctx->buffer[buffer_index] = padding_size;
 		buffer_index++;

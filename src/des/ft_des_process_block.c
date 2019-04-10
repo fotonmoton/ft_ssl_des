@@ -1,14 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_process_block.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:54:39 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:55:29 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 
-static void switch_halves
+static void	switch_halves
 (
 	t_byte1 message[FT_DES_BIT_BLOCK_SIZE]
 )
 {
-	int i;
-	int tmp;
+	int	i;
+	int	tmp;
+
 	i = 0;
-	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
+	while (i < FT_DES_BIT_BLOCK_SIZE / 2)
 	{
 		tmp = message[i];
 		message[i] = message[i + FT_DES_BIT_BLOCK_SIZE / 2];
@@ -23,12 +36,12 @@ static void	bytes_to_bits
 	t_byte1 bits[FT_DES_BIT_BLOCK_SIZE]
 )
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	while (i < FT_DES_BYTE_BLOCK_SIZE)
 	{
 		bits[j] = bytes[i] >> 7 & 1;
 		bits[j + 1] = bytes[i] >> 6 & 1;
@@ -49,12 +62,12 @@ static void	bits_to_bytes
 	t_byte1 bytes[FT_DES_BYTE_BLOCK_SIZE]
 )
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while(i < FT_DES_BYTE_BLOCK_SIZE)
+	while (i < FT_DES_BYTE_BLOCK_SIZE)
 	{
 		bytes[i] = bits[j] << 7
 					| bits[j + 1] << 6
@@ -69,7 +82,7 @@ static void	bits_to_bytes
 	}
 }
 
-void	ft_des_process_block
+void		ft_des_process_block
 (
 	t_byte1 input[FT_DES_BYTE_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE],
@@ -79,12 +92,12 @@ void	ft_des_process_block
 	t_byte1 input_bits[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1 output_bits[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1 ip_message[FT_DES_BIT_BLOCK_SIZE];
-	int i;
+	int		i;
 
 	bytes_to_bits(input, input_bits);
 	ft_des_initial_permutation(input_bits, ip_message);
 	i = 1;
-	while(i <= FT_DES_ROUND_COUNT)
+	while (i <= FT_DES_ROUND_COUNT)
 	{
 		if (i % 2 != 0)
 			ft_des_round(ip_message, ip_message + 32, keys[i - 1]);

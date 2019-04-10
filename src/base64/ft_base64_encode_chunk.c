@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_base64_encode_chunk.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:11:15 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:11:28 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_base64.h"
 #include "libft.h"
 
@@ -33,7 +45,7 @@ void		ft_base64_encode_chunk
 		ft_memcpy(&buff->block[buffer_index], message, free_space_in_buffer);
 		ft_base64_encode_write(ctx, buff->block);
 		idx = free_space_in_buffer;
-		while(idx + FT_BASE64_ENCODE_BLOCK_SIZE <= message_len)
+		while (idx + FT_BASE64_ENCODE_BLOCK_SIZE <= message_len)
 		{
 			ft_base64_encode_write(ctx, &message[idx]);
 			idx += FT_BASE64_ENCODE_BLOCK_SIZE;

@@ -6,7 +6,7 @@
 /*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/02 18:26:32 by gtertysh          #+#    #+#             */
-/*   Updated: 2019/02/02 18:26:51 by gtertysh         ###   ########.fr       */
+/*   Updated: 2019/04/10 16:12:05 by gtertysh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ void	ft_base64_encode_transform
 	second_char = ((data[0] << 4) & 0x30) | ((data[1] >> 4) & 0xf);
 	third_char = ((data[1] << 2) & 0x3c) | ((data[2] >> 6) & 0x3);
 	fourth_char = data[2] & 0x3F;
-
 	chars[0] = ctx->alphabet[first_char];
 	chars[1] = ctx->alphabet[second_char];
 	chars[2] = ctx->alphabet[third_char];
 	chars[3] = ctx->alphabet[fourth_char];
-
 }

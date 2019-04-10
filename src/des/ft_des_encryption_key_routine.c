@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_encryption_key_routine.c                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:34:23 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:34:35 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <stdio.h>
 #include "ft_des.h"
@@ -31,7 +43,7 @@ static void	get_salt
 	}
 }
 
-void	ft_des_encryption_key_routine
+void		ft_des_encryption_key_routine
 (
 	t_des_ctx *ctx
 )

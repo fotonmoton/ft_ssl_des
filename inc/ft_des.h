@@ -33,7 +33,7 @@
 typedef uint64_t					t_byte8;
 typedef unsigned char				t_byte1;
 
-typedef void (*t_ft_des_mode)
+typedef void						(*t_ft_des_mode)
 (
 	t_byte1 input[FT_DES_BYTE_BLOCK_SIZE],
 	t_byte1 keys[FT_DES_ROUND_COUNT][FT_DES_ROUND_KEY_SIZE],
@@ -52,7 +52,7 @@ typedef	struct						s_des_ctx
 	t_byte1							iv[FT_DES_BIT_BLOCK_SIZE];
 	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte1							round_keys[FT_DES_ROUND_COUNT]
-									[FT_DES_ROUND_KEY_SIZE];
+	[FT_DES_ROUND_KEY_SIZE];
 	const char						*raw_password;
 	const char						*raw_salt;
 	const char						*raw_key;
@@ -61,16 +61,16 @@ typedef	struct						s_des_ctx
 	t_ft_des_mode					decrypt;
 }									t_des_ctx;
 
-typedef int (*t_ft_des_arg_parser_function)
+typedef int							(*t_ft_des_arg_parser_function)
 	(int argc, char **argv, int position, t_des_ctx *c);
 
-typedef struct 						s_des_argument_parser
+typedef struct						s_des_argument_parser
 {
 	const char						*arg;
 	t_ft_des_arg_parser_function	arg_parser;
 }									t_des_argument_parser;
 
-typedef struct 						s_des_chunk_buffer
+typedef struct						s_des_chunk_buffer
 {
 	t_byte1							buffer[FT_DES_BYTE_BLOCK_SIZE];
 	t_byte8							readed;

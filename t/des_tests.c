@@ -44,10 +44,10 @@ int perform_initial_permutation()
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(initial_permutation[i] == expect[i]);
+		_IS(initial_permutation[i] == expect[i]);
 		i++;
 	}
-	_end("perform initial permutation");
+	_END("perform initial permutation");
 }
 
 int	perform_final_permutation()
@@ -89,13 +89,13 @@ int	perform_final_permutation()
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(final_permutation[i] == expect[i]);
+		_IS(final_permutation[i] == expect[i]);
 		i++;
 	}
-	_end("perform final permutation");
+	_END("perform final permutation");
 }
 
-int final_permutation_is_reverse_of_initial()
+int final_permutation_IS_reverse_of_initial()
 {
 	t_byte1 message[FT_DES_BIT_BLOCK_SIZE] = {
 		1, 0, 1, 0, 1, 0, 1, 0,
@@ -119,10 +119,10 @@ int final_permutation_is_reverse_of_initial()
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(final_permutation[i] == message[i]);
+		_IS(final_permutation[i] == message[i]);
 		i++;
 	}
-	_end("final permutation is reverse of initial");
+	_END("final permutation is reverse of initial");
 }
 
 int perform_expansion_in_feistel_function()
@@ -156,10 +156,10 @@ int perform_expansion_in_feistel_function()
 	int i = 0;
 	while(i < FT_DES_EXPANDED_HALF_BLOCK_SIZE)
 	{
-		_is(expanded_half_actual[i] == expanded_half_expected[i]);
+		_IS(expanded_half_actual[i] == expanded_half_expected[i]);
 		i++;
 	}
-	_end("perform expansion in feistel function");
+	_END("perform expansion in feistel function");
 }
 
 static int s_box_check
@@ -201,7 +201,7 @@ int	s_boxes_confuse()
 		{0, 1, 1, 1},
 	};
 
-	_is(s_box_check(s1_inputs, s1_expected, ft_des_s_box_1));
+	_IS(s_box_check(s1_inputs, s1_expected, ft_des_s_box_1));
 
 	t_byte1 s2_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -215,7 +215,7 @@ int	s_boxes_confuse()
 		{0, 1, 0, 1},
 	};
 
-	_is(s_box_check(s2_inputs, s2_expected, ft_des_s_box_2));
+	_IS(s_box_check(s2_inputs, s2_expected, ft_des_s_box_2));
 
 	t_byte1 s3_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -229,7 +229,7 @@ int	s_boxes_confuse()
 		{1, 0, 1, 1},
 	};
 
-	_is(s_box_check(s3_inputs, s3_expected, ft_des_s_box_3));
+	_IS(s_box_check(s3_inputs, s3_expected, ft_des_s_box_3));
 
 	t_byte1 s4_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -243,7 +243,7 @@ int	s_boxes_confuse()
 		{1, 1, 1, 1},
 	};
 
-	_is(s_box_check(s4_inputs, s4_expected, ft_des_s_box_4));
+	_IS(s_box_check(s4_inputs, s4_expected, ft_des_s_box_4));
 
 	t_byte1 s5_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -257,7 +257,7 @@ int	s_boxes_confuse()
 		{0, 0, 1, 1},
 	};
 
-	_is(s_box_check(s5_inputs, s5_expected, ft_des_s_box_5));
+	_IS(s_box_check(s5_inputs, s5_expected, ft_des_s_box_5));
 
 	t_byte1 s6_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -271,7 +271,7 @@ int	s_boxes_confuse()
 		{1, 1, 0, 1},
 	};
 
-	_is(s_box_check(s6_inputs, s6_expected, ft_des_s_box_6));
+	_IS(s_box_check(s6_inputs, s6_expected, ft_des_s_box_6));
 
 	t_byte1 s7_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -285,7 +285,7 @@ int	s_boxes_confuse()
 		{1, 1, 0, 0},
 	};
 
-	_is(s_box_check(s7_inputs, s7_expected, ft_des_s_box_7));
+	_IS(s_box_check(s7_inputs, s7_expected, ft_des_s_box_7));
 
 	t_byte1 s8_inputs[S_BOX_CASES_NUMBER][FT_DES_S_BOX_INPUT_SIZE] = {
 		{0, 0, 0, 0, 0, 0},
@@ -299,9 +299,9 @@ int	s_boxes_confuse()
 		{1, 0, 1, 1},
 	};
 
-	_is(s_box_check(s8_inputs, s8_expected, ft_des_s_box_8));
+	_IS(s_box_check(s8_inputs, s8_expected, ft_des_s_box_8));
 
-	_end("s boxes confuse");
+	_END("s boxes confuse");
 }
 
 int perform_premutation_in_feistel_function()
@@ -327,10 +327,10 @@ int perform_premutation_in_feistel_function()
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
 	{
-		_is(actual[i] == expected[i]);
+		_IS(actual[i] == expected[i]);
 		i++;
 	}
-	_end("should perform permutation in feistel function");
+	_END("should perform permutation in feistel function");
 }
 
 int perform_feistel_function()
@@ -373,10 +373,10 @@ int perform_feistel_function()
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
 	{
-		_is(output[i] == expected[i]);
+		_IS(output[i] == expected[i]);
 		i++;
 	}
-	_end("feistel function should encode half of a block");
+	_END("feistel function should encode half of a block");
 }
 
 int reduce_key_to_56_bits()
@@ -409,11 +409,11 @@ int reduce_key_to_56_bits()
 	int i = 0;
 	while(i < FT_DES_REDUCED_KEY_SIZE)
 	{
-		_is(actual_reduced[i] == expected_reduced_key[i]);
+		_IS(actual_reduced[i] == expected_reduced_key[i]);
 		i++;
 	}
 
-	_end("should reduce key size to 56 bits");
+	_END("should reduce key size to 56 bits");
 }
 
 int rotate_half_key()
@@ -442,10 +442,10 @@ int rotate_half_key()
 
 	while(i < FT_DES_REDUCED_KEY_SIZE / 2)
 	{
-		_is(half_key[i] == expected[i]);
+		_IS(half_key[i] == expected[i]);
 		i++;
 	}
-	_end("should rotate half of reduced key");
+	_END("should rotate half of reduced key");
 }
 
 int derive_round_key()
@@ -492,17 +492,17 @@ int derive_round_key()
 	i = 0;
 	while(i < FT_DES_REDUCED_KEY_SIZE)
 	{
-		_is(shifted_reduced_key[i] == reduced_key[i]);
+		_IS(shifted_reduced_key[i] == reduced_key[i]);
 		i++;
 	}
 
 	i = 0;
 	while(i < FT_DES_ROUND_KEY_SIZE)
 	{
-		_is(round_key[i] == expected_round_key[i]);
+		_IS(round_key[i] == expected_round_key[i]);
 		i++;
 	}
-	_end("should derive round key");
+	_END("should derive round key");
 }
 
 int perform_encryption_round()
@@ -550,10 +550,10 @@ int perform_encryption_round()
 	int i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(initial_permuatation[i] == expected_message[i]);
+		_IS(initial_permuatation[i] == expected_message[i]);
 		i++;
 	}
-	_end("should perform encryption round");
+	_END("should perform encryption round");
 }
 
 int encrypt_block()
@@ -583,10 +583,10 @@ int encrypt_block()
 	int i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(cyphertext[i] == expected_cypertext[i]);
+		_IS(cyphertext[i] == expected_cypertext[i]);
 		i++;
 	}
-	_end("should encrypt block");
+	_END("should encrypt block");
 }
 
 int	decrypt_block()
@@ -616,10 +616,10 @@ int	decrypt_block()
 	int i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(plaintext[i] == expected_plaintext[i]);
+		_IS(plaintext[i] == expected_plaintext[i]);
 		i++;
 	}
-	_end("should decrypt block");
+	_END("should decrypt block");
 }
 
 int	init_ctx()
@@ -632,7 +632,7 @@ int	init_ctx()
 	i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(ctx.key[i] == 0);
+		_IS(ctx.key[i] == 0);
 		i++;
 	}
 
@@ -642,7 +642,7 @@ int	init_ctx()
 		j = 0;
 		while(j < FT_DES_ROUND_KEY_SIZE)
 		{
-			_is(ctx.round_keys[i][j] == 0);
+			_IS(ctx.round_keys[i][j] == 0);
 			j++;
 		}
 		i++;
@@ -650,27 +650,27 @@ int	init_ctx()
 	i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(ctx.buffer[i] == 0);
+		_IS(ctx.buffer[i] == 0);
 		i++;
 	}
 	i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(ctx.iv[i] == 0);
+		_IS(ctx.iv[i] == 0);
 		i++;
 	}
-	_is(ctx.readed == 0);
-	_is(ctx.input_fd == STDIN_FILENO);
-	_is(ctx.output_fd == STDOUT_FILENO);
-	_is(ctx.decode == 0);
-	_is(ctx.b64 == 0);
-	_is(ctx.raw_password == NULL);
-	_is(ctx.raw_key == NULL);
-	_is(ctx.raw_salt == NULL);
-	_is(ctx.raw_iv == NULL);
-	_is(ctx.encrypt == NULL);
-	_is(ctx.decrypt == NULL);
-	_end("shoud init ctx");
+	_IS(ctx.readed == 0);
+	_IS(ctx.input_fd == STDIN_FILENO);
+	_IS(ctx.output_fd == STDOUT_FILENO);
+	_IS(ctx.decode == 0);
+	_IS(ctx.b64 == 0);
+	_IS(ctx.raw_password == NULL);
+	_IS(ctx.raw_key == NULL);
+	_IS(ctx.raw_salt == NULL);
+	_IS(ctx.raw_iv == NULL);
+	_IS(ctx.encrypt == NULL);
+	_IS(ctx.decrypt == NULL);
+	_END("shoud init ctx");
 }
 
 int convert_hex_string_to_bits()
@@ -691,26 +691,26 @@ int convert_hex_string_to_bits()
 
 	wrong_key_char = ft_des_hex_to_bit("FFFFFFFFFFFFFFFF", actual_key,
 		FT_DES_INITIAL_KEY_SIZE);
-	_is(wrong_key_char == NULL);
+	_IS(wrong_key_char == NULL);
 
 	i = 0;
 	while(i < FT_DES_INITIAL_KEY_SIZE)
 	{
-		_is(expected_key[i] == actual_key[i]);
+		_IS(expected_key[i] == actual_key[i]);
 		i++;
 	}
 
 	wrong_key_char = ft_des_hex_to_bit("ffffffffffffffff", actual_key,
 		FT_DES_INITIAL_KEY_SIZE);
-	_is(wrong_key_char == NULL);
+	_IS(wrong_key_char == NULL);
 
 	i = 0;
 	while(i < FT_DES_INITIAL_KEY_SIZE)
 	{
-		_is(expected_key[i] == actual_key[i]);
+		_IS(expected_key[i] == actual_key[i]);
 		i++;
 	}
-	_end("should convert hex string to 64 bit key");
+	_END("should convert hex string to 64 bit key");
 }
 
 int convert_short_hex_string_to_bits()
@@ -731,15 +731,15 @@ int convert_short_hex_string_to_bits()
 	ft_bzero(actual_key, FT_DES_INITIAL_KEY_SIZE);
 	wrong_key_char = ft_des_hex_to_bit("FF12CD", actual_key,
 		FT_DES_INITIAL_KEY_SIZE);
-	_is(wrong_key_char == NULL);
+	_IS(wrong_key_char == NULL);
 
 	i = 0;
 	while(i < FT_DES_INITIAL_KEY_SIZE)
 	{
-		_is(expected_key[i] == actual_key[i]);
+		_IS(expected_key[i] == actual_key[i]);
 		i++;
 	}
-	_end("should convert shorter hex string to 64 bit key");
+	_END("should convert shorter hex string to 64 bit key");
 }
 
 int convert_longer_hex_string_to_bits()
@@ -761,15 +761,15 @@ int convert_longer_hex_string_to_bits()
 	ft_bzero(actual_key, FT_DES_INITIAL_KEY_SIZE);
 	wrong_key_char = ft_des_hex_to_bit("FF12CDFF12CDFF12CD", actual_key,
 		FT_DES_INITIAL_KEY_SIZE);
-	_is(wrong_key_char == NULL);
+	_IS(wrong_key_char == NULL);
 
 	i = 0;
 	while(i < FT_DES_INITIAL_KEY_SIZE)
 	{
-		_is(expected_key[i] == actual_key[i]);
+		_IS(expected_key[i] == actual_key[i]);
 		i++;
 	}
-	_end("should convert longer hex string to 64 bit key");
+	_END("should convert longer hex string to 64 bit key");
 }
 
 int convert_hex_string_to_bytes()
@@ -784,15 +784,15 @@ int convert_hex_string_to_bytes()
 	ft_bzero(actual, FT_DES_BYTE_BLOCK_SIZE);
 	wrong_char = ft_des_hex_to_byte("FFFFFFFFFFFFFFFF", actual,
 		FT_DES_BYTE_BLOCK_SIZE);
-	_is(wrong_char == NULL);
+	_IS(wrong_char == NULL);
 
 	i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(expected[i] == actual[i]);
+		_IS(expected[i] == actual[i]);
 		i++;
 	}
-	_end("should convert hex to 8 byte");
+	_END("should convert hex to 8 byte");
 }
 
 int convert_short_hex_string_to_bytes()
@@ -807,15 +807,15 @@ int convert_short_hex_string_to_bytes()
 	ft_bzero(actual, FT_DES_BYTE_BLOCK_SIZE);
 	wrong_char = ft_des_hex_to_byte("CC565", actual,
 		FT_DES_BYTE_BLOCK_SIZE);
-	_is(wrong_char == NULL);
+	_IS(wrong_char == NULL);
 
 	i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(expected[i] == actual[i]);
+		_IS(expected[i] == actual[i]);
 		i++;
 	}
-	_end("should convert short hex string to 8 bytes");
+	_END("should convert short hex string to 8 bytes");
 }
 
 int convert_bytes_to_bits()
@@ -844,10 +844,10 @@ int convert_bytes_to_bits()
 	i = 0;
 	while(i < FT_DES_BIT_BLOCK_SIZE)
 	{
-		_is(expected[i] == actual[i]);
+		_IS(expected[i] == actual[i]);
 		i++;
 	}
-	_end("should convert 8 bytes to 64 bits");
+	_END("should convert 8 bytes to 64 bits");
 }
 
 int convert_bits_to_bytes()
@@ -875,7 +875,7 @@ int convert_bits_to_bytes()
 	i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(expected[i] == actual[i]);
+		_IS(expected[i] == actual[i]);
 		i++;
 	}
 	t_byte1 bits1[FT_DES_BIT_BLOCK_SIZE] = {
@@ -896,34 +896,34 @@ int convert_bits_to_bytes()
 	i = 0;
 	while(i < FT_DES_BYTE_BLOCK_SIZE)
 	{
-		_is(expected1[i] == actual[i]);
+		_IS(expected1[i] == actual[i]);
 		i++;
 	}
-	_end("should convert 64 bits to 8 bytes");
+	_END("should convert 64 bits to 8 bytes");
 }
 
 int des_tests()
 {
-	_should(perform_initial_permutation);
-	_should(perform_final_permutation);
-	_should(final_permutation_is_reverse_of_initial);
-	_should(perform_expansion_in_feistel_function);
-	_should(s_boxes_confuse);
-	_should(perform_premutation_in_feistel_function);
-	_should(perform_feistel_function);
-	_should(reduce_key_to_56_bits);
-	_should(rotate_half_key);
-	_should(derive_round_key);
-	_should(perform_encryption_round);
-	_should(encrypt_block);
-	_should(decrypt_block);
-	_should(init_ctx);
-	_should(convert_hex_string_to_bits);
-	_should(convert_short_hex_string_to_bits);
-	_should(convert_longer_hex_string_to_bits);
-	_should(convert_hex_string_to_bytes);
-	_should(convert_short_hex_string_to_bytes);
-	_should(convert_bytes_to_bits);
-	_should(convert_bits_to_bytes);
+	_SHOULD(perform_initial_permutation);
+	_SHOULD(perform_final_permutation);
+	_SHOULD(final_permutation_IS_reverse_of_initial);
+	_SHOULD(perform_expansion_in_feistel_function);
+	_SHOULD(s_boxes_confuse);
+	_SHOULD(perform_premutation_in_feistel_function);
+	_SHOULD(perform_feistel_function);
+	_SHOULD(reduce_key_to_56_bits);
+	_SHOULD(rotate_half_key);
+	_SHOULD(derive_round_key);
+	_SHOULD(perform_encryption_round);
+	_SHOULD(encrypt_block);
+	_SHOULD(decrypt_block);
+	_SHOULD(init_ctx);
+	_SHOULD(convert_hex_string_to_bits);
+	_SHOULD(convert_short_hex_string_to_bits);
+	_SHOULD(convert_longer_hex_string_to_bits);
+	_SHOULD(convert_hex_string_to_bytes);
+	_SHOULD(convert_short_hex_string_to_bytes);
+	_SHOULD(convert_bytes_to_bits);
+	_SHOULD(convert_bits_to_bytes);
 	return 0;
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_parse_args.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:52:24 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:53:19 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include "ft_des.h"
 #include "libft.h"
@@ -46,28 +58,28 @@ t_des_argument_parser	g_arg_parsers[] = {
 	{ NULL, NULL},
 };
 
-void	ft_des_parse_args
+void					ft_des_parse_args
 (
 	int argc,
 	char **argv,
 	t_des_ctx *ctx
 )
 {
-	int i;
-	char *current_arg;
-	t_des_argument_parser *parser_walker;
+	int						i;
+	char					*current_arg;
+	t_des_argument_parser	*parser_walker;
 
 	i = 1;
-	while(i < argc)
+	while (i < argc)
 	{
 		current_arg = argv[i];
 		parser_walker = g_arg_parsers;
-		while(parser_walker->arg_parser)
+		while (parser_walker->arg_parser)
 		{
 			if (ft_strcmp(current_arg, parser_walker->arg) == 0)
 			{
 				i = parser_walker->arg_parser(argc, argv, i, ctx);
-				break;
+				break ;
 			}
 			parser_walker++;
 		}

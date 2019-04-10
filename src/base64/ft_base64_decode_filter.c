@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_base64_decode_filter.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:09:58 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:10:14 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_base64.h"
 #include "libft.h"
 
@@ -12,7 +24,7 @@ t_byte8	ft_base64_decode_filter
 
 	i = 0;
 	last_free_index = 0;
-	while(i < readed)
+	while (i < readed)
 	{
 		if (!ft_isspace(buffer[i]))
 		{

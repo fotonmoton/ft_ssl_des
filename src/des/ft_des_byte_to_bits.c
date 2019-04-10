@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_byte_to_bits.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 16:21:52 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 16:22:09 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 
 void	ft_des_byte_to_bits
@@ -13,7 +25,7 @@ void	ft_des_byte_to_bits
 
 	bits_count = 0;
 	bytes_count = 0;
-	while(bits_count < bits_len && bytes_count < bytes_len)
+	while (bits_count < bits_len && bytes_count < bytes_len)
 	{
 		bits[bits_count] = bytes[bytes_count] >> 7 & 1;
 		bits[bits_count + 1] = bytes[bytes_count] >> 6 & 1;

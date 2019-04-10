@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_round.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 17:13:31 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 17:13:43 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 
-static void xor
+static void	xor
 (
 	t_byte1 left_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 f_function_result[FT_DES_BIT_BLOCK_SIZE / 2]
@@ -9,14 +21,14 @@ static void xor
 	int i;
 
 	i = 0;
-	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
+	while (i < FT_DES_BIT_BLOCK_SIZE / 2)
 	{
 		left_half[i] = left_half[i] ^ f_function_result[i];
 		i++;
 	}
 }
 
-void	ft_des_round
+void		ft_des_round
 (
 	t_byte1 left_half[FT_DES_BIT_BLOCK_SIZE / 2],
 	t_byte1 right_half[FT_DES_BIT_BLOCK_SIZE / 2],

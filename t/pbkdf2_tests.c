@@ -10,18 +10,18 @@ static int init_hmac_sha256_ctx()
 	t_hmac_sha256_ctx ctx;
 
 	ft_hmac_sha256_init_ctx(&ctx);
-	_is(ctx.key == NULL);
-	_is(ctx.msg == NULL);
-	_is(ctx.key_size == 0);
-	_is(ctx.msg_size == 0);
+	_IS(ctx.key == NULL);
+	_IS(ctx.msg == NULL);
+	_IS(ctx.key_size == 0);
+	_IS(ctx.msg_size == 0);
 	int i = 0;
 	while(i < FT_SHA256_BLOCK_SIZE)
 	{
-		_is(ctx.opad[i] == 0);
-		_is(ctx.ipad[i] == 0);
+		_IS(ctx.opad[i] == 0);
+		_IS(ctx.ipad[i] == 0);
 		i++;
 	}
-	_end("init hmac sha256 ctx");
+	_END("init hmac sha256 ctx");
 }
 
 static int perform_hmac_256_computation_short_key()
@@ -53,10 +53,10 @@ static int perform_hmac_256_computation_short_key()
 	int i = 0;
 	while(i < FT_SHA256_DIGEST_LENGTH_BYTE)
 	{
-		_is(out[i] == expected_result[i]);
+		_IS(out[i] == expected_result[i]);
 		i++;
 	}
-	_end("perform hamc sha256 computation with short key");
+	_END("perform hamc sha256 computation with short key");
 }
 
 static int perform_hmac_256_computation_long_key()
@@ -120,10 +120,10 @@ static int perform_hmac_256_computation_long_key()
 	int i = 0;
 	while(i < FT_SHA256_DIGEST_LENGTH_BYTE)
 	{
-		_is(out[i] == expected_result[i]);
+		_IS(out[i] == expected_result[i]);
 		i++;
 	}
-	_end("perform hamc sha256 computation with long key");
+	_END("perform hamc sha256 computation with long key");
 }
 
 int init_pbkdf2_sha256_ctx()
@@ -132,15 +132,15 @@ int init_pbkdf2_sha256_ctx()
 
 	ft_pbkdf2_sha256_init_ctx(&ctx);
 
-	_is(ctx.iterations == 0);
-	_is(ctx.key_len == 0);
-	_is(ctx.salt_len == 0);
-	_is(ctx.pass_len == 0);
-	_is(ctx.salt == NULL);
-	_is(ctx.key == NULL);
-	_is(ctx.pass == NULL);
+	_IS(ctx.iterations == 0);
+	_IS(ctx.key_len == 0);
+	_IS(ctx.salt_len == 0);
+	_IS(ctx.pass_len == 0);
+	_IS(ctx.salt == NULL);
+	_IS(ctx.key == NULL);
+	_IS(ctx.pass == NULL);
 
-	_end("init pbkdf2 sha256 ctx");
+	_END("init pbkdf2 sha256 ctx");
 }
 
 int perform_pbkdf2_sha256()
@@ -171,7 +171,7 @@ int perform_pbkdf2_sha256()
 	i = 0;
 	while(i < 32)
 	{
-		_is(ctx.key[i] == expected1[i]);
+		_IS(ctx.key[i] == expected1[i]);
 		i++;
 	}
 
@@ -195,7 +195,7 @@ int perform_pbkdf2_sha256()
 	i = 0;
 	while(i < 32)
 	{
-		_is(ctx.key[i] == expected2[i]);
+		_IS(ctx.key[i] == expected2[i]);
 		i++;
 	}
 
@@ -219,7 +219,7 @@ int perform_pbkdf2_sha256()
 	i = 0;
 	while(i < 32)
 	{
-		_is(ctx.key[i] == expected3[i]);
+		_IS(ctx.key[i] == expected3[i]);
 		i++;
 	}
 
@@ -247,10 +247,10 @@ int perform_pbkdf2_sha256()
 	i = 0;
 	while(i < 40)
 	{
-		_is(ctx.key[i] == expected4[i]);
+		_IS(ctx.key[i] == expected4[i]);
 		i++;
 	}
-	_end("perform pbkdf2 sha256");
+	_END("perform pbkdf2 sha256");
 }
 
 int copy_openssl_pbkdf2()
@@ -290,19 +290,19 @@ int copy_openssl_pbkdf2()
 	i = 0;
 	while(i < 8)
 	{
-		_is(my_key[i] == orig_key[i]);
+		_IS(my_key[i] == orig_key[i]);
 		i++;
 	}
-	_end("copy openssl pbkdf2");
+	_END("copy openssl pbkdf2");
 }
 
 int pbkdf2_tests()
 {
-	_should(init_hmac_sha256_ctx);
-	_should(perform_hmac_256_computation_short_key);
-	_should(perform_hmac_256_computation_long_key);
-	_should(init_pbkdf2_sha256_ctx);
-	_should(perform_pbkdf2_sha256);
-	_should(copy_openssl_pbkdf2);
+	_SHOULD(init_hmac_sha256_ctx);
+	_SHOULD(perform_hmac_256_computation_short_key);
+	_SHOULD(perform_hmac_256_computation_long_key);
+	_SHOULD(init_pbkdf2_sha256_ctx);
+	_SHOULD(perform_pbkdf2_sha256);
+	_SHOULD(copy_openssl_pbkdf2);
 	return 0;
 }

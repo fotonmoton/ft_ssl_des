@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_des_switch_message_halves.c                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtertysh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/10 17:12:41 by gtertysh          #+#    #+#             */
+/*   Updated: 2019/04/10 17:12:47 by gtertysh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_des.h"
 
 void	ft_des_switch_message_halves
@@ -7,9 +19,9 @@ void	ft_des_switch_message_halves
 {
 	int i;
 	int tmp;
-	i = 0;
 
-	while(i < FT_DES_BIT_BLOCK_SIZE / 2)
+	i = 0;
+	while (i < FT_DES_BIT_BLOCK_SIZE / 2)
 	{
 		tmp = message[i];
 		message[i] = message[i + FT_DES_BIT_BLOCK_SIZE / 2];
